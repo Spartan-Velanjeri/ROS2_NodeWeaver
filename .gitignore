@@ -12,6 +12,9 @@ utils/
 # Tasks 
 TASKS.md 
 
+#JSON files
+*.json
+
 
 # Distribution / packaging
 .Python
