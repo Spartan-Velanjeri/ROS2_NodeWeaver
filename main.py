@@ -1,6 +1,11 @@
+# TODO
+# Make sure all node labels and node attributes are unique
+
 import dearpygui.dearpygui as dpg
 import json
-from random import random as random
+import random
+import string
+
 # Variables
 
 link_info = {}
@@ -21,7 +26,7 @@ def delink_callback(sender, app_data): # On ctrl+click a link
     # node_properties_callback() TODO: Auto-Refresh of Property window after removing link
 
 def add_node_callback(): # On clicking the New_node button
-    with dpg.node(label="New_node",parent=NodeEditor) as new_node:
+    with dpg.node(label="New_node",parent=NodeEditor):
         with dpg.node_attribute(label="Description",attribute_type=dpg.mvNode_Attr_Static):
             dpg.add_input_text(label="Node Description",hint="Add Node description ...",width=250)
 
@@ -35,10 +40,10 @@ def rename_node_callback(sender,data): #Works !
         dpg.configure_item(dpg.get_selected_nodes(NodeEditor)[0],label=input_text_value)
         dpg.delete_item("Rename_Node")
 
-def remove_feature(sender,app_data):
+def remove_feature(sender):
     dpg.delete_item(dpg.get_item_parent(sender))
 
-def node_properties_callback(sender,app_data):
+def node_properties_callback():
     #print(link_info)
     clear_window(properties_window)
     if len(dpg.get_selected_nodes(NodeEditor)) == 1:
@@ -113,18 +118,18 @@ def clear_window(window_tag):
             for value in values:
                 dpg.delete_item(value)
 
-# def random_number_gen():
-#     return random.random
+def random_number_gen():
+    return ''.join(random.choices(string.ascii_lowercase+string.digits,k=7))
 
 def publisher_node_callback():
     # Assuming NodeEditor is the ID of your node editor
     selected_nodes = dpg.get_selected_nodes(NodeEditor)
     if selected_nodes:
         selected_node_id = selected_nodes[0]  # Assuming only one node is selected
-        with dpg.node_attribute(label=f"Publisher_{random()}",parent=selected_node_id,attribute_type=dpg.mvNode_Attr_Output): #Change label to type_#
-            dpg.add_input_text(label="Publisher Message Type", width=250)
-            dpg.add_input_text(label="Publisher Topic name", width=250)
-            dpg.add_input_int(label="Publisher Queue size", default_value=10, width=250)
+        with dpg.node_attribute(label=f"publisher@{random_number_gen()}",parent=selected_node_id,attribute_type=dpg.mvNode_Attr_Output): #Change label to type_#
+            dpg.add_input_text(label="message_type",default_value='', width=250)
+            dpg.add_input_text(label="topic_name", default_value='',width=250)
+            dpg.add_input_int(label="queue_size", default_value=10, width=250)
             dpg.add_button(label="^ Remove ^",callback=remove_feature)
 
     else:
@@ -135,11 +140,11 @@ def subscriber_node_callback():
     selected_nodes = dpg.get_selected_nodes(NodeEditor)
     if selected_nodes:
         selected_node_id = selected_nodes[0]  # Assuming only one node is selected
-        with dpg.node_attribute(label=f"Subscriber_{random()}",parent=selected_node_id,attribute_type=dpg.mvNode_Attr_Input):
-            dpg.add_input_text(label="Subscriber Message Type",width=250)
-            dpg.add_input_text(label="Subscriber Topic name",width=250)
-            dpg.add_input_text(label="Subscriber Callback function",width=250)     
-            dpg.add_input_int(label="Subscriber Queue size",default_value=10,width=250)
+        with dpg.node_attribute(label=f"subscriber@{random_number_gen()}",parent=selected_node_id,attribute_type=dpg.mvNode_Attr_Input):
+            dpg.add_input_text(label="message_type", default_value='',width=250)
+            dpg.add_input_text(label="topic_name", default_value='',width=250)
+            dpg.add_input_text(label="callback_function", default_value='',width=250)     
+            dpg.add_input_int(label="queue_size",default_value=10,width=250)
             dpg.add_button(label="^ Remove ^",callback=remove_feature)
 
     else:
@@ -148,10 +153,10 @@ def service_server_node_callback():
     selected_nodes = dpg.get_selected_nodes(NodeEditor)
     if selected_nodes:
         selected_node_id = selected_nodes[0]  # Assuming only one node is selected
-        with dpg.node_attribute(label=f"Service Server_{random()}",parent=selected_node_id,attribute_type=dpg.mvNode_Attr_Input,shape=2):
-            dpg.add_input_text(label="Service Type (Server)",width=250)
-            dpg.add_input_text(label="Service name (Server)",width=250)
-            dpg.add_input_text(label="Service Callback (Server)",width=250)     
+        with dpg.node_attribute(label=f"service_server@{random_number_gen()}",parent=selected_node_id,attribute_type=dpg.mvNode_Attr_Input,shape=2):
+            dpg.add_input_text(label="service_type", default_value='',width=250)
+            dpg.add_input_text(label="Service_name", default_value='',width=250)
+            dpg.add_input_text(label="callback_function", default_value='',width=250)     
             dpg.add_button(label="^ Remove ^",callback=remove_feature)
 
     else:
@@ -161,10 +166,10 @@ def service_client_node_callback():
     selected_nodes = dpg.get_selected_nodes(NodeEditor)
     if selected_nodes:
         selected_node_id = selected_nodes[0]  # Assuming only one node is selected
-        with dpg.node_attribute(label=f"Service Client_{random()}",parent=selected_node_id,attribute_type=dpg.mvNode_Attr_Output,shape=2):
-            dpg.add_input_text(label="Service Type (Client)",width=250)
-            dpg.add_input_text(label="Service name (Client)",width=250)
-            dpg.add_input_text(label="Send Request Function (Client)",width=250)     
+        with dpg.node_attribute(label=f"service_client@{random_number_gen()}",parent=selected_node_id,attribute_type=dpg.mvNode_Attr_Output,shape=2):
+            dpg.add_input_text(label="service_type", default_value='',width=250)
+            dpg.add_input_text(label="service_name", default_value='',width=250)
+            dpg.add_input_text(label="request_function", default_value='',width=250)     
             dpg.add_button(label="^ Remove ^",callback=remove_feature)
 
     else:
@@ -174,10 +179,10 @@ def action_server_node_callback():
     selected_nodes = dpg.get_selected_nodes(NodeEditor)
     if selected_nodes:
         selected_node_id = selected_nodes[0]  # Assuming only one node is selected
-        with dpg.node_attribute(label=f"Action Server_{random()}",parent=selected_node_id,attribute_type=dpg.mvNode_Attr_Input,shape=4):
-            dpg.add_input_text(label="Action Type (Server)",width=250)
-            dpg.add_input_text(label="Action name (Server)",width=250)
-            dpg.add_input_text(label="Action Callback (Server)",width=250,hint="must return result message for the action type")     
+        with dpg.node_attribute(label=f"action_server@{random_number_gen()}",parent=selected_node_id,attribute_type=dpg.mvNode_Attr_Input,shape=4):
+            dpg.add_input_text(label="action_type", default_value='',width=250)
+            dpg.add_input_text(label="action_name", default_value='',width=250)
+            dpg.add_input_text(label="action_callback",width=250,hint="must return result message for the action type")     
             dpg.add_button(label="^ Remove ^",callback=remove_feature)
 
     else:
@@ -187,12 +192,12 @@ def action_client_node_callback():
     selected_nodes = dpg.get_selected_nodes(NodeEditor)
     if selected_nodes:
         selected_node_id = selected_nodes[0]  # Assuming only one node is selected
-        with dpg.node_attribute(label=f"Action Client_{random()}",parent=selected_node_id,attribute_type=dpg.mvNode_Attr_Output,shape=4):
-            dpg.add_input_text(label="Action Type (Client)",width=250)
-            dpg.add_input_text(label="Action name (Client)",width=250)
-            dpg.add_input_text(label="Send Goal Function (Client)",width=250)     
-            dpg.add_input_text(label="Goal Response Callback (Client)",width=250)     
-            dpg.add_input_text(label="Get Result Callback (Client)",width=250)     
+        with dpg.node_attribute(label=f"action_client@{random_number_gen()}",parent=selected_node_id,attribute_type=dpg.mvNode_Attr_Output,shape=4):
+            dpg.add_input_text(label="action_type", default_value='',width=250)
+            dpg.add_input_text(label="action_name", default_value='',width=250)
+            dpg.add_input_text(label="action_goal_function", default_value='', width=250)     
+            dpg.add_input_text(label="action_goal_response_callback", default_value='', width=250)     
+            dpg.add_input_text(label="action_get_result_callback", default_value='', width=250)     
             dpg.add_button(label="^ Remove ^",callback=remove_feature)
 
     else:

@@ -43,3 +43,8 @@ TODO: EDIT THESE
 cd ros2-node-flow-gui
 ```
 
+### Rules
+
+Node label: Capital Case
+Node Attribute label: small case
+Widget Label: Capital Case

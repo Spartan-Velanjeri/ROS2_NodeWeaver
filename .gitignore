@@ -7,7 +7,7 @@ __pycache__/
 *.so
 
 # Utils for now
-utils/
+utils/functionality/*
 
 # Tasks 
 TASKS.md 
