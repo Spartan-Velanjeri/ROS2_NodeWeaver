@@ -1,0 +1,46 @@
+network:
+    version: 2
+    renderer: networkd
+    ethernets:
+      enp0s31f6:  # ID 2: WLAN Router (2c:94:64:01:d2:26)
+        addresses:
+          - 192.168.88.200/24
+        gateway4: 192.168.88.1
+        routes:
+          - to: 0.0.0.0/0
+            via: 192.168.88.1
+            metric: 100
+        nameservers:
+          addresses: [192.168.88.1]
+      # enp12s0:    # ID 5 (2c:94:64:01:d0:14): VLP16_Front
+      #   addresses:
+      #     - 192.168.15.1/24
+      # enp13s0:    # ID 6 (2c:94:64:01:d0:15): VLP16_Rear
+      #   addresses:
+      #     - 192.168.16.1/24
+      enp12s0:    # ID 5 (2c:94:64:01:d0:14): Ouster OS0-64 Front
+        # link-local: [ ipv4 ]
+        addresses:
+          - 192.168.15.1/24
+      enp13s0:    # ID 6 (2c:94:64:01:d0:15): Ouster OS0-64 Rear
+        # link-local: [ ipv4 ]
+        addresses:
+          - 192.168.16.1/24
+      enp14s0:    # ID 1: Outside connection e.g. via BTIA Router (2c:94:64:01:d2:27)
+        dhcp4: true
+      enp4s0:     # ID 8 DevNet in RNG (2c:94:64:01:f5:c8)
+        dhcp4: true
+      enp5s0:     # ID 7 (2c:94:64:01:f5:c9): Humatics
+        link-local: [ ipv4 ]
+        addresses:
+         - 192.168.1.1/24
+      enp8s0:     # ID 3 (2c:94:64:01:d0:12): SICK_Front
+        addresses:
+          - 192.168.13.1/24
+      enp9s0:     # ID 4 (2c:94:64:01:d0:13): SICK_Rear
+        addresses:
+          - 192.168.14.1/24
+      enx002400000000: # Leica USB-LAN-Adapter
+        dhcp4: no
+        addresses: 
+          - 192.168.254.1/24

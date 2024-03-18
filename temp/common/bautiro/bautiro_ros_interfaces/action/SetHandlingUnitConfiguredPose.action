@@ -1,0 +1,20 @@
+# REQUEST Handling Unit to drive to TARGET Pose
+#
+# Target_Joint_Pose_Enum
+#
+int32 INITIAL_JOINT_POSE = 0
+int32 INITIAL_LOW_JOINT_POSE = 1
+int32 INITIAL_LOW_ROT_JOINT_POSE = 2
+int32 TRANSPORT_JOINT_POSE = 3
+int32 TRANSPORT_POCKET_JOINT_POSE = 4
+int32 WORKING_JOINT_POSE = 5 
+
+int32 handling_unit_configured_pose
+---
+# FINAL RESPONSE:
+int32 response_code
+
+---
+# FEEDBACK INBETWEEN The remaining move-operation
+# in percentage [0.0 .. 1.0]
+float32 progress_normalized

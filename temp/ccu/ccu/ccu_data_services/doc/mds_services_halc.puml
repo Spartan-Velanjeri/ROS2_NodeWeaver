@@ -1,0 +1,36 @@
+@startuml Overview
+
+frame f as "HCU\nROS2 services"   {
+    () i1 as "get_mission_list"
+    () i2 as "get_node_tree"
+    () i3 as "get_cluster"
+    () i4 as "set_active_mission"
+}
+
+class "DataService**HALC**"  as dsh  << Node >> #APPLICATION
+
+dsh -up-    i1
+dsh -left-  i2
+dsh -down-  i3
+dsh -up-  i4
+
+i4 -[hidden]- i1
+i1 -[hidden]- i2
+i2 -[hidden]- i3
+
+class CDataService << Python >> {
+    + set_active_mission()
+    + get_mission_list()
+    + get_node_tree()
+    + get_cluster()
+}
+
+dsh o-down- CDataService
+
+
+object protobuf << grpc >> {
+    //de/serialiser//
+}
+dsh - protobuf
+
+@enduml

@@ -1,0 +1,4 @@
+# service for getting points
+---
+int32 points_count
+float64[] points

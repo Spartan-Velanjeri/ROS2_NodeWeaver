@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>rpm_bringup</name>
+  <version>0.0.0</version>
+  <description>Launch files or starting RPM</description>
+  <maintainer email="QuangHuy.Nguyen2@de.bosch.com">ngq3fe</maintainer>
+  <maintainer email="ingo.luetkebohle@de.bosch.com">Ingo Lütkebohle</maintainer>
+  <license>Robert Bosch proprietary</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>bautiro_description</exec_depend>
+  <exec_depend>bautiro_launch</exec_depend>
+  <exec_depend>rpm_sensors</exec_depend>
+  <exec_depend>rpm_localization</exec_depend>
+  <exec_depend>lu_rough_localization</exec_depend>
+  <exec_depend>p2p_offset_controller</exec_depend>
+  <exec_depend>rpm_nav2</exec_depend>
+  <exec_depend>rpm_behavior_tree</exec_depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

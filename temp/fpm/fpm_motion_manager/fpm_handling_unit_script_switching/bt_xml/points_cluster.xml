@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+        <Sequence>
+            <Action ID="loadpoints" pointslist="{points}" totalpoints="{points_count_bb}"/>
+            <Repeat num_cycles="{points_count_bb}">
+                <Sequence>
+                    <Action ID="getpoi" currentpoint="{points}" drill_point="{drill_point}" point_index="{point_index}" total="{points_count_bb}"/>
+                    <Action ID="moveitcontrol"/>
+                    <Action ID="moveit" goal="-0.047;-0.451;-0.277"/>
+                    <Action ID="moveitcluster" current_point="{drill_point}"/>
+                    <Sequence>
+                        <Action ID="loadscript"/>
+                        <Action ID="execscript"/>
+                    </Sequence>
+                    <Delay delay_msec="2000">
+                        <Inverter>
+                            <KeepRunningUntilFailure>
+                                <Sequence>
+                                    <Action ID="iostatecondition"/>
+                                </Sequence>
+                            </KeepRunningUntilFailure>
+                        </Inverter>
+                    </Delay>
+                    <Action ID="updatepoi" point_index="{point_index}" total="{points_count_bb}" update_index="{point_index}"/>
+                </Sequence>
+            </Repeat>
+        </Sequence>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <Action ID="execscript"/>
+        <Action ID="getpoi">
+            <input_port name="currentpoint"/>
+            <output_port name="drill_point"/>
+            <input_port name="point_index"/>
+            <input_port name="total"/>
+        </Action>
+        <Action ID="iostatecondition"/>
+        <Action ID="loadpoints">
+            <output_port name="pointslist"/>
+            <output_port name="totalpoints"/>
+        </Action>
+        <Action ID="loadscene">
+            <input_port name="scene_file"/>
+        </Action>
+        <Action ID="loadscript"/>
+        <Action ID="loadur">
+            <input_port name="file_name"/>
+        </Action>
+        <Action ID="moveit">
+            <input_port name="goal"/>
+        </Action>
+        <Action ID="moveitcluster">
+            <input_port name="current_point"/>
+        </Action>
+        <Action ID="moveitcontrol"/>
+        <Action ID="moveitjoints"/>
+        <Action ID="playur"/>
+        <Action ID="removescene"/>
+        <Action ID="updatepoi">
+            <input_port name="point_index"/>
+            <input_port name="total"/>
+            <output_port name="update_index"/>
+        </Action>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>

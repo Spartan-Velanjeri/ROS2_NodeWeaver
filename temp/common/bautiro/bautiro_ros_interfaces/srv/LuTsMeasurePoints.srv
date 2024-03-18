@@ -1,0 +1,3 @@
+geometry_msgs/PointStamped[] in_point
+---
+geometry_msgs/PointStamped[] out_point

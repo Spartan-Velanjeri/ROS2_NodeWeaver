@@ -1,0 +1,45 @@
+# !/bin/bash -e
+
+# Usage: ./RPM_CAN_mode_activation.sh
+
+CanInterfaceName=can0
+BitRate=250000
+CompareStringBad='Device "can0" does not exist.' 
+CompareStringGood="can0"
+CompareStringBusy="RTNETLINK answers: Device or resource busy"
+
+
+
+##activation of the CAN interface "can0"  for a CAN_USB adapter
+#sudo modprobe can_raw
+#sudo modprobe can
+#sudo modprobe peak_usb
+
+
+# sudo ip link set can0 type can bitrate 250000 
+Output="$(sudo ip link show $CanInterfaceName 2>&1)"
+echo Echo Output: "$Output"
+echo Echo CompareStringBad: "$CompareStringBad"
+echo Echo CompareStringGood: "$CompareStringGood"
+
+if [ "$Output" = "$CompareStringBad" ]; then
+ echo "Error: can0 is not configured, check if it is connected and driver are installed! ";
+elif [[ "$Output" == *"$CompareStringGood"* ]]; then
+ echo "Can0 is there and up. ";
+else
+ echo "something went horrible wrong";
+fi
+
+ip link show $CanInterfaceName
+
+
+#activation of the CAN interface of the inverter
+
+cansend $CanInterfaceName 626#2F67330000
+cansend $CanInterfaceName 627#2F67330000
+echo "VLC_Conntroll at inverter is deactive"
+
+cansend $CanInterfaceName 000#8026
+cansend $CanInterfaceName 000#8027
+echo "CAN mode at inverters is deacativated"
+

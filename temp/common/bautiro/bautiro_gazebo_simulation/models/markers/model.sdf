@@ -1,0 +1,59 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name="markers">  
+    <static>true</static>    
+    <link name="marker_1">
+      <pose>-0.35 7.9 4 0 1.5707 1.5707</pose>
+        <collision name="collision">
+          <geometry>
+            <cylinder>
+              <length>0.1</length>
+              <radius>0.1</radius>
+            </cylinder>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <material>
+              <ambient>1 0 0 1</ambient>
+              <diffuse>1 0 0 1</diffuse>
+              <specular>1 1 1 1</specular>
+          </material>
+          <geometry>
+            <cylinder>
+              <length>0.1</length>
+              <radius>0.1</radius>
+            </cylinder>
+          </geometry>
+        </visual>
+      </link>
+
+      <link name="marker_2">
+      <pose>14.25 -0.8 4 0 1.5707 0</pose>
+        <collision name="collision">
+          <geometry>
+            <cylinder>
+              <length>0.1</length>
+              <radius>0.1</radius>
+            </cylinder>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <material>
+              <ambient>1 0 0 1</ambient>
+              <diffuse>1 0 0 1</diffuse>
+              <specular>1 1 1 1</specular>
+          </material>
+          <geometry>
+            <cylinder>
+              <length>0.1</length>
+              <radius>0.1</radius>
+            </cylinder>
+          </geometry>
+        </visual>
+      </link>
+      
+      <plugin filename="libLocalPosePublisher.so" name="ignition::gazebo::systems::LocalPosePublisher">
+        <set_subscriber_topic_name>/marker_id</set_subscriber_topic_name>
+      </plugin>
+    </model>
+</sdf>

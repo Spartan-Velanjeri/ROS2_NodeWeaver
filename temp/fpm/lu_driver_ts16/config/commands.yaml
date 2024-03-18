@@ -1,0 +1,8 @@
+start_distance: '%R8Q,1:'
+stop_distance: '%R8Q,2:'
+start_stream: '%R8Q,4:'
+stop_stream: '%R8Q,5:'
+time_synchronization: '%R8Q,8:'
+search_reflector_static: '%R8Q,6:1'
+search_reflector_dynamic: '%R8Q,6:5'
+turn_telescope: '%R8Q,7:'

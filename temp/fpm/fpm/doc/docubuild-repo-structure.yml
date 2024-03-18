@@ -1,0 +1,9 @@
+---
+fpm:
+- fpm_drill_process
+- fpm_inclinometer
+- fpm_motion_manager
+- fpm_ptu_control
+- fpm_ptu_standalone_gui
+- fpm_ptu_testbench_utils
+- fpm_task_execution_and_monitoring

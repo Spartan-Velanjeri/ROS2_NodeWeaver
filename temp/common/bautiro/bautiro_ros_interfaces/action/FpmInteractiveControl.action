@@ -1,0 +1,7 @@
+# REQUEST 
+# none
+---
+# RESULT
+# response_code: check msg.ResponseCode for possible response codes
+int32 response_code
+---

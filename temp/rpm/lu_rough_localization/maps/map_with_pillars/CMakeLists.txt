@@ -1,0 +1,1 @@
+download_map(map_with_pillars map_with_pillars.db3)

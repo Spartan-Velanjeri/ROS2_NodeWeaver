@@ -1,0 +1,21 @@
+bautiro_base_link_to_rpm_base_link:
+  x: 0.0 
+  y: 0.0
+  z: 0.0
+  roll: 0 
+  pitch: 0
+  yaw: 0
+rpm_fpm_lift:
+  x: 0.0 
+  y: 0.0
+  z: 0.1
+  roll: 0 
+  pitch: 0
+  yaw: 0
+rpm_sensorrack:
+  x: 0.0 
+  y: 0.0
+  z: 0.0
+  roll: 0 
+  pitch: 0
+  yaw: 0

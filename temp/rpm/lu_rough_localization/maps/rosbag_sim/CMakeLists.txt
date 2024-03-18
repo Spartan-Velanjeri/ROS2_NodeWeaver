@@ -1,0 +1,1 @@
+download_map(rosbag_sim rosbag_0.db3)

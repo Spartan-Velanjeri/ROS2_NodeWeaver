@@ -1,0 +1,11 @@
+# action to start the timer
+
+#Goal
+bool start
+string bt_xml   #start main task or service tasks
+---
+#Result
+string message
+---
+#Feedback
+

@@ -1,0 +1,80 @@
+# Explain calibration value e.g. fpm_a2b:
+#   -x,y,z: are the position of b relative to frame a, expressed in coordinate system a
+#   -roll, pitch, yaw: are the euler angles of b relativ to a according to intrinsic rotation with sequence x,y,z
+#      see https://en.wikipedia.org/wiki/Euler_angles#Definition_by_intrinsic_rotations
+
+fpm_lift2asm:
+   x: 0.0 
+   y: 0.0
+   z: 0.0
+   roll: 0.0 
+   pitch: 0.0
+   yaw: 0.0
+
+# # original value from calibration
+# fpm_acr_hum:
+#    x: 0.545
+#    y: 0.215
+#    z: 0.099
+#    roll: -1.57279633 
+#    pitch: 0.002
+#    yaw: -1.57079833  
+
+# new value, rotated about Z-axis with 180° so that, hu_base has the same direction like in FUS1
+fpm_acr_hum:
+   x: 0.545
+   y: 0.215
+   z: 0.099
+   roll: 1.57279633 
+   pitch: -0.00199734
+   yaw: 1.57079433  
+
+fpm_asm2sensorrack:
+   x: 0.0 
+   y: 0.0
+   z: 0.0
+   roll: 0.0 
+   pitch: 0.0
+   yaw: 0.0
+fpm_acr_leica:
+   x: 0.06088802 
+   y: 0.37342308
+   z: 0.43223852     
+   roll: 0.00510538 
+   pitch: 0.00121342
+   yaw: 0.13754975
+fpm_acr_imu:
+   x: -1.0 
+   y: 0.0
+   z: 0.0
+   roll: 0.0 
+   pitch: 0.0
+   yaw: 0.0
+fpm_acr_inc:
+   x: 0.0 
+   y: 1.0
+   z: 0.0
+   roll: 0.0 
+   pitch: 0.0
+   yaw: 0.0
+fpm_acr_hub: # tranformation from accessory calibration reference to usb-hub
+   x: 0.285 
+   y: -0.09
+   z: 0.075
+   roll: 0.0 
+   pitch: 0.0
+   yaw: 0.0
+fpm_acr_vac: # tranformation from accessory calibration reference to vaccuum cleaner
+   x:  0.27 
+   y: 0.63
+   z: 0.02
+   roll: 0.0 
+   pitch: 0.0
+   yaw: 0.0
+fpm_atb_acr:
+   x: -0.35051026 
+   y: -0.21542471
+   z: -0.20271542
+   roll: -7.05210542e-03 
+   pitch: 7.63062293e-05
+   yaw: -3.87248495e-03

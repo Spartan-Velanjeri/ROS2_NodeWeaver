@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+        <Sequence>
+            <Action ID="MarkerReadBB" out_markers="{markers}"/>
+            <Action ID="FineLoc" in_markers="{markers}" out_pose="{pose}"/>
+        </Sequence>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <Action ID="MarkerReadBB">
+            <output_port name="out_markers" type="std::vector&lt;geometry_msgs::msg::PointStamped_&lt;std::allocator&lt;void&gt; &gt;, std::allocator&lt;geometry_msgs::msg::PointStamped_&lt;std::allocator&lt;void&gt; &gt; &gt; &gt;"/>            
+        </Action>
+        <Action ID="FineLoc">
+            <input_port name="in_markers" type="std::vector&lt;geometry_msgs::msg::PointStamped_&lt;std::allocator&lt;void&gt; &gt;, std::allocator&lt;geometry_msgs::msg::PointStamped_&lt;std::allocator&lt;void&gt; &gt; &gt; &gt;"/>
+            <output_port name="out_pose" type="geometry_msgs::msg::PoseWithCovarianceStamped_&lt;std::allocator&lt;void&gt; &gt;"/>
+        </Action>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>

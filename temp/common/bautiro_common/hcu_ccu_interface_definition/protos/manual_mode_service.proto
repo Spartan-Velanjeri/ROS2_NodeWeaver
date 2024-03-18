@@ -1,0 +1,130 @@
+syntax = "proto3";
+
+package google.protobuf;
+option csharp_namespace = "BautiroGrpcLib";
+
+import "google/protobuf/empty.proto";
+import "common_types.proto";
+
+service ManualModeService {
+    // server streams the current state of allowed actions
+    rpc ControlStateStream(google.protobuf.Empty) returns (stream ControlState);
+    // client streams RPM drive commands
+    rpc DriveRpmControlStream(stream DriveRpmControlMessage) returns (google.protobuf.Empty);
+    // unary Arm move commands. returns when the arm has stopped moving
+    rpc DriveArmControl(DriveArmControlMessage) returns (google.protobuf.Empty);
+    // client requests a state change. Service call streams progress and ends with a SetStateFinishedMessage on completion or fail
+    rpc SetState(SetStateMessage) returns (stream SetStateMessageResponse);
+    // start drilling at the current tool position
+    rpc StartDrill(StartDrillMessage) returns (stream StartDrillResponse);
+    // Stop whatever bautiro is doing
+    rpc Stop(google.protobuf.Empty) returns (google.protobuf.Empty);
+}
+
+/////////////////////////////
+/////// ControlStateStream //
+/////////////////////////////
+
+// contains information of currently available actions
+message ControlState {
+    bool can_drive_rpm = 1; // Can the rpm be driven currently
+    bool can_raise_lift = 2; // Can the lift be raised currently (= Can the state be set to FINE_POSITIONING)
+    bool can_lower_lift = 3; // Can the lift be lowered currently (= Can the state be set to DRIVING)
+    bool can_move_arm = 4; // Can the arm be moved manually
+}
+
+/////////////////////////////
+// DriveRpmControlStream ////
+/////////////////////////////
+
+// Contains rpm driving commands
+message DriveRpmControlMessage {
+    float forward_backward_axis = 1; // a float from -1 to 1 where -1 is backwards and 1 is forward
+    float left_right_axis = 2; // a float from -1 to 1 where -1 is right and 1 is left
+    float speed_mult = 3; // a float from 0 to 1 that is a multiplier for the speed applied
+}
+
+/////////////////////////////
+// unary Arm move commands //
+/////////////////////////////
+
+// send move commands to the robotic arm
+message DriveArmControlMessage {
+
+    Direction direction = 1; // direction, relative to base_link
+    float speed_mult = 2; // a float from 0 to 1 that is a multiplier for the speed applied
+
+    enum Direction {
+        LEFT = 0;
+        RIGHT = 1;
+        FORWARD = 2;
+        BACKWARD = 3;
+    }
+}
+
+/////////////////////////////
+// SetState /////////////////
+/////////////////////////////
+
+// Sets a specific state for manual control
+message SetStateMessage {
+
+    TargetState target_state = 1; // requested state
+
+    enum TargetState {
+        UNUSED = 0; // placeholder
+        DRIVING = 10; // mode for driving manually
+        FINE_POSITIONING = 20; // mode for positioning Arm
+    }
+}
+
+// response after sending a SetStateMessage.
+// While the command is in progress, a SetStateProgressMessage is sent.
+// When done, a SetStateFinishedMessage is sent.
+message SetStateMessageResponse {
+
+    oneof set_state_message_response_type {
+        SetStateProgressMessage progress = 1; // progress update of current setstate action
+        SetStateFinishedMessage finished = 2; // sent when setState is done or failed
+    }
+
+    // Sent while the state is being set
+    message SetStateProgressMessage {
+        float progress = 1; // progress update of current setstate action
+    }
+
+    // Sent when done setting state
+    message SetStateFinishedMessage {
+        bool success = 1; // was setting state a success
+    }
+}
+
+/////////////////////////////
+// StartDrill ///////////////
+/////////////////////////////
+
+// Command to start drilling
+message StartDrillMessage {
+    repeated ManualDrillHole drill_holes = 1; // List of holes to drill
+
+    // Definition of a hole to drill
+    message ManualDrillHole {
+        Matrix4x4 local_transform = 1; // this holes's transform relative to the drillmask
+        string name = 2;
+        double depth_meter = 3;
+        double diameter_meter = 4;
+    }
+}
+
+// Respone while/after drilling
+message StartDrillResponse {
+    oneof data {
+        float progress = 1; // When in progress, float from 0-1
+        DrillFinishedMessage finished = 2; // When done
+    }
+
+    // Response when Drilling is done
+    message DrillFinishedMessage {
+        bool success = 1;
+    }
+}

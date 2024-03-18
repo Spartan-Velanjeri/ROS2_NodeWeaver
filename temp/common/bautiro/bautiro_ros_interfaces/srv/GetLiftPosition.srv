@@ -1,0 +1,4 @@
+string NAME = "get_lift_position"
+
+---
+float32 lift_position

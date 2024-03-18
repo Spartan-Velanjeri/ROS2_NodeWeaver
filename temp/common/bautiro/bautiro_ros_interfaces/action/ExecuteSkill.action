@@ -1,0 +1,11 @@
+# action to start generic skill
+#Goal
+string              name                # name of the skill
+SkillInputValue[]   inputs              # list of skill inputs
+
+---
+#Result
+int32           response_code       # response code as defined in ResponseCode.msg
+string          response_code_text  # description of the repsonse code
+---
+#Feedback

@@ -1,0 +1,44 @@
+fpm_cu_action_server:
+  ros__parameters:
+    configured_joint_pose_names: ["initial_joint_pose", "initial_joint_pose_low", "initial_joint_pose_low_rot", "transport", "transport_pocket", "working_joint_pose"]
+    #arrays can be copied from ur scripts directly! No sorting of array is require
+    initial_joint_pose:
+      id: 0
+      joints: [-1.1903436819659632, -2.2715898952879847, -2.0792531967163086, 1.214960737819336, 1.1856426000595093, -0.007533852254049123]
+    initial_joint_pose_low:
+      id: 1 
+      joints: [-0.9237774054156702, -2.2094866238036097, -2.481501817703247, 1.5568329530903326, 0.9362388253211976, 0.0]
+    initial_joint_pose_low_rot:
+      id: 2
+      joints: [-0.9237883726703089, -2.2095138035216273, -2.4814858436584473, 1.5568138796040039, 0.9362614154815674, -1.5741694609271448]
+    transport:
+      id: 3
+      joints: [-4.08586031595339, -2.209498544732565, -2.481477975845337, 1.5568017202564697, 0.936250627040863, -1.5741661230670374]
+    transport_pocket:
+      id: 4
+      joints: [-4.206249539052145, -2.240756174127096, -2.2471752166748047, 1.3525580602833251, 1.0567550659179688, -1.5721996466266077]
+    transport_pocket:
+      id: 5
+      joints: [-4.206249539052145, -2.240756174127096, -2.2471752166748047, 1.3525580602833251, 1.0567550659179688, -1.5721996466266077]
+    working_joint_pose:
+      id: 6
+      joints: [-4.206249539052145, -2.240756174127096, -2.2471752166748047, 1.3525580602833251, 1.0567550659179688, -1.5721996466266077]
+
+
+    configured_pose_names: ["drive_pose", "transport_pose", "lifting_pose", "working_pose"]
+    drive_pose:
+      id: 0
+      position: [0.12, 0.29, 0.61]
+      orientation: [-0.5, 0.5, 0.5, 0.5 ]
+    transport_pose:
+      id: 2 
+      position: [0.45, 0.29, 0.61]
+      orientation: [ -0.5, 0.5, 0.5, 0.5 ]
+    lifting_pose:
+      id: 4
+      position: [0.45, 0.61, 0.16]
+      orientation: [ -0.5, 0.5, 0.5, 0.5 ]
+    working_pose:
+      id: 8
+      position: [0.0  , 0.75, 0.0]
+      orientation: [ -0.5, 0.5, 0.5, 0.5 ]

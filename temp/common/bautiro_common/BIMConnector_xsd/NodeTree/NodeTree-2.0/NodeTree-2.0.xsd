@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" version="2.0">
+    <xs:annotation>
+        <xs:appinfo source="2.0" xml:lang="de-DE">PatternTree 1.3 ersetzt durch neuen NodeTree 2.0.</xs:appinfo>
+        <xs:documentation xml:lang="en">Schema for a NodeTree.</xs:documentation>
+        <xs:documentation xml:lang="de-DE">Schema für einen NodeTree.</xs:documentation>
+    </xs:annotation>
+    <xs:include schemaLocation="../../DataTypes/DataTypes-1.0/DataTypes-1.0.xsd"/>
+    <xs:element name="NodeTree">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Tree of structured nodes. Defines the overall topologie of the whole "Bohrvorhaben" in global space ("Ursprungskoordinaten" or "PKS").</xs:documentation>
+            <xs:documentation xml:lang="de-DE">Definiert die Topologie des gesamten Bohrvorhabens im jeweiligen Bohrraum. Das Wurzelelement des Baumes wird stets als globale Koordinate (also Ursprungskoordinaten im Sinne von Revit) interpretiert. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="Node"> </xs:element>
+            </xs:sequence>
+            <xs:attribute name="version" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Version number of the NodeTree-Schema, the document is related to.</xs:documentation>
+                    <xs:documentation xml:lang="de-DE">Versionsnummer des NodeTree-Schemas, auf welches sich die jeweilige XML-Datei beziehen soll. Diese Information ist insbesondere dann wichtig, wenn die NamespaceSchemaLocation des verwendeten Schemas NICHT im xml-Header aufgeführt ist.</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+        <xs:unique name="UDrillMask">
+            <xs:annotation>
+                <xs:appinfo xml:lang="de-DE">Stellt sicher, dass der Name des Elementes "DrillMask" eindeutig innerhalb des NodeTree ist. Das ist insbesondere im TaskPlan wichtig, weil dort auf die DrillMasks per "name" referenziert wird.</xs:appinfo>
+                <xs:documentation xml:lang="en">Note: This is important here. See "appinfo".</xs:documentation>
+            </xs:annotation>
+            <xs:selector xpath=".//DrillMask"/>
+            <xs:field xpath="@name"/>
+        </xs:unique>
+        <xs:unique name="uNode">
+            <xs:annotation>
+                <xs:appinfo xml:lang="de-DE">Stellt sicher, dass der Name des Elementes "Node" eindeutig innerhalb des NodeTree ist.</xs:appinfo>
+            </xs:annotation>
+            <xs:selector xpath=".//Node"/>
+            <xs:field xpath="@name"/>
+        </xs:unique>
+    </xs:element>
+    <xs:element name="Node">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">A single node of the NodeTree.</xs:documentation>
+            <xs:documentation xml:lang="de-DE">Dies ist ein einzelnes Node-Element des NodeTree.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="BaseObjectMl" type="Matrix">
+                    <xs:annotation>
+                        <xs:appinfo xml:lang="de-DE">Fehlt die BaseObjectMl-Matrix, dann wird automatisch eine Einheitsmatrix verwendet.
+Einheiten:
+v0: Translationsvektor, Komponenten je in mm
+v1...3: Richtungsvektoren für x,y und z-Achse, Komponenten normalisiert, ohne Einheit</xs:appinfo>
+                        <xs:documentation xml:lang="en">Pose of the node related to its actual parent. If the node is a "fist level" node, then the parent is the global space.</xs:documentation>
+                        <xs:documentation xml:lang="de-DE">Dieses Element definiert die Pose des aktuellen Node-Elementes gegenüber seinem aktuellen Parent-Node.
+Hat die Node keinen Parent, also eine "First Level Node", dann ist die Pose als globale Koordinate zu verstehen.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:choice>
+                    <xs:element ref="FastenerTemplate"/>
+                    <xs:element minOccurs="0" name="NullObject">
+                        <xs:annotation>
+                            <xs:appinfo xml:lang="de-DE">Dient als Platzhalter für andere Arten von Befestigungsmitteln (alternativ zu FastenerTemplate). Standardmäßig im XML-File bitte weglassen.</xs:appinfo>
+                            <xs:documentation xml:lang="en">Optional Null Object, its just a placeholder for future use.</xs:documentation>
+                            <xs:documentation xml:lang="de-DE">Optionales NullObject, dient als Platzhalter für zukünftige Erweiterungen.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:choice>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="Node"/>
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:NCName" use="required">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Unique name of the single node.</xs:documentation>
+                    <xs:documentation xml:lang="de-DE">Eindeutiger Name des Node-Elementes. Muss eindeutig im gesamten NodeTree sein.</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="series" type="xs:string">
+                <xs:annotation>
+                    <xs:appinfo xml:lang="de-DE">In der Bohrlochplanung können verschiedene Befestigungsmodelle verarbeitet und theoretisch auch gemischt werden. Um diese für die verschiedenen Gewerke am Ende noch auseinanderhalten zu können, werden die Patterns je nach Herkunft (Befestigungsmodell) eindeutig gekannzeichnet.</xs:appinfo>
+                    <xs:appinfo xml:lang="de-DE">In der Regel wird nur die oberste PatternList2D mit diesem Attribut markiert. Alle Kindelemente erben dieses Attribut.</xs:appinfo>
+                    <xs:documentation xml:lang="en">This is a label for the addressed craft, e.g. TGA.</xs:documentation>
+                    <xs:documentation xml:lang="de-DE">Kennzeichnet die Zielgruppe des Node.Im Grunde kann dies ein spezielles Gewerk kennzeichnen, z.B. TGA.</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="desc" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">A short description of the node element (optional).</xs:documentation>
+                    <xs:documentation xml:lang="de-DE">Optionale Kurzbeschreibung des Node-Elementes.</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="FastenerTemplate">
+        <xs:annotation>
+            <xs:appinfo xml:lang="de-DE">Das Befestigungssystem (FastenerTemplate) übernimmt als seine Pose die BaseObjectMl seines Node-Elementes.</xs:appinfo>
+            <xs:documentation xml:lang="en">Describes a generic fastener, its drill masks and resulting drill holes. The pose of the FastenerTemplate is inherited from its parent Node.</xs:documentation>
+            <xs:documentation xml:lang="de-DE">Besitzt ein Node ein solches Element, dann handelt es sich bei dieser Node um die Beschreibung eines Befestigungssystems an derjenigen Pose, die durch BaseObjectMl des übergeordneten Node festgelegt ist.
+Ein Befestigungssystem (FastenerTemplate) kann mehrere DrillMasks besitzen, mindestens jedoch eine.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Properties">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="en">Additional Properties of the FastenerTemplate element.</xs:documentation>
+                        <xs:documentation xml:lang="de-DE">Eigenschaftswerte des Befestigungssystems (FastenerTemplate).</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Tolerance" type="Tolerance2D">
+                                <xs:annotation>
+                                    <xs:documentation xml:lang="en">Acceptable tolerance of the FastenerTemplate in relation to its parent node. This ist the BaseObjectMl of the node the FastenerTemplate belongs to.</xs:documentation>
+                                    <xs:documentation xml:lang="de-DE">Zulässige Toleranzen eines Node gegenüber seinem aktuellen Parent.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##any"
+                                processContents="skip">
+                                <xs:annotation>
+                                    <xs:documentation xml:lang="en">Additional node specific properties can be added here. The will be ignored from xml-validator.</xs:documentation>
+                                    <xs:documentation xml:lang="de-DE">Ab hier können zusätzliche Eigenschaftswerte hinzugefügt werden. Diese werden jedoch vom XML-Validierer ignoriert.</xs:documentation>
+                                </xs:annotation>
+                            </xs:any>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element maxOccurs="unbounded" minOccurs="1" ref="DrillMask"/>
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:string" use="required">
+                <xs:annotation>
+                    <xs:appinfo xml:lang="de-DE">Dieses Attribut entspricht dem früheren Parameter "FastenerName". Über diesen Namen kann in der FastenerList1D das verwendete Befestigungssystem gesucht werden.</xs:appinfo>
+                    <xs:documentation xml:lang="en">Name of the Fastener Type that was used for plannung the DrillMasks.</xs:documentation>
+                    <xs:documentation xml:lang="de-DE">Name des Befestigungssystems, welches das Element beschreibt. Das ist in der Regel der Name welchen der Hersteller für dieses Befestigungssystem festgelegt hat. Über diesen Namen kann das Befestigungselement in der FastenerList1D gefunden werden.
+Das Befestigungssystem beinhaltet letztlich die zu bohrenden Bohrpositionen.</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="guid" type="guidType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">This is a unique ID of the Fastener Type. It will represent the type of the fastener uniquely.</xs:documentation>
+                    <xs:documentation xml:lang="de-DE">GUID, welche den Typ des Befestigungssystem eindeutig beschreibt.</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="DrillHole">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">A single drill hole. This element is always child of a drill mask.</xs:documentation>
+            <xs:documentation xml:lang="de-DE">Dieses Element beschreibt ein einzelnes Bohrloch. Ein DrillHole muss immer eine DrillMask als Parent besitzen.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="BaseObjectMl" type="Matrix">
+                    <xs:annotation>
+                        <xs:appinfo xml:lang="de-DE">Fehlt die BaseObjectMl-Matrix, dann wird automatisch eine Einheitsmatrix verwendet.
+Einheiten:
+v0: Translationsvektor, Komponenten je in mm
+v1...3: Richtungsvektoren für x,y und z-Achse, Komponenten normalisiert, ohne Einheit</xs:appinfo>
+                        <xs:documentation xml:lang="en">Pose of the drill hole related to its actual parent.</xs:documentation>
+                        <xs:documentation xml:lang="de-DE">Pose eines Bohrloches gegenüber seinem aktuellen Parent (DrillMask).</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="Properties">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="en">Additional Properties of a single DrillHole element.</xs:documentation>
+                        <xs:documentation xml:lang="de-DE">Eigenschaftswerte für ein einzelnes Bohrloch (DrillHole).</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Tolerance" type="Tolerance2D">
+                                <xs:annotation>
+                                    <xs:documentation xml:lang="de-DE">Zulässige Toleranz eines Bohrloches gegenüber seinem aktuellen Parent (DrillMask).</xs:documentation>
+                                    <xs:documentation xml:lang="en">Acceptablle tolerance of the DrillHole in relation to its parent DrillMask. This ist the BaseObjectMl of the DrillMask the DrillHole belongs to.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="DrillDepth">
+                                <xs:annotation>
+                                    <xs:appinfo xml:lang="de-DE">Dieser Parameter wird vom Modellierungstool vorgegeben (relevant für Statik).</xs:appinfo>
+                                    <xs:documentation xml:lang="en">Required depth of the drill hole in mm.</xs:documentation>
+                                    <xs:documentation xml:lang="de-DE">Erforderliche Bohrtiefe für das Bohrloch (in mm).</xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="xs:double">
+                                            <xs:attribute name="MinDrillDepth" type="xs:double">
+                                                <xs:annotation>
+                                                  <xs:documentation xml:lang="en">Minimum required drill depth. This requirement comes from the planned fastener.</xs:documentation>
+                                                  <xs:documentation xml:lang="de-DE">Erforderliche minimale Bohrtiefe (in mm). Diese Angabe hängt vom geplanten Befestigungssystem ab und wird vom Modellierer definiert.</xs:documentation>
+                                                </xs:annotation>
+                                            </xs:attribute>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="DrillDiameter">
+                                <xs:annotation>
+                                    <xs:appinfo xml:lang="de-DE">Dieser Parameter wird vom Modellierungstool vorgegeben (relevant für Statik).</xs:appinfo>
+                                    <xs:documentation xml:lang="en">Required diameter of the drill hole in mm.</xs:documentation>
+                                    <xs:documentation xml:lang="de-DE">Erfordelicher Bohrdurchmesser für das Bohrloch (in mm).</xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="xs:double">
+                                            <xs:attribute name="MinDrillDiameter" type="xs:double">
+                                                <xs:annotation>
+                                                  <xs:documentation xml:lang="en">Required minimum drill diameter. This requirement comes from the planned fastener.</xs:documentation>
+                                                  <xs:documentation xml:lang="de-DE">Erforderlicher minimale Bohrdurchmesser. Diese Angabe hängt vom geplanten Befestigungssystem ab und wird vom Modellierer definiert.</xs:documentation>
+                                                </xs:annotation>
+                                            </xs:attribute>
+                                            <xs:attribute name="MaxDrillDiameter" type="xs:double">
+                                                <xs:annotation>
+                                                  <xs:documentation xml:lang="en">Allowed maximum drill diameter. This requirement comes from the planned fastener.</xs:documentation>
+                                                  <xs:documentation xml:lang="de-DE">Maximal zulässiger Bohrdurchmesser. Diese Angabe hängt vom geplanten Befestigungssystem ab und wird vom Modellierer definiert.</xs:documentation>
+                                                </xs:annotation>
+                                            </xs:attribute>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##any"
+                                processContents="skip">
+                                <xs:annotation>
+                                    <xs:documentation xml:lang="en">Additional pattern specific properties can be added here. The will be ignored from xml-validator.</xs:documentation>
+                                    <xs:documentation xml:lang="de-DE">Ab hier können zusätzliche Eigenschaftswerte hinzugefügt werden. Diese werden jedoch vom XML-Validierer ignoriert.</xs:documentation>
+                                </xs:annotation>
+                            </xs:any>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:NCName" use="required">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Unique name of the drill hole (required unique inside the DrillMask only).</xs:documentation>
+                    <xs:documentation xml:lang="de-DE">Eindeutiger Name eines Bohrloches (DrillHole). Der Name muss eindeutig innerhalb der zugehörigen DrillMask sein.</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="DrillMask">
+        <xs:annotation>
+            <xs:appinfo xml:lang="de-DE">Auf dieses Element wird im TaskPlan referenziert.</xs:appinfo>
+            <xs:documentation xml:lang="en">This element describes a drill mask for the fixation of the fastener. Each drill mask may hold several drill holes.</xs:documentation>
+            <xs:documentation xml:lang="de-DE">Bei diesem Element handelt es sich um die Beschreibung des Bohrmusters (DrillMask) für ein einzelnes Befestigungselement. Jedes Befestigungselement kann mehrere Bohrlöcher (DrillHoles) erfordern.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="BaseObjectMl" type="Matrix">
+                    <xs:annotation>
+                        <xs:appinfo xml:lang="de-DE">Fehlt die BaseObjectMl-Matrix, dann wird automatisch eine Einheitsmatrix verwendet.
+Einheiten:
+v0: Translationsvektor, Komponenten je in mm
+v1...3: Richtungsvektoren für x,y und z-Achse, Komponenten normalisiert, ohne Einheit</xs:appinfo>
+                        <xs:documentation xml:lang="en">Pose of the DrillMask related to its actual parent.</xs:documentation>
+                        <xs:documentation xml:lang="de-DE">Pose der DrillMask gegenüber seinem aktuellen Parent.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="Properties">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="en">Additional Properties of the DrillMask element.</xs:documentation>
+                        <xs:documentation xml:lang="de-DE">Eigenschaftswerte des Befestigungselementes (DrillMask).
+</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Tolerance" type="Tolerance2D">
+                                <xs:annotation>
+                                    <xs:documentation xml:lang="en">Acceptable tolerance of the DrillMask in relation to its parent node. This ist the BaseObjectMl of the FastenerTemplate the DrillMask belongs to (Note: The FastenerTemplate is using the pose matrix of its parent node!).</xs:documentation>
+                                    <xs:documentation xml:lang="de-DE">Zulässige Toleranz der DrillMask gegenüber ihrem aktuellen Parent.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##any"
+                                processContents="skip">
+                                <xs:annotation>
+                                    <xs:documentation xml:lang="en">Additional pattern specific properties can be added here. The will be ignored from xml-validator.</xs:documentation>
+                                    <xs:documentation xml:lang="de-DE">Ab hier können zusätzliche Eigenschaftswerte hinzugefügt werden. Diese werden jedoch vom XML-Validierer ignoriert.</xs:documentation>
+                                </xs:annotation>
+                            </xs:any>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element maxOccurs="unbounded" minOccurs="1" ref="DrillHole"/>
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:NCName" use="required">
+                <xs:annotation>
+                    <xs:appinfo xml:lang="de-DE">Hintergrund der geforderten Eindeutigkeit im gesamten NodeTree ist, dass bei der weiteren Versendung im TaskPlan auf die einzelnen Bohrmuster (DrillMask) referenziert werden muss (Thema: Verteilung der DrillMasks in verschiedene DrillJobs).</xs:appinfo>
+                    <xs:documentation xml:lang="en">Unique name of the single DrillMask. Must be unique within the NodeTree.</xs:documentation>
+                    <xs:documentation xml:lang="de-DE">Eindeutiger Name des Bohrmusters (DrillMask). Muss unique innerhalb des gesamten NodeTree sein.</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+        <xs:unique name="uDrillHole">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">Each drill hole must have a unique name within its DrillMask.</xs:documentation>
+            </xs:annotation>
+            <xs:selector xpath=".//DrillHole"/>
+            <xs:field xpath="@name"/>
+        </xs:unique>
+    </xs:element>
+    <xs:complexType name="Tolerance2D">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Complex data type of a tolerance parameter.</xs:documentation>
+            <xs:documentation xml:lang="de-DE">Komplexer Datentyp, der ein maßliche Toleranz definiert.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="dX" type="xs:double">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Acceptable tolerance of element in its x direction (unit is mm).</xs:documentation>
+                    <xs:documentation xml:lang="de-DE">Zulässige Toleranzwert des Elementes bezüglich seiner x-Richtung (in mm).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="dY" type="xs:double">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Acceptable tolerance of element in its y direction (unit is mm).</xs:documentation>
+                    <xs:documentation xml:lang="de-DE">Zulässige Toleranzwert des Elementes bezüglich seiner y-Richtung (in mm).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

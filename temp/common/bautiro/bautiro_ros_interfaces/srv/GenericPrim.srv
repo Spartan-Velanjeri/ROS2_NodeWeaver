@@ -1,0 +1,12 @@
+bool data_bool
+int64 data_int
+float64 data_float
+string data_str
+---
+bool data_bool
+int64 data_int
+float64 data_float
+string data_str
+
+# generic service interface for single atom elements
+# used in HALC-DS (ccu_hcu_abstraction - ccu_data_services)

@@ -1,0 +1,89 @@
+@startuml CCU Context
+component HCU {
+    node " " << gRPC >> as hcu #IMPLEMENTATION
+}
+component BAUTIRO_CORE {
+    component CCU {
+        folder ccu_hcu_abstraction #BUSINESS {
+            rectangle "main" as exe_1 <<executable>> #Yellow {
+                node "start_mission | manual | bridge" as bridge #APPLICATION
+                node " " << gRPC >> as grpc #IMPLEMENTATION
+            }
+        }
+        folder ccu_data_services #BUSINESS {
+            rectangle "main" as exe_2 <<executable>> #Yellow  {
+                node "CORE  &  HALC" as CORE_HALC #APPLICATION
+            }
+        }
+        folder ccu_util #BUSINESS {
+            card util #BUSINESS
+        }
+        folder ccu_interfaces #BUSINESS {
+            card srv #BUSINESS
+            card msg #BUSINESS
+        }
+        folder ccu_task_execution #BUSINESS {
+
+            rectangle "ccu_behavior_tree" as exe3 <<executable>> #Yellow {
+                    node ccu_bt_navigators as me #APPLICATION
+            }
+            rectangle ccu_bt_tree_nodes #BUSINESS {
+                control " " as move_to_pose  #APPLICATION
+                control " " as start_drill  #APPLICATION
+                control " " as add_mission_event  #APPLICATION
+            }
+            me -- start_drill
+            me -- move_to_pose
+            me -- add_mission_event
+        }
+        folder ccu_dataservice #LightYellow {
+            rectangle "\n   core-library   \n" as lib #LightYellow
+        }
+        frame //codegen//  {
+            folder ccu_bautiro #LightYellow {
+                file "//*.ecore//" as ecore #LightSlateGrey
+                note right #WhiteSmoke: Model-\nDefinition
+            }
+            folder ccu_grpc #LightYellow {
+                file "//*.proto//" as proto #LightSlateGrey
+                note right #WhiteSmoke: Message\n& Service-\nDefinition
+            }
+            ccu_grpc -[dotted]right- proto
+            ccu_grpc -[hidden]- ccu_bautiro
+            ccu_bautiro  -[dotted]right- ecore
+        }
+        rectangle #WhiteSmoke {
+            folder data_dir #IndianRed{
+                database TaskPlan.xml #LightGreen
+                database progress.xml #LightCoral
+            }
+        }
+    }
+    component FPM {
+        node bt_fpm
+    }
+    component RPM {
+        node bt_rpm
+    }
+    bt_rpm - move_to_pose
+    bt_fpm - move_to_pose
+    FPM -[hidden]- RPM
+}
+
+ccu_hcu_abstraction -[dashed]-> ccu_grpc         #Gray: //depends//
+ccu_data_services   -[dashed]up-> ccu_grpc       #Gray: //depends//
+ccu_dataservice     -[dashed]up-> ccu_bautiro    #Gray: //depends//
+ccu_data_services   -[dashed]right-> ccu_bautiro #Gray: //depends//
+ccu_data_services   -[dashed]-> ccu_dataservice  #Gray: //depends//
+ccu_data_services   -[dashed]-> ccu_util         #Gray: //depends//
+ccu_data_services   -[dashed]-> ccu_interfaces   #Gray: //depends//
+
+lib -[bold]-> progress.xml #RED
+TaskPlan.xml -[bold]up-> lib #GREEN
+me -[bold]- CORE_HALC #BLUE
+hcu -[bold]- grpc #RED
+grpc -[bold]- bridge
+me <-[bold]right- bridge #BLUE
+bridge -[bold]- CORE_HALC #BLUE
+
+@enduml

@@ -1,0 +1,40 @@
+@startuml Context ccu_dataservice
+
+left to right direction
+skinparam Ranksep 10
+skinparam Nodesep 20
+
+
+component component {
+
+    frame ROS2 {
+        folder ccu_data_services {
+            node "CORE | HALC " << Node >> as ds #APPLICATION
+
+        }
+    }
+    frame Python {
+        folder ccu_dataservice  #BUSINESS {
+            card lib {
+
+            rectangle Context as ctx #Yellow
+            }
+            database persistency {
+                file Taskplan           as t
+                file Workplan           as w
+                file "Processing\nData" as p
+            }
+            card Mission            as m
+        }
+    }
+}
+ds -- lib
+ctx .up. persistency : "access  "
+t -[dotted]left-> w : "load  "
+w  <-[dotted]down- p : update
+w <.left. m : "\n\nrefers "
+
+
+
+
+@enduml

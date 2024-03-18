@@ -1,0 +1,16 @@
+# REQUEST target lift level in meter
+# absolut value on lift axis
+float32 requested_target_lift_level
+---
+# RESULT
+# final_lift_level: absolut value on lift axis
+# response_code:
+#  0000 - request level achieved
+#       - action failed (time-out ...etc)
+#       - current state does not allow this operation (ccu_hcu_abstraction_statemachine)
+int32 response_code
+float32 final_lift_level
+---
+# FEEDBECK INBETWEEN The remaining lift distance
+# in percentage [0.0 .. 1.0]
+float32 progress_normalized

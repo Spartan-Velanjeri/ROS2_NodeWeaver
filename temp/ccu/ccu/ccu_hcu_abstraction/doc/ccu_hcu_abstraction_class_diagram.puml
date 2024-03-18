@@ -1,0 +1,85 @@
+@startuml "grpc_serve"
+
+left to right direction
+
+skinparam minClassWidth 255
+skinparam Nodesep 10
+skinparam Ranksep 20
+
+
+frame ROS #APPLICATION   {
+    class NodeDelegator {
+        node : <<Node>>
+    }
+    class GetMissionList <<NodeDelegator>> {
+        - client.call(""'/get_mission_list'"")
+        --
+        + get_mission_list()
+    }
+    class GetMissionData <<NodeDelegator>> {
+        + get_mission_data(""id"")
+    }
+    class StartMission <<NodeDelegator>> {
+        + start_mission(""id"")
+    }
+    class ImportMission <<NodeDelegator>> {
+        + import_mission()
+    }
+    class DriveRpmControlStream <<NodeDelegator>> {
+        -  pub(<color:blue>""Twist""</color>) :  ""cmd_vel""
+        --
+        + drive_rpm_control_stream()
+    }
+    class DriveArmControl <<NodeDelegator>> {
+        - send_goal(x,y)
+        --
+        + drive_arm_control(x,y)
+    }
+    class SetState <<FpmSkillCaller>> {
+        - send_goal(<color:blue>""fpm_skill""</color>)
+        --
+        + set_state()
+    }
+}
+    GetMissionList -[dotted]right> NodeDelegator : \n\n//extends//   \n\n
+
+
+
+
+
+frame gRPC #line:IMPLEMENTATION  {
+    class BaseSrv <<BaseLayerServiceServicer>>  #IMPLEMENTATION  {
+        + BaseLayerStateStream()
+        + GetMissionList()
+        + GetMissionData()
+        + GetRoomPlanObjFile()
+        + StreamMissionData()
+        + StartMission()
+        + ImportMission()
+        + GetBautiroDescription()
+        + GetBautiroMesh()
+        + StreamBautiroTransforms()
+        + GetDeveloperFunctions()
+        + CallDeveloperFunction()
+    }
+    class ManualSrv <<ManualModeServiceServicer>>  #IMPLEMENTATION  {
+        + ControlStateStream()
+        + DriveRpmControlStream()
+        + DriveArmControl()
+        + SetState()
+        + StartDrill()
+        + Stop()
+    }
+}
+'gRPC -[hidden]- ROS
+BaseSrv -- GetMissionList
+BaseSrv -- GetMissionData
+BaseSrv -- StartMission
+BaseSrv -- ImportMission
+
+ManualSrv -- DriveRpmControlStream
+ManualSrv -- DriveArmControl
+ManualSrv -- SetState
+
+
+@enduml

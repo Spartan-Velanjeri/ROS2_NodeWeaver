@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+        <Sequence>
+            <Action ID="configuredpose" handling_unit_configured_pose="" name="move to lifting pose"/>
+            <Action ID="moveliftabsolute" requested_target_lift_level=""/>
+            <Action ID="configuredpose" handling_unit_configured_pose="" name="move to working plane pose"/>
+            <Repeat num_cycles="{points_count_bb}">
+                <Sequence>
+                    <Action ID="getpoi" currentpoint="{points}" drill_point="{drill_point}" point_index="{point_index}" total="{points_count_bb}"/>
+                    <Action ID="moveabsolute" absolute_target_position="{drill_point}" name="move to start position"/>
+                    <Action ID="moveabsolute" absolute_target_position="" name="fake drill process"/>
+                    <Action ID="configuredpose" handling_unit_configured_pose="" name="move to home position"/>
+                    <Action ID="updatepoi" point_index="{point_index}" total="{points_count_bb}" update_index="{point_index}"/>
+                </Sequence>
+            </Repeat>
+        </Sequence>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <Action ID="configuredpose">
+            <input_port name="handling_unit_configured_pose"/>
+        </Action>
+        <Action ID="execscript"/>
+        <Action ID="getpoi">
+            <input_port name="currentpoint"/>
+            <output_port name="drill_point"/>
+            <input_port name="point_index"/>
+            <input_port name="total"/>
+        </Action>
+        <Action ID="iostatecondition"/>
+        <Action ID="loadpoints">
+            <output_port name="pointslist"/>
+            <output_port name="totalpoints"/>
+        </Action>
+        <Action ID="loadscene">
+            <input_port name="scene_file"/>
+        </Action>
+        <Action ID="loadscript"/>
+        <Action ID="loadur">
+            <input_port name="file_name"/>
+        </Action>
+        <Action ID="moveabsolute">
+            <input_port name="absolute_target_position"/>
+        </Action>
+        <Action ID="moveit">
+            <input_port name="goal"/>
+        </Action>
+        <Action ID="moveitcluster">
+            <input_port name="current_point"/>
+        </Action>
+        <Action ID="moveitcontrol"/>
+        <Action ID="moveitjoints"/>
+        <Action ID="moveliftabsolute">
+            <input_port name="absolute_target_position"/>
+        </Action>
+        <Action ID="playur"/>
+        <Action ID="removescene"/>
+        <Action ID="updatepoi">
+            <input_port name="point_index"/>
+            <input_port name="total"/>
+            <output_port name="update_index"/>
+        </Action>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>

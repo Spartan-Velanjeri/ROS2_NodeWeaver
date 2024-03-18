@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<robot name="bautiro" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- Include UR URDF -->
+  <xacro:include filename="$(find ur_description)/urdf/ur.urdf.xacro"/>
+
+  <!-- robot base link -->
+  
+  <link name="robot_base">
+    <visual>
+      <geometry>
+        <box size="0.8 0.36 0.6"/>
+      </geometry>
+      <origin xyz="0 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.8 0.36 0.6"/>
+      </geometry>
+      <origin xyz="0 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="20"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+  
+  <link name="base_connect">
+    <visual>
+      <geometry>
+        <box size="0.28 0.40 0.28"/>
+      </geometry>
+      <origin xyz="0 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.28 0.40 0.28"/>
+      </geometry>
+      <origin xyz="0 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="20"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+  <!-- Drill hammer link -->
+  <link name="drill_hammer">
+    <visual>
+      <geometry>
+        <cylinder length="0.68" radius="0.16"/>
+      </geometry>
+      <origin xyz="0 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.68" radius="0.16"/>
+      </geometry>
+      <origin xyz="0 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="15"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+  
+  <!-- Base fixed joint -->
+
+  <!-- Lift and UR fixed joint -->
+  <joint name="fix_ur" type="fixed">
+    <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+    <parent link="world"/>
+    <child link="robot_base"/>
+  </joint>
+  
+  <joint name="base_ur" type="fixed">
+    <origin xyz="0.14 0.09 0.0" rpy="0 1.5717 0"/> <!-- x and z = 0 when no cad models are used -->
+    <parent link="base_connect"/>
+    <child link="base_link"/>
+  </joint>
+  
+  <joint name="connect_ur" type="fixed">
+    <origin xyz="0.26 0.36 0.0" rpy="0 0 0"/> <!-- x and z = 0 when no cad models are used -->
+    <parent link="robot_base"/>
+    <child link="base_connect"/>
+  </joint>
+  
+  <!-- RPM and IMU fixed joint -->
+  <joint name="ur_hammer" type="revolute">
+    <origin xyz="0.0 0.0 0.34" rpy="0 0 0"/>
+    <parent link="wrist_3_link"/>
+    <child link="drill_hammer"/>
+    <limit effort="1000.0" lower="0" upper="0.75" velocity="0.5"/>
+  </joint>
+  
+
+</robot>

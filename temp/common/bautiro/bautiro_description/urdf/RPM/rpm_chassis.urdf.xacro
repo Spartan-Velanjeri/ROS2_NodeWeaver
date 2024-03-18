@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="rpm">
+  <!-- robot name parameter -->
+  <xacro:arg name="name" default="bautiro" />
+  <xacro:arg name="is_sim" default="true" />
+  <xacro:arg name="prefix" default="" />
+  <xacro:arg name="controllers" default="$(find bautiro_description)/config/RPM/$(arg rpm_version)/gazebo_default_controller.yaml" />
+  <xacro:arg name="load_ign_plugin_rpm" default="false" />
+
+  <xacro:arg name="bus_config" default="$(arg installation_path)/config/RPM/bus.yaml"/>
+  <!-- <xacro:arg name="master_config" default="$(find rpm_actuators)/config/mobile_base/master.dcf"/> -->
+  <xacro:arg name="master_config" default=""/>
+  <xacro:arg name="can_interface_name" default="vcan0"/>
+  <xacro:arg name="master_bin" default=""/>
+
+  <xacro:include filename="$(cwd)/RPM/urdf/rpm_chassis_macro.urdf.xacro" />
+
+  <!-- Load rpm description -->
+  <xacro:rpm
+    prefix="$(arg prefix)"
+    is_sim="$(arg is_sim)"
+    bus_config="$(arg bus_config)"
+    master_config="$(arg master_config)"
+    can_interface_name="$(arg can_interface_name)"
+    master_bin="$(arg master_bin)"
+  />
+
+  <xacro:if value="$(arg is_sim)">
+      <xacro:if value="$(arg load_ign_plugin_rpm)">
+        <xacro:include filename="$(cwd)/RPM/urdf/rpm_chassis_gazebo_plugin.urdf.xacro" />
+      </xacro:if>
+  </xacro:if>
+
+</robot>

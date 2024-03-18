@@ -1,0 +1,23 @@
+@startuml Overview
+folder taskplans #Beige{
+   folder "1" as tp1 {
+      file taskplan as "TaskPlan.XML"
+   }
+}
+folder missions #AntiqueWhite{
+   folder m1 as "1" {
+      database db1 as "            \n     <b>30%</b> \n    done   \n"  #LightSteelBlue;text:DarkGreen
+   }
+}
+
+control c as "  " #TECHNOLOGY
+
+taskplan -up- db1 #Black;line.dotted;text:Gray : "\n\n orgin"
+
+db1 -[dotted]r- c 
+note right of c
+  Continue
+  Mission 
+  Execution
+end note
+@enduml

@@ -1,0 +1,8 @@
+config_template_general: 
+  mode:
+    real: #'fus1_slam_general.yaml'             # Files need to be adapted to RPM3
+    gazebo_sim: #'fus1_slam_general_sim.yaml'
+config_template_lidar: 
+  mode:
+    real: #'fus1_slam_lidar.yaml'
+    gazebo_sim: #'fus1_slam_lidar_sim.yaml'

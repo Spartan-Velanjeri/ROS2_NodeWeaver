@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<robot name="bautiro_fus1" xmlns:xacro="http://ros.org/wiki/xacro">
+
+<!-- TODO: check names of sensor frames for each sensor in data -->
+<link name="base_link" />
+  <link name="viz_model">
+      <visual>
+      <geometry>
+        <box size="2.01 0.9 0.327"/>
+      </geometry>
+      <material name="Cyan">
+        <color rgba="0 1.0 1.0 1.0"/>
+      </material>
+    </visual>
+  </link>
+  <link name="viz_model_lift">
+      <visual>
+      <geometry>
+        <box size="0.22 0.22 0.6"/>
+      </geometry>
+      <material name="Yelow">
+        <color rgba="0 1.0 0.5 0.5"/>
+      </material>
+    </visual>
+  </link>
+
+  <link name="base_footprint"/>
+  <link name="rpm_imu" />
+  <link name="rpm_lidar_rear" />
+  <link name="rpm_lidar_front" />
+
+  <joint name="base_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_footprint"/>
+    <origin xyz="0.0 0.0 -0.3" rpy="0 0 0"/>
+  </joint>
+  <!-- needs to specify the center of the box to draw -->
+  <joint name="base_footprint_to_viz_model" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="viz_model"/>
+    <origin xyz="0.0 0.0 0.30" rpy="0 0 0"/>
+  </joint>
+
+  <!-- needs to specify the center of the box to draw -->
+  <joint name="base_link_to_viz_model_lift" type="fixed">
+    <parent link="base_link"/>
+    <child link="viz_model_lift"/>
+    <origin xyz="0.7 0.0 0.45" rpy="0 0 0"/>
+  </joint>
+
+
+  <joint name="base_link_to_rpm_lidar_rear" type="fixed">
+    <parent link="base_link" />
+    <child link="rpm_lidar_rear" />
+    <origin xyz="-0.99226936 0.466518 0.59827304" rpy="0.000465723183 0.0126784158 0.744250199" />
+  </joint>  
+  <joint name="base_link_to_rpm_lidar_front" type="fixed">
+    <parent link="base_link" />
+    <child link="rpm_lidar_front" />
+    <origin xyz="0.93805789 -0.48013894 0.59890565" rpy="-0.02350701 -0.00860745 -2.43212323" />
+  </joint>    
+
+  <joint name="base_link_to_rpm_imu" type="fixed">
+    <parent link="base_link" />
+    <child link="rpm_imu" />
+    <origin xyz="0.72396978 -0.35270053  0.6527172" rpy="0.0 0.0 -1.675466667"/>
+  </joint>
+
+</robot>

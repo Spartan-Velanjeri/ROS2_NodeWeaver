@@ -1,0 +1,4 @@
+string NAME = "set_handling_unit_configured_pose_feedback"
+Progress progress
+HandlingUnitPose current_pose
+HandlingUnitPose target_pose

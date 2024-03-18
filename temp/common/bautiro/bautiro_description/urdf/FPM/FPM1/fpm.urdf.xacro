@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<robot name="fpm" xmlns:xacro="http://ros.org/wiki/xacro">
+  
+  <!--=========================== Arguments =================================================-->
+  <!-- Controller parameters for Gazebo plugin for -->  
+  <!-- <xacro:arg name="simulation_controllers" default="$(find fpm_control)/config/ur_controllers.yaml" /> -->
+  <!-- <xacro:arg name="robot_name" default="FUS1" /> robot name used to select the calibration source -->
+  <!-- <xacro:arg name="calibration_file_fpm" default="FUS1" /> path to calibration file -->
+
+  <!--===========================Properties =================================================-->
+  <!--<xacro:property name="calibration" value="${load_yaml('$(arg calibration_file)')}" />-->
+  <!-- <xacro:property name="calibration" value="${dict(
+    **load_yaml('$(arg calibration_file_fpm)'))}" /> -->
+
+  <!-- FPM lift is mounted on the RPM chassis,  -->
+  <xacro:include filename="$(cwd)/urdf/FPM/fpm_lift.urdf.xacro"/>
+  
+  <!-- FPM top assembly containing sensorrack and handling unit URDF -->
+  <xacro:include filename="$(cwd)/urdf/FPM/fpm_top_assembly.urdf.xacro"/>
+  <xacro:spawn_calibrated_joint name="fpm_lift2asm" parent="assembly_top_mount" child="assembly_top_base" dict_key="fpm_lift2asm"/>    
+
+  <!-- FPM handling unit URDF -->
+  <!-- Handling unit is mounted on the lift assembly, position is calibrated -->
+  <xacro:include filename="$(find ur_description)/urdf/ur.urdf.xacro"/>  
+  <link name="handling_unit_base" /> 
+  <joint name="fpm_hum2hub" type="fixed">
+    <origin xyz="0 0.0 0"/>
+    <parent link="handling_unit_mount"/>
+    <child link="handling_unit_base"/>
+  </joint>
+
+  <xacro:include filename="$(cwd)/urdf/FPM/fpm_ptu.urdf.xacro"/>
+  <joint name="fpm_huf2ptu" type="fixed">
+    <origin xyz="0 0.0 0"/>
+    <parent link="hu_flange"/>
+    <child link="fpm_ptu_base"/>
+  </joint>
+
+</robot>

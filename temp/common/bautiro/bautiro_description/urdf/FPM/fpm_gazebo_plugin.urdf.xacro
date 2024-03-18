@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<robot>
+
+  <!-- Plugin to have the ROS2 control hardware interfaces from simulaiton  -->
+  <gazebo>
+    <!-- Joint state publisher -->
+    <plugin filename="ign_ros2_control-system" name="ign_ros2_control::IgnitionROS2ControlPlugin">
+      <parameters>$(find fpm_control)/config/gazebo_default_controller.yaml</parameters>
+    </plugin>
+  </gazebo>
+
+</robot>

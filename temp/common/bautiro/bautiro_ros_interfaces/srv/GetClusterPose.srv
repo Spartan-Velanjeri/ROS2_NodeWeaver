@@ -1,0 +1,18 @@
+string NAME = "get_cluster_pose"
+
+int64 number_of_next
+
+# value < 1  is treated like 1
+
+# Returned list has upper-size-limits:
+# 1. never more than n=10 entries
+#    (n configurable / payload issue)
+# 2. calling  >number_of_next = 7<
+#    (with three clusters available)
+#    returns  >3 elements list<
+
+---
+geometry_msgs/Pose poi
+bool no_more_pois
+
+int32 CURRENT_NEXT_INDEX=0

@@ -1,0 +1,41 @@
+@startuml Overview
+skinparam file {
+   backgroundColor #LightSkyBlue
+}
+
+skinparam node {
+   backgroundColor #MOTIVATION
+}
+
+node pc as "Office Desktop PC" {
+   file tp_pc as "TaskPlan.XML"
+}
+
+storage USB as "USB-Stick"  {
+}
+
+rectangle " " as r  {
+   node HCU  {
+   }
+}
+
+frame BAUTIRO  {
+   node RPM {
+      node CCU  {
+         file tp_CCU as "TaskPlan.XML"
+      }
+   }
+}
+tp_pc --> USB #green : "file\n copy"
+HCU --> CCU #OrangeRed;line.dotted;text:OrangeRed : " wifi"
+USB --> RPM #Gray;line.bold : "   plug-in"
+USB -> HCU #Gray;line.bold : " plug-in"
+
+note right of USB
+   plugged-in
+   either to
+   **HCU** or 
+   **CCU/RPM**
+end note
+
+@enduml

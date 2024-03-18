@@ -1,0 +1,164 @@
+rpm_lidar_fl: 
+  x: 0.93805789 
+  y: -0.48013894 
+  z: 0.59890565
+  roll: -0.02350701
+  pitch: -0.00860745 
+  yaw: -2.43212323
+rpm_safety_lidar_fl:
+  x: 2.0 
+  y: 0.0
+  z: 1.15 #(0.3 + 0.85)
+  roll: 0 
+  pitch: 0
+  yaw: 0
+rpm_lidar_rr:
+  x: -0.99226936 
+  y: 0.466518 
+  z: 0.59827304
+  roll: 0.0 
+  pitch: 0.0 
+  yaw: 0.744250199
+rpm_safety_lidar_rr:
+  x: -2.0 
+  y: 0.0
+  z: 1.15  #(0.3 + 0.85)
+  roll: 0 
+  pitch: 0
+  yaw: 0
+rpm_imu:
+  x: 0.72396978 
+  y: -0.35270053  
+  z: 0.6527172
+  roll: 0 
+  pitch: 0
+  yaw: -1.675466667
+rpm_inc:
+  x: 0.0 
+  y: -1.0
+  z: 0.95 #(0.1 + 0.85)
+  roll: 0 
+  pitch: 0
+  yaw: 0
+rpm_rs_1:
+  x: 0.0 
+  y: 0.0
+  z: 1.35 #(0.5 + 0.85)
+  roll: 0 
+  pitch: 0
+  yaw: 0
+rpm_lcr:
+  x: 0.28048974 
+  y: -0.21242471
+  z: 1.20328458
+  roll: -7.05210542e-03 
+  pitch: 7.63062293e-05
+  yaw: -3.87248495e-03
+rpm_lcr2lbm:
+  x: 0.35 #0.46874544 
+  y: 0.22307453
+  z: -0.95171955
+  roll: 7.05234804e-03 
+  pitch: -4.89948822e-05
+  yaw: 3.87292678e-03
+
+# validation points for Schillerhöhe contruction site
+rpm_validation_point_01:
+# [[-0.426 -0.492  0.232  1.   ]
+  x: -0.426
+  y: -0.492
+  z:  0.232 
+  roll: 0.0
+  pitch: 0.0
+  yaw: 0.0
+rpm_validation_point_02:
+#  [-0.109 -0.394  0.687  1.   ]
+  x: -0.109
+  y: -0.394
+  z:  0.687
+  roll: 0.0
+  pitch: 0.0
+  yaw: 0.0
+rpm_validation_point_03:
+#  [ 0.383 -0.493  0.224  1.   ]
+  x: 0.383
+  y: -0.493
+  z: 0.224 
+  roll: 0.0
+  pitch: 0.0
+  yaw: 0.0
+rpm_validation_point_04:
+#  [-1.018  0.348  0.213  1.   ]
+  x: -1.018
+  y: 0.348
+  z: 0.213
+  roll: 0.0
+  pitch: 0.0
+  yaw: 0.0
+rpm_validation_point_05:
+#  [-0.873  0.001  0.675  1.   ]
+  x: -0.873
+  y: 0.001
+  z:  0.675 
+  roll: 0.0
+  pitch: 0.0
+  yaw: 0.0
+rpm_validation_point_06:
+#  [-1.017 -0.344  0.22   1.   ]
+  x: -1.017
+  y: -0.344
+  z:  0.22 
+  roll: 0.0
+  pitch: 0.0
+  yaw: 0.0
+rpm_validation_point_07:
+#  [ 0.379  0.497  0.221  1.   ]
+  x: 0.379
+  y: 0.497
+  z:  0.221 
+  roll: 0.0
+  pitch: 0.0
+  yaw: 0.0
+rpm_validation_point_08:
+#  [-0.161  0.403  0.671  1.   ]
+  x: -0.161
+  y: 0.403
+  z:  0.671 
+  roll: 0.0
+  pitch: 0.0
+  yaw: 0.0
+rpm_validation_point_09:
+#  [-0.426  0.495  0.219  1.   ]
+  x: -0.426
+  y: 0.495
+  z:  0.219 
+  roll: 0.0
+  pitch: 0.0
+  yaw: 0.0
+rpm_validation_point_10:
+#  [ 0.971 -0.347  0.224  1.   ]
+  x: 0.971
+  y: -0.347
+  z:  0.224 
+  roll: 0.0
+  pitch: 0.0
+  yaw: 0.0
+rpm_validation_point_11:
+#  [ 0.922 -0.303  0.486  1.   ]
+  x: 0.922
+  y: -0.303
+  z:  0.486 
+  roll: 0.0
+  pitch: 0.0
+  yaw: 0.0
+rpm_validation_point_12:
+#  [ 0.97   0.348  0.221  1.   ]]
+  x: 0.97
+  y: 0.348
+  z:  0.221 
+  roll: 0.0
+  pitch: 0.0
+  yaw: 0.0
+
+
+

@@ -1,0 +1,14 @@
+safety_limits: true
+safety_pos_margin: 0.15
+safety_k_position: 20
+name: ur
+ur_type: ur16e
+prefix: hu_
+ur_parent: handling_unit_base
+sim_ignition: true
+is_sim: true
+simulation_controllers: ur_controllers.yaml
+calibration_file: calibration_bautiro.yaml
+calibration_file_rpm: calibration_rpm.yaml
+calibration_file_fpm: calibration_fpm.yaml
+robot_name: FUS1

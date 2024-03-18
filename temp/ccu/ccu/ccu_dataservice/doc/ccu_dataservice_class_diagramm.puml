@@ -1,0 +1,26 @@
+@startuml class diagramm ccu_dataservice
+frame ccu_dataservice as ds #BUSINESS {
+    abstract BaseManager
+    MissionManager ..|> BaseManager
+    TaskplanManager ..|> BaseManager
+    WorkplanManager ..|> BaseManager
+    BaseManager o-- EResourceHandler
+    DataServiceContext o-- TaskplanManager
+    DataServiceContext o-- WorkplanManager
+    DataServiceContext o-- MissionManager
+    TaskplanManager o-- Validator
+    WorkplanManager o-- Loader
+}
+object ccu_bautiro #BUSINESS
+object pyecore
+object lxml
+object "TaskPlan.XSD" as xsd #APPLICATION
+EResourceHandler .. pyecore
+Validator ... xsd
+Loader .up. ccu_bautiro
+DataServiceContext .right. ccu_bautiro
+WorkplanManager  .right. ccu_bautiro
+Loader .. lxml
+Validator ... lxml
+ccu_bautiro .... pyecore
+@enduml

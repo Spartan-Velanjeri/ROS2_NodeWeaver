@@ -1,0 +1,48 @@
+@startuml "Developer Functions"
+
+skinparam DefaultTextAlignment center
+skinparam NoteTextAlignment left
+skinparam Nodesep 20
+skinparam Ranksep 20
+
+component HCU {
+    portout client #Salmon
+}
+
+package ccu_hcu_abstraction  {
+    component halc {
+        portin server  #Salmon
+        portout " " as ph #CornflowerBlue
+        note as N1
+        ""**H**CU""
+        ""**A**bstraction""
+        ""**L**ayer""
+        ""**C**CU""
+        end note
+        }
+
+}
+
+package ccu_data_services  {
+    component data_service {
+        portin " " as ds  #CornflowerBlue
+    }
+}
+package ccu_behaviour_tree  {
+    component ccu_bt {
+        portin " " as bt  #CornflowerBlue
+    }
+}
+package bautiro_developer_functions  {
+    ph - [dev_func] : "           invoke             "
+}
+
+
+client -- server : "wifi \n  <font color=Salmon>protobuf</font>"
+ph -- ds
+ph -- bt
+bt - ds
+
+
+
+@enduml

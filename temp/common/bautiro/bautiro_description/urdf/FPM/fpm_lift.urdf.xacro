@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<robot name="lifting_unit" xmlns:xacro="http://ros.org/wiki/xacro">
+
+<!-- robot name parameter -->
+<xacro:arg name="is_sim" default="false" />
+<xacro:arg name="load_ign_plugin_fpm" default="false" />
+<!-- Properties-->
+<xacro:property name="height_bottom" value="1.055" />
+<xacro:property name="length_width" value="0.35" />
+
+<!-- Links and joints-->
+
+  <link name="lift_base">
+    <visual>
+      <geometry>
+        <box size="0.5 0.5 0.1"/>
+      </geometry>
+      <origin xyz="0 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.5 0.5 0.1"/>
+      </geometry>
+      <origin xyz="0 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="20"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+
+  <link name="lift_segment1">
+    <visual>
+      <geometry>
+        <mesh filename="file://$(arg installation_path)/meshes/FPM/lift/lift_bottom.stl"/>        
+      </geometry>
+      <origin xyz="0 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(arg installation_path)/meshes/FPM/lift/lift_bottom.stl"/>        
+      </geometry>
+      <origin xyz="0 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="50"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <link name="lift_segment2">
+    <visual>
+      <geometry>
+        <mesh filename="file://$(arg installation_path)/meshes/FPM/lift/lift_bottom2.stl"/>        
+      </geometry>
+      <origin xyz="0 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(arg installation_path)/meshes/FPM/lift/lift_bottom2.stl"/>        
+      </geometry>
+      <origin xyz="0 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <link name="lift_segment3">
+    <visual>
+      <geometry>
+        <mesh filename="file://$(arg installation_path)/meshes/FPM/lift/lift_bottom3.stl"/>
+      </geometry>
+      <origin xyz="0 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(arg installation_path)/meshes/FPM/lift/lift_bottom3.stl"/>
+      </geometry>
+      <origin xyz="0 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <link name="lift_segment4">
+    <visual>
+      <geometry>
+        <mesh filename="file://$(arg installation_path)/meshes/FPM/lift/lift_bottom4.stl"/>
+      </geometry>
+      <origin xyz="0 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(arg installation_path)/meshes/FPM/lift/lift_bottom4.stl"/>
+      </geometry>
+      <origin xyz="0 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <link name="assembly_top_mount">
+    <visual>
+      <geometry>
+        <mesh filename="file://$(arg installation_path)/meshes/FPM/lift/mount_ur.obj"/>
+      </geometry>
+      <origin xyz="0 0 0"/>
+    </visual>
+    <!-- <collision>
+      <geometry>
+        <mesh filename="file://$(arg installation_path)/meshes/FPM/lift/mount_ur.obj"/>
+      </geometry>
+      <origin xyz="0 0 0"/>
+    </collision> -->
+    <inertial>
+      <mass value="10"/> <!-- If mass is low, gazebo is crashing-->
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <joint name="base2segment1" type="fixed">
+    <origin xyz="0 0.0 ${height_bottom}"/>
+    <parent link="lift_base"/>
+    <child link="lift_segment1"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+
+  <joint name="segment1_segment2" type="prismatic">
+    <axis xyz="0 0 1"/>
+    <origin xyz="0.0 0.0 0.0005"/>
+    <parent link="lift_segment1"/>
+    <child link="lift_segment2"/>
+    <limit effort="1000.0" lower="0" upper="0.8" velocity="0.5"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+
+  <joint name="segment2_segment3" type="prismatic">
+    <axis xyz="0 0 1"/>
+    <origin xyz="0.0 0.0 0.0005"/>
+    <parent link="lift_segment2"/>
+    <child link="lift_segment3"/>
+    <limit effort="1000.0" lower="0" upper="0.8" velocity="0.5"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+
+  <joint name="segment3_segment4" type="prismatic">
+    <axis xyz="0 0 1"/>
+    <parent link="lift_segment3"/>
+    <origin xyz="0.0 0.0 0.0005"/>
+    <child link="lift_segment4"/>
+    <limit effort="1000.0" lower="0" upper="0.8" velocity="0.5"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+
+  <joint name="segment4_lift_top" type="fixed">
+    <origin xyz="0 0.0 0"/>
+    <parent link="lift_segment4"/>
+    <child link="assembly_top_mount"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+
+  
+
+  <!-- Load Gazebo simulation tags -->
+  <xacro:if value="$(arg is_sim)">
+    <!-- Load Gazebo simulation tags -->
+    <xacro:include filename="$(cwd)/urdf/FPM/fpm_lift_gazebo.urdf.xacro" />
+    <xacro:if value="$(arg load_ign_plugin_fpm)">
+      <xacro:include filename="$(cwd)/urdf/FPM/fpm_gazebo_plugin.urdf.xacro" />
+    </xacro:if>
+    <!-- Load ROS2 control tags tags -->
+    <xacro:include filename="$(cwd)/urdf/FPM/fpm_lift_control.urdf.xacro" />
+  </xacro:if>
+
+  
+</robot>

@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+        <Sequence>
+            <Action ID="getSize" list_size="{num_points}"/>
+            <Repeat num_cycles="{num_points}">
+                <Sequence>
+                    <Action ID="getPose" name="get_navigation_pose" poi_pose="{pose}" poi_pose_id="{pose_id}"/>
+                    <Delay delay_msec="1000">
+                        <Action ID="StartRPM" behavior="motion_nav2_p2p.xml" navigation_goal="{pose}" navigation_goal_id="{pose_id}" navigation_result="{nav_res}"/>
+                    </Delay>
+                    <Action ID="getDrillMask" drill_mask_array="{drill_masks}" name="get_drill_mask"/>
+                    <Delay delay_msec="1000">
+                        <Action ID="createDrillResult" drill_mask_array="{drill_masks}" drill_res="{drill_res}"/>
+                    </Delay>
+                    <Action ID="addMissionEvent" drill_result="{drill_res}" name="add_mission_event" navigation_result="{nav_res}"/>
+                </Sequence>
+            </Repeat>
+        </Sequence>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <Action ID="StartFPM">
+            <input_port name="behavior"/>
+            <input_port name="drill_mask_array"/>
+            <output_port name="drill_result"/>
+            <input_port name="marker_array"/>
+        </Action>
+        <Action ID="StartRPM">
+            <input_port name="behavior"/>
+            <input_port name="navigation_goal"/>
+            <input_port name="navigation_goal_id"/>
+            <output_port name="navigation_result"/>
+        </Action>
+        <Action ID="addMissionEvent">
+            <input_port name="drill_result"/>
+            <input_port name="navigation_result"/>
+        </Action>
+        <Action ID="createDrillResult">
+            <input_port name="drill_mask_array"/>
+            <output_port name="drill_res"/>
+        </Action>
+        <Action ID="createNavResult">
+            <output_port name="nav_result"/>
+            <input_port name="poi_pose_id"/>
+        </Action>
+        <Action ID="getDrillMask">
+            <output_port name="drill_mask_array"/>
+        </Action>
+        <Action ID="getPose">
+            <output_port name="poi_pose"/>
+            <output_port name="poi_pose_id"/>
+        </Action>
+        <Action ID="getSize">
+            <output_port name="list_size"/>
+        </Action>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>

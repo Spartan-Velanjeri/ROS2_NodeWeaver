@@ -1,0 +1,15 @@
+__pycache__
+.pyc
+.vscode/*.db*
+*.bak*
+*.pyc
+build
+log
+install
+.vscode
+build/**
+log/**
+install/**
+.vscode/**
+*.bag
+metadata.yaml

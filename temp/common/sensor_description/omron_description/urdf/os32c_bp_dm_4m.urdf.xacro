@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="OS32C-BP-DM-4M">
+
+    <xacro:property name="name" value="OS32C-BP-DM-4M"/>
+
+    <link name="world"/>
+
+    <link name="${name}">
+      <inertial>
+        <mass value="1.3"/>
+        <origin xyz="0 0 0"/>
+        <inertia ixx="0.001567" ixy="0" ixz="0" iyy="0.001594" iyz="0" izz="0.001532"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 -0.0377"/>
+        <geometry>
+          <cylinder radius="0.1" length="0.3"/>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint name="${name}_omron_joint" type="fixed">
+      <origin xyz="0 0 0.2" rpy="0 0 0"/>
+      <parent link="world"/>
+      <child link="${name}"/>
+    </joint>
+
+    <gazebo reference="${name}">
+        <sensor type="gpu_ray" name="${name}_lidar_link">
+          <pose>0 0 0 0 0 0</pose>
+          <topic>${name}_lidar_data</topic>
+          <visualize>false</visualize>
+          <update_rate>10</update_rate>
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>675</samples> <!-- scan angle 270 degrees and angular resolution is 0.4. Divide 270 by 0.4 for the number of samples-->
+                <resolution>1</resolution>
+                <min_angle>0</min_angle>
+                <max_angle>4.71238898</max_angle>
+              </horizontal>
+            </scan>
+            <range>
+              <min>1.75</min>
+              <max>15</max>
+              <resolution>0.4</resolution>
+            </range>
+            <noise>
+              <type>gaussian</type>
+              <mean>0.0</mean>
+              <stddev>0.02</stddev>
+            </noise>
+          </ray>
+          <xacro:if value="true">
+            <plugin filename="libignition-gazebo-sensors-system.so" name="ignition::gazebo::systems::Sensors">
+              <render_engine>ogre2</render_engine>
+            </plugin>
+          </xacro:if>
+        </sensor>
+    </gazebo>
+</robot>

@@ -1,0 +1,29 @@
+@startuml Overview
+skinparam note{
+ BackgroundColor TECHNOLOGY
+}
+
+folder taskplans #Beige{
+   folder "1" as tp1 {
+      file taskplan as "TaskPlan.XML"
+   }
+}
+folder missions #AntiqueWhite{
+   folder m2 as "2" {
+      database db2 as "                \n\n\n"  #LightSteelBlue
+   }
+   folder m1 as "1" {
+      database db1 as "            \n     <b>30%</b> \n    done   \n"  #LightSteelBlue;text:DarkGreen
+   }
+}
+
+taskplan -up- db1 #Black;line.dotted;text:Gray : "\n\n orgin"
+taskplan -[hidden]u- db2
+db1 -[bold]r-> db2 #DarkGreen : " Create <i>new</i> Mission  \nfrom other"
+note right of db2
+  BAUTIRO <i>"<u>knows</u>"</i>
+  what has been done
+  on creation of <i>2</i>
+end note
+
+@enduml

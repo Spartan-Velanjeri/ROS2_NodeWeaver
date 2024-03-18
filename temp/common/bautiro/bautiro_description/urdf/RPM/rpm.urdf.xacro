@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<robot name="rpm" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:arg name="prefix" default="" />
+  <xacro:arg name="controllers" default="$(arg installation_path)/config/RPM/gazebo_default_controller.yaml" />
+  <xacro:arg name="load_ign_plugin_rpm" default="false" />
+
+  <xacro:arg name="bus_config" default="$(arg installation_path)/config/RPM/bus.yaml"/>
+  <!-- <xacro:arg name="master_config" default="$(find rpm_actuators)/config/mobile_base_old/master.dcf"/> -->
+  <xacro:arg name="master_config" default=""/>
+  <xacro:arg name="can_interface_name" default="can0"/>
+  <xacro:arg name="master_bin" default=""/>
+
+  <!-- Include RPM URDF -->
+  <xacro:include filename="$(cwd)/urdf/RPM/rpm_chassis_macro.urdf.xacro" />  
+  <xacro:rpm
+    parent="rpm_base_link"
+    prefix="$(arg prefix)"
+    is_sim="$(arg is_sim)"
+    bus_config="$(arg bus_config)"
+    master_config="$(arg master_config)"
+    can_interface_name="$(arg can_interface_name)"
+    master_bin="$(arg master_bin)"
+  />  
+
+  
+  <!-- RPM sensorrack is mounted on the RPM chassis -->
+  <xacro:include filename="$(cwd)/urdf/RPM/rpm_sensorrack_macro.urdf.xacro"/>
+  <xacro:rpm_sensor
+      parent="rpm_base_link"
+      load_imu="true"
+      load_inclino="false"
+      load_lidar="true"
+      load_realsense="false"
+      is_sim="$(arg is_sim)"
+    />
+
+  <link name="rpm_lift_calibrate_reference" />
+  <xacro:spawn_calibrated_joint name="rpmbaselink2lcr" parent="rpm_base_link" child="rpm_lift_calibrate_reference" dict_key="rpm_lcr"/>  
+  <xacro:spawn_calibrated_joint name="lcr2liftbasemount" parent="rpm_lift_calibrate_reference" child="lift_base_mount" dict_key="rpm_lcr2lbm"/>  
+
+</robot>

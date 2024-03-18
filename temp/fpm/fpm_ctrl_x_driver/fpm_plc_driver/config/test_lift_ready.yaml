@@ -1,0 +1,5 @@
+/vacuum_driver:
+  ros__parameters:
+    emulation:
+      active: true
+      drive_state: 7 # en_Operation_Enable state

@@ -1,0 +1,35 @@
+# Copyright 2023 Stogl Robotics Consulting UG (haftungsbeschränkt)
+# All rights reserved.
+#
+# Made for Robert Bosch GmbH
+#
+# Proprietary License
+#
+# Unauthorized copying of this file, via any medium is strictly prohibited.
+# The file is considered confidential.
+
+#
+# Author: Dr. Denis (denis.stogl@stoglrobotics.de)
+
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Hz
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    left_wheel_controller:
+      type: canopen_ros2_controllers/CanopenProxyController
+
+    right_wheel_controller:
+      type: canopen_ros2_controllers/CanopenProxyController
+
+
+left_wheel_controller:
+  ros__parameters:
+    joint: left_wheel_joint
+
+
+right_wheel_controller:
+  ros__parameters:
+    joint: right_wheel_joint

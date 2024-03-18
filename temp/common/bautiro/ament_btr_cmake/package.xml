@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>ament_btr_cmake</name>
+  <version>0.0.0</version>
+  <description>CMake definitions for the BAUTIRO project.</description>
+  <maintainer email="MusaMorena.MarcussoManhaes@de.bosch.com">Musa Morena Marcusso Manhaes</maintainer>
+  <license>Robert Bosch GmbH proprietary</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <!-- <buildtool_depend>ament_cmake_pycodestyle</buildtool_depend> -->
+  <buildtool_depend>ament_cmake_lint_cmake</buildtool_depend>
+  <buildtool_depend>ament_cmake_copyright</buildtool_depend>
+  <buildtool_depend>bosch_copyright_extension</buildtool_depend>
+  <buildtool_depend>ament_cmake_pycodestyle</buildtool_depend>
+  <buildtool_depend>ament_cmake_flake8</buildtool_depend>
+  <buildtool_depend>ament_cmake_pep257</buildtool_depend>
+  <buildtool_depend>ament_cmake_xmllint</buildtool_depend>
+  <buildtool_depend>ament_cmake_uncrustify</buildtool_depend>
+  <buildtool_depend>ament_cmake_cpplint</buildtool_depend>
+  <buildtool_depend>ament_cmake_cppcheck</buildtool_depend>
+
+  <buildtool_export_depend>ament_cmake_test</buildtool_export_depend>
+
+  <test_depend>ament_cmake_lint_cmake</test_depend>
+  <test_depend>ament_cmake_copyright</test_depend>
+  <test_depend>bosch_copyright_extension</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

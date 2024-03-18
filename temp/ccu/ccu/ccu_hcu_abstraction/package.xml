@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>ccu_hcu_abstraction</name>
+  <version>2.1.0</version>
+  <description>Central Control Unit</description>
+  <maintainer email="Georg.Schumacher@de.bosch.com">sg82fe</maintainer>
+  <license>Copyright (c) Robert Bosch GmbH. All rights reserved.</license>
+
+  <depend>rclpy</depend>
+  <depend>std_msgs</depend>
+
+  <depend>python3-grpcio-pip</depend>
+  <depend>python3-protobuf-pip</depend>
+
+  <depend>tf2_ros</depend>
+  <depend>tf_transformations</depend>
+
+  <depend>bautiro_ros_interfaces</depend>
+  <depend>bautiro_developer_functions</depend>
+  <depend>ccu_interfaces</depend>
+  <depend>ccu_bautiro</depend>
+  <depend>ccu_grpc</depend>
+  <depend>ccu_util</depend>
+
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

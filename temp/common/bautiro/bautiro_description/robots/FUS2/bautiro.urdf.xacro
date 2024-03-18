@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<robot name="bautiro" xmlns:xacro="http://ros.org/wiki/xacro">
+  
+  <!--=========================== Arguments =================================================-->
+  <xacro:arg name="robot_name" default="FUS2" /> <!-- robot name used to select the calibration source -->
+  
+  <xacro:arg name="rpm_version" default="RPM2"/>
+  <xacro:arg name="fpm_version" default="FPM1"/>
+
+  <xacro:arg name="installation_path" default=""/>
+
+  <xacro:arg name="is_sim" default="true" />
+  <xacro:arg name="name" default="bautiro" />
+
+  <xacro:arg name="ur_type" default="ur16e" />
+
+  <xacro:include filename="$(cwd)/urdf/bautiro.urdf.xacro" />
+  
+</robot>

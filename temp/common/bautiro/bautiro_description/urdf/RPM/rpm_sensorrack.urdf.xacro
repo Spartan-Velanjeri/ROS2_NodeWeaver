@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<robot name="rpm_sensorrack" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <link name="rpm_sensorrack_base" />
+  
+  <!--
+  <link name="rpm_imu" />
+  <link name="rpm_lidar_front_left_base_link" />
+  <link name="rpm_lidar_rear_right_base_link" />
+  <link name="rpm_inclinometer" />
+  -->
+  <link name="rpm_safety_lidar_front_left" /> 
+  <link name="rpm_safety_lidar_rear_right" />
+  
+
+  <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
+  <xacro:include filename="$(find realsense2_description)/urdf/_d435.urdf.xacro" />
+
+  <!-- ============  LIDARS FRONT LEFT ============================================ -->
+
+  <!-- LOCALIZATION LIDAR -->
+  <xacro:VLP-16 name="rpm_lidar_front_left" hz="10" samples="440" load_lidar_plugin="true" /> 
+  <xacro:spawn_calibrated_joint name="rpm_sensorrack_base2rpm_lidar_front_left" parent="rpm_sensorrack_base" child="rpm_lidar_front_left_base_link" dict_key="rpm_lidar_fl"/>  
+  
+  <!-- SAFETY LIDAR -->
+  <xacro:spawn_calibrated_joint name="rpm_sensorrack_base2rpm_safety_lidar_fl" parent="rpm_sensorrack_base" child="rpm_safety_lidar_front_left" dict_key="rpm_safety_lidar_fl"/>  
+  
+  
+  
+  
+  <!-- ============ LIDARS REAR RIGHT  ============================================ -->
+
+  <!-- LOCALIZATION LIDAR -->
+  <xacro:VLP-16 name="rpm_lidar_rear_right" hz="10" samples="440" />
+  <xacro:spawn_calibrated_joint name="rpm_sensorrack_base2rpm_lidar_rr" parent="rpm_sensorrack_base" child="rpm_lidar_rear_right_base_link" dict_key="rpm_lidar_rr"/>  
+  
+  <!-- SAFETY LIDAR -->
+  <xacro:spawn_calibrated_joint name="rpm_sensorrack_base2rpm_safety_lidar_rr" parent="rpm_sensorrack_base" child="rpm_safety_lidar_rear_right" dict_key="rpm_safety_lidar_rr"/>  
+  
+  <!-- ============  Inertial sensors =============================================================== -->
+
+  <!-- INCLINOMETER -->
+  <!--
+  <xacro:include filename="$(find inclinometer_description)/urdf/inclinometer.urdf.xacro"/>
+  <xacro:spawn_calibrated_joint name="rpm_sensorrack_base2rpm_inclinometer" parent="rpm_sensorrack_base" child="rpm_inclinometer" dict_key="rpm_inc"/>  
+  -->
+
+  <!-- RPM_XSENS Height is 7 mm over mounting plate -->
+  <!--
+  <xacro:include filename="$(find imu_description)/urdf/imu.urdf.xacro"/>
+  <xacro:spawn_calibrated_joint name="rpm_sensorrack_base2rpm_imu" parent="rpm_sensorrack_base" child="rpm_imu" dict_key="rpm_imu"/>  
+  -->
+  <!-- ============  Real sense =============================================================== -->
+  <!--
+  <link name="rpm_real_sense_1" />
+  <xacro:spawn_calibrated_joint name="rpm_sensorrack_base2rpm_rs1" parent="rpm_sensorrack_base" child="rpm_real_sense_1" dict_key="rpm_rs_1"/>  
+  <xacro:sensor_d435 name="camera" parent="rpm_real_sense_1">
+    <origin xyz="-2 0 2" rpy="0 0 1.5707"/>
+  </xacro:sensor_d435>
+  -->
+
+</robot>

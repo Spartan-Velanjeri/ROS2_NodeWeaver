@@ -1,0 +1,1 @@
+[![Build and test packages](https://github.boschdevcloud.com/BAUTIRO/fpm_motion_manager/actions/workflows/build.yml/badge.svg)](https://github.boschdevcloud.com/BAUTIRO/fpm_motion_manager/actions/workflows/build.yml)

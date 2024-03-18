@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+        <Sequence>
+            <Action ID="LiftMoveAbsolute" lift_setpoint_position="{lift_setpoint_position}"/>
+        </Sequence>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <Action ID="ConfiguredPose">
+            <input_port name="handling_unit_configured_pose">Configured pose number.</input_port>
+        </Action>
+        <Action ID="LiftMoveAbsolute">
+            <input_port name="lift_setpoint_position">Setpoint for lift motion.</input_port>
+        </Action>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>

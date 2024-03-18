@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<robot name="fpm_ptu" xmlns:xacro="http://ros.org/wiki/xacro">
+  <!-- Properties-->
+  <xacro:property name="drill_bit_length" value="0.16"/>
+  <xacro:property name="ptu_length" value="0.365"/>
+
+  <link name="fpm_ptu_bit_tcp"/> 
+  <link name="fpm_ptu_chuck"/>  
+  <link name="fpm_ptu_base">
+    <visual>
+      <geometry>
+        <mesh filename="file://$(arg installation_path)/meshes/FPM/ptu/PTU_visual.obj"/>        
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(arg installation_path)/meshes/FPM/ptu/PTU_collision.stl"/>        
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </collision>
+  </link>
+  
+  <joint name="ptu_base2chuck" type="fixed">
+    <origin xyz="${ptu_length} 0.0 0"/>
+    <parent link="fpm_ptu_base"/>
+    <child link="fpm_ptu_chuck"/>
+  </joint>
+
+  <joint name="ptu_chuck2tip" type="fixed">
+    <origin xyz="${drill_bit_length} 0.0 0"/>
+    <parent link="fpm_ptu_chuck"/>
+    <child link="fpm_ptu_bit_tcp"/>
+  </joint>
+
+
+</robot>

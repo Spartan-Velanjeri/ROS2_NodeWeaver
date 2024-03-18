@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+        <Sequence>
+            <Action ID="moveitcontrol"/>
+            <Action ID="loadscene" scene_file="/home/avp1le/ros2_ws/src/fpm_motion_manager/fpm_handling_unit_script_switching/collision_scenes/testbench1.scene"/>
+            <Action ID="moveit" goal="-0.048;-0.603;0.020" name="Move to Home Position"/>
+            <Action ID="moveit" goal="-0.048;-0.700;0.020" name="move to Target Position"/>
+            <Sequence>
+                <Action ID="loadscript" name="loading drill script"/>
+                <Action ID="execscript" name="execute drill script"/>
+            </Sequence>
+            <Inverter>
+                <KeepRunningUntilFailure>
+                    <Sequence>
+                        <Action ID="iostatecondition"/>
+                    </Sequence>
+                </KeepRunningUntilFailure>
+            </Inverter>
+            <Action ID="moveitcontrol"/>
+            <Action ID="moveit" goal="0.068;-0.603;0.020"/>
+            <Sequence>
+                <Action ID="loadscript"/>
+                <Action ID="execscript"/>
+            </Sequence>
+        </Sequence>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <Action ID="execscript"/>
+        <Action ID="iostatecondition"/>
+        <Action ID="loadscene">
+            <input_port name="scene_file"/>
+        </Action>
+        <Action ID="loadscript"/>
+        <Action ID="loadur">
+            <input_port name="file_name"/>
+        </Action>
+        <Action ID="moveit">
+            <input_port name="goal"/>
+        </Action>
+        <Action ID="moveitcontrol"/>
+        <Action ID="moveitjoints"/>
+        <Action ID="playur"/>
+        <Action ID="removescene"/>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>

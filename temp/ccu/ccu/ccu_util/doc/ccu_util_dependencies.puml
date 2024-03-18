@@ -1,0 +1,41 @@
+@startuml ccu_util_dependencies
+
+'left to right direction
+skinparam Nodesep 20
+skinparam Ranksep 20
+
+
+
+frame bautiro {
+    rectangle bautiro_ros_interfaces
+}
+frame ccu {
+    rectangle ccu_dataservice
+    rectangle ccu_data_services
+    rectangle ccu_hcu_abstraction
+
+    rectangle ccu_util #Yellow
+
+    ccu_hcu_abstraction ..> ccu_util
+    ccu_data_services ..> ccu_util
+    ccu_dataservice ..> ccu_util
+
+    rectangle ccu_grpc
+    ccu_util ..> ccu_grpc
+    ccu_hcu_abstraction ..> ccu_grpc #LightGray
+}
+frame 3rd_party{
+    rectangle numpy
+    rectangle hashlib
+    frame ros {
+        rectangle geometry_msgs
+    }
+}
+
+ccu_util ...> bautiro_ros_interfaces
+ccu_util ....> 3rd_party
+bautiro -[hidden]- 3rd_party
+bautiro -[hidden]left- 3rd_party
+
+
+@enduml

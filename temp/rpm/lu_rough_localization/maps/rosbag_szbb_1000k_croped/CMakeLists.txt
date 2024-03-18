@@ -1,0 +1,1 @@
+download_map(rosbag_szbb_1000k_croped rosbag2_2024_02_26-09_03_05_0.db3)

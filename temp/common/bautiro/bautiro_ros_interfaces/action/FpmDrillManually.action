@@ -1,0 +1,8 @@
+# REQUEST height in meter
+# program: name of the drill program
+float32 platform_ceiling_distance  # distance from ceiling to platform in [m]
+---
+# RESULT
+# response_code: check msg.ResponseCode for possible response codes
+int32 response_code
+---

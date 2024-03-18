@@ -1,0 +1,8 @@
+# REQUEST 
+# pose_number: number of the predefined pose
+int32 pose_number
+---
+# RESULT
+# response_code: check msg.ResponseCode for possible reponse codes
+int32 response_code
+---

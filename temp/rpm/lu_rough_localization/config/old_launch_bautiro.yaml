@@ -1,0 +1,228 @@
+# This is based on the waegele.yaml and adapted for the bautiro waegele which features two SICK MicroScan3 and Velodyne VLP16 lidars
+
+# === Major modes ====
+# sensor_mode is found in the sub-configs for sick, vlp16
+odo_mode: imu_only # none # imu_only
+ground_truth_mode: none
+imu_orientation_mode: keep # ecf # use ecf for raw data from imu/data to avoid wrong data in orientation estimation of imu
+
+#controller/wait_time_per_scan: 0.01
+slam_components: [global_localization, ground_plane] # ros2 doesn't like empty lists - comment out if none used
+
+# Apply per-sensor time offsets
+# bagmode/time_offset_topics: [/sick_lms_151/scan, /r2000/r2000_node/scan, /omron/scan]
+# bagmode/time_offset/sick_lms_151/scan: -0.054
+# bagmode/time_offset/r2000/r2000_node/scan: -0.08
+# bagmode/time_offset/omron/scan: -0.15
+
+global_localization/component_type: threaded_global_localization
+global_localization/enable: true
+global_localization/min_global_matcher_time_per_keyframe: 3.0
+
+controller/threaded: false # true # speed up # non-deterministic if used inside slam
+# localization paremters
+localization/verbose_map_matcher: true
+# localization/failure_detection/enable: true
+
+# copied from active_shuttle.yaml
+localization/enable_test_mode: false
+localization/enable_match_to_local_map: false # nutzt local map aus lidar odom für ndt scan matching, anstatt scans zwischen keyframes zu akkumulieren und diese gegen Map zu matchen
+localization/enable_match_to_local_map_all_scans: false
+localization/ndt_cell_sizes_m: [0.5, 1.0]
+localization/initial_pose: [0.0, 0.0, 0.0]
+localization/shall_refine_initial_pose: false
+# localization/shall_match_against_map: true
+localization/max_graph_size: 10000 # disable graph pruning in localization mode
+localization/failure_detection/enable: true
+# localization/failure_detection/gate_position_m: .2 # default: 0.3
+# localization/failure_detection/gate_heading_rad: .1 # default: 0.2
+# localization/failure_detection/gate_delta_position_m: 0.0 # default: 0.05
+# localization/failure_detection/gate_delta_heading_rad: 0.0 # default: 0.1
+# localization/failure_detection/max_failure_counter: 4 # default: 4
+# localization/max_lambda_1: 500 # default: 100000
+# localization/max_lambda_2: 4000 # default: 100000
+localization/failure_detection/relocalize_on_failure: false
+localization/min_number_cells: 5 # default: 1
+localization/min_score: 0.2 # 0.4 # default: 0.1
+localization/out_of_map_detection/enable: false
+localization/out_of_map_detection/max_allowed_distance_m: 10.0
+localization/enable_estimate_z: true
+
+slam_visualization/graph_scale: 1.0 # Slam Graph in RViz kleiner machen
+
+
+# == Lidar Filter ==
+# lidar_filter/class: interpolator3
+# lidar_filter/name: interpolator3
+# == Interpolator3 == # see vlp16_config
+# interpolator3/min_range_m: 2.0
+# interpolator3/max_range_m: 50.0
+# interpolator3/filter_mode: none # intensity
+# interpolator3/enable_undistortion: true
+# interpolator3/enable_publish_pointclouds: false
+# interpolator3/estimate_scan_duration_from_header_stamp: true
+
+introspection/tracker/enabled: false
+introspection/lidar_odometry/enabled: false
+
+# === slam_control parameters ===
+slam_control/enable_undistorter: true
+slam_control/store_original_distorted_scans: false
+
+# ==== Topic names ====
+topic_names/imu: /rpm/sensors/front/imu/imu/data
+
+# ==== Laser parameter ====
+# config_laser/shall_mirror_scans: false
+# config_laser/min_range_m: 0.8
+# config_laser/max_range_m: 100.0
+
+# == TF ==
+tf/mode/online: "base_to_map"
+tf/mode/from_bag: "base_to_map"
+tf/base_frame_id: "base_link_rough"
+tf/map_frame_id: "map"
+# Base link origin defined as front left corner scanners, at height of scanner, x facing forward, define in the sub-configs so this holds true
+# tf/base_link_to_scanner: [0.0, 0.0, 0.0,  0.9238795, 0.3826834, 0.0, 0.0] # EULER XYZ (°): 180, 0, -45 (sensor facing diagonally outwards), converted using https://www.andre-gaschler.com/rotationconverter/
+# tf/base_link_to_scanner: [0.0, 0.0, 0.0,  0.0, 0.0, 0.0] # EULER XYZ (°): 180, 0, -45 (sensor facing diagonally outwards), converted using https://www.andre-gaschler.com/rotationconverter/
+# tf/base_link_to_imu: [-0.1, -0.1, 0.3,  0.0, 0.0, 0.0, 1.0]  # rough estimate
+#tf/base_link_to_imu: [1.8631, -0.0150, -0.030,  0.0, 0.0, 0.0, 1.0]  # rough estimate
+tf/base_link_to_imu: [0.724, -0.353, 0.653, -0.001, -0.002, 0.750, 0.661]  # calibration 04.05.2023
+
+# ==== Scan Selector parameters ====
+scan_selector/use_at_least_every_nth_scan: 1 # low number required for "odo_mode: imu_only" to work. use 1 (all) for scan2scan tracking
+scan_selector/max_trans_m: 0.02
+scan_selector/max_rot_rad: 0.02
+
+# === Zero Velocity Detection ====
+zero_velocity_detection/max_omega_rad: 0.1
+zero_velocity_detection/detection_wait_time_s: 0.2
+zero_velocity_detection/use_imu: true
+
+# ==== Tracker parameters ====
+tracker/shall_use_odo_for_initial_estimate: true
+tracker/max_distance_m: 1.0
+tracker/max_rotation_rad: 0.6
+# select and configure scan matcher plugin
+tracker/scan_matcher: "ndt"
+tracker/scan_matcher_config: "tracker/config_ndt"
+tracker/config_ndt/subsample: 1
+tracker/config_ndt/cell_sizes_m: [0.5, 1.0]
+tracker/config_ndt/has_matched_criteria/use_min_relative_score: true
+tracker/config_ndt/has_matched_criteria/min_relative_score: 0.5
+# uncomment the following to visualize ndt cells / layers
+#tracker/config_ndt/shall_create_test_msg: true
+#tracker/shall_visualize_scan_matcher: true
+
+tracker/base_scan_recommendation/min_points: 5 # require at least n points to base a recommendatation on
+tracker/base_scan_recommendation/min_points_matched_ratio: 0.7 # create a new base scan if 1 out of 3 (or or fewer) markers could not be matched
+
+# ==== Lidar Odometry parameter ====
+lidar_odometry/enable_publish: false
+lidar_odometry/local_map_size: 5 # no of keyframes to keep in local map
+lidar_odometry/shall_use_local_map_for_tracker_base_scan: true
+lidar_odometry/shall_use_odo_prior: false
+lidar_odometry/shall_refine: true
+lidar_odometry/shall_use_imu_odo_error_model: false
+lidar_odometry/cell_sizes_m: [0.25, 0.5, 1.0]
+
+# ==== Slam parameter ====
+slam/publish_full_map_every_nth_vertex: 1
+slam/run_g2o_every_nth_vertex: 1
+
+# change_detection/component_type: change_detection
+# change_detection/range_threshold_m: 0.1
+# change_detection/neighborhood_size_azimuth_rad: 0.1
+# change_detection/min_neighborhood_points: 2
+# change_detection/filter_new_keyframe: true
+# change_detection/filter_prev_keyframe: true
+# change_detection/filter_all_vertices_on_end_of_run: true
+# change_detection/include_loop_closures_on_new_keyframe: false
+# change_detection/include_loop_closures_on_end_of_run: true
+
+# ==== Manhattan parameters:
+manhattan/component_type: manhattan
+manhattan/enable: true
+manhattan/enable_on_end_output: false
+manhattan/optimizer/information: 1000
+manhattan/optimizer/robust_kernel_delta: .1
+manhattan/optimizer/shall_align_to_manhattan_direction: true
+manhattan/optimizer/min_number_of_manhattan_edges: 10
+manhattan/graph_visualization/shall_publish_manhattan_edges: false
+
+# ==== Find Loop Closures parameters ====
+find_loop_closure/enable_test_mode: false
+
+find_loop_closure/local/enable: true
+find_loop_closure/local/min_odo_distance_m: 8.0
+find_loop_closure/local/max_vertex_dist_m: 6.0
+find_loop_closure/local/ndt_cell_sizes_m: [1.0,3.0]
+find_loop_closure/local/shall_reduce_pointcloud2: true
+find_loop_closure/local/subsample: 5
+find_loop_closure/local/min_score: .5
+find_loop_closure/local/max_lambda1: 10.0
+find_loop_closure/local/max_lambda2: 300.0
+find_loop_closure/local/min_number_of_cells: 60
+find_loop_closure/local/max_number_of_candidates: 10
+
+find_loop_closure/global/enable: true
+find_loop_closure/global/min_vertex_distance: 0.5
+find_loop_closure/global/raw_ndt_cell_sizes_m: [2.0]
+find_loop_closure/global/fine_ndt_cell_sizes_m: [1.0]
+find_loop_closure/global/shall_reduce_pointcloud1: true
+find_loop_closure/global/shall_reduce_pointcloud2: true
+find_loop_closure/global/min_score: .35
+find_loop_closure/global/max_lambda1: 20.0
+find_loop_closure/global/max_lambda2: 500000.0
+find_loop_closure/global/min_number_of_cells: 30
+find_loop_closure/global/global_matcher/enable_profiling: true
+find_loop_closure/global/global_matcher/verbose: false
+find_loop_closure/global/pose_candidate_factor: 1
+
+find_loop_closure/local_past/enable: true
+find_loop_closure/local_past/is_a_change_threshold_m: 0.2
+find_loop_closure/local_past/enable_profiling: true
+find_loop_closure/local_past/verbose: true
+
+find_loop_closure/ignore_for_loop_closure/enable: false
+find_loop_closure/ignore_for_loop_closure/min_nr_of_edges: 1
+find_loop_closure/ignore_for_loop_closure/max_distance: 1.5
+find_loop_closure/ignore_for_loop_closure/max_angle: 0.6
+
+find_loop_closure/localized_detection/enable: true
+find_loop_closure/localized_detection/max_distance: 0.2
+find_loop_closure/localized_detection/max_angle: 0.03
+optimizer/nr_of_vertices_to_optimize_if_localized: 50
+
+# ==== Loop closures verification global ====
+loop_closure_verification/global/enable_test_mode: false
+loop_closure_verification/global/sigma_pos: .05
+loop_closure_verification/global/sigma_theta: .02
+loop_closure_verification/global/min_number_of_required_consistent_loop_closures: 3
+
+optimizer/verbose: false
+
+# ==== Ground Plane Component ====
+ground_plane/component_type: ground_plane
+ground_plane/enable: true
+ground_plane/use_in_slam: true
+ground_plane/grid_size: 0.25
+ground_plane/max_dist: 7.0
+ground_plane/detector_bandwidth: 0.05
+ground_plane/min_score: 20.0
+ground_plane/verbose: false
+
+# ==== Full map parameters ====
+full_map_generator/enable_full_map: false
+full_map_generator/save_full_trajectory/enabled : true
+full_map_generator/shall_write_full_map: true
+full_map_generator/shall_save_full_pcd_map: true
+full_map_generator/shall_use_full_scan_for_pcd_map: true
+full_map_generator/shall_save_colored_pcd_map: false
+full_map_generator/shall_save_ground_plane_image: false
+full_map_generator/ground_plane_resolution_m_per_px: 0.02
+full_map_generator/shall_save_graph_and_all_scans: false
+full_map_generator/voxel_grid_filter/enable: true
+full_map_generator/voxel_grid_filter/leaf_size: [0.05] # default: 0.01f
+full_map_generator/voxel_grid_filter/min_points_per_voxel: [1]
+full_map_generator/use_odometry: false

@@ -1,0 +1,2643 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article>
+  <title>Protocol Documentation</title>
+  
+  <section>
+    <title>base_layer_service.proto</title>
+    <para></para>
+    
+    <section id="google.protobuf.BaseLayerState">
+      <title>BaseLayerState</title>
+      <para>contains information about the current capabilities</para>
+      
+      <table frame="all">
+        <title><classname>BaseLayerState</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>can_switch_to_manual_mode</entry>
+              <entry><link linkend="bool">bool</link></entry>
+              <entry></entry>
+              <entry><para>Is Bautiro state ready to switch to manual mode</para></entry>
+            </row>
+            
+            <row>
+              <entry>can_start_mission</entry>
+              <entry><link linkend="bool">bool</link></entry>
+              <entry></entry>
+              <entry><para>Is Bautiro state ready to accept a new mission. This will enable/disable start buttons in UI</para></entry>
+            </row>
+            
+            <row>
+              <entry>mission_in_progress</entry>
+              <entry><link linkend="google.protobuf.MissionMetaData">MissionMetaData</link></entry>
+              <entry>optional</entry>
+              <entry><para>Holds Metadata about the current mission in progress</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.BautiroDescriptionMessage">
+      <title>BautiroDescriptionMessage</title>
+      <para>Message describing the robot</para>
+      
+      <table frame="all">
+        <title><classname>BautiroDescriptionMessage</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>links</entry>
+              <entry><link linkend="google.protobuf.BautiroUrdfLink">BautiroUrdfLink</link></entry>
+              <entry>repeated</entry>
+              <entry><para>collection of links</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.BautiroUrdfLink">
+      <title>BautiroUrdfLink</title>
+      <para>a single link</para>
+      
+      <table frame="all">
+        <title><classname>BautiroUrdfLink</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>name</entry>
+              <entry><link linkend="string">string</link></entry>
+              <entry></entry>
+              <entry><para>Name of the link. If name=="base_link", parent_id is empty and this is the root</para></entry>
+            </row>
+            
+            <row>
+              <entry>parent</entry>
+              <entry><link linkend="string">string</link></entry>
+              <entry></entry>
+              <entry><para>Name of the parent. Empty if root link</para></entry>
+            </row>
+            
+            <row>
+              <entry>transform_relative_to_parent</entry>
+              <entry><link linkend="google.protobuf.Matrix4x4">Matrix4x4</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>visuals</entry>
+              <entry><link linkend="google.protobuf.BautiroUrdfVisualMesh">BautiroUrdfVisualMesh</link></entry>
+              <entry>repeated</entry>
+              <entry><para>collection of visuals</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.BautiroUrdfVisualMesh">
+      <title>BautiroUrdfVisualMesh</title>
+      <para>A visual representation</para>
+      
+      <table frame="all">
+        <title><classname>BautiroUrdfVisualMesh</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>mesh_file_path</entry>
+              <entry><link linkend="string">string</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>mesh_file_md5_hash</entry>
+              <entry><link linkend="string">string</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>offset</entry>
+              <entry><link linkend="google.protobuf.Matrix4x4">Matrix4x4</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.BautiroVisualFileRequest">
+      <title>BautiroVisualFileRequest</title>
+      <para>Request to download a visual file (.obj or .mtl)</para>
+      
+      <table frame="all">
+        <title><classname>BautiroVisualFileRequest</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>file_path</entry>
+              <entry><link linkend="string">string</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.BoolParameter">
+      <title>BoolParameter</title>
+      <para>defines a boolean parameter</para>
+      
+      <table frame="all">
+        <title><classname>BoolParameter</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>param_name</entry>
+              <entry><link linkend="string">string</link></entry>
+              <entry></entry>
+              <entry><para>name of the parameter</para></entry>
+            </row>
+            
+            <row>
+              <entry>param_value</entry>
+              <entry><link linkend="bool">bool</link></entry>
+              <entry></entry>
+              <entry><para>value of the parameter. Will also be used as the default value</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.DeveloperFunctionCallResult">
+      <title>DeveloperFunctionCallResult</title>
+      <para>result of the function call. will be shown in GUI</para>
+      
+      <table frame="all">
+        <title><classname>DeveloperFunctionCallResult</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>message</entry>
+              <entry><link linkend="string">string</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.DeveloperFunctionDefinition">
+      <title>DeveloperFunctionDefinition</title>
+      <para>defines a developer function</para>
+      
+      <table frame="all">
+        <title><classname>DeveloperFunctionDefinition</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>name</entry>
+              <entry><link linkend="string">string</link></entry>
+              <entry></entry>
+              <entry><para>name and identifier of the function. Unique for every function.</para></entry>
+            </row>
+            
+            <row>
+              <entry>description</entry>
+              <entry><link linkend="string">string</link></entry>
+              <entry></entry>
+              <entry><para>short description</para></entry>
+            </row>
+            
+            <row>
+              <entry>parameters</entry>
+              <entry><link linkend="google.protobuf.ParameterDefinition">ParameterDefinition</link></entry>
+              <entry>repeated</entry>
+              <entry><para>list of the function's parameters</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.DeveloperFunctionList">
+      <title>DeveloperFunctionList</title>
+      <para>contains a list of developer fucntions</para>
+      
+      <table frame="all">
+        <title><classname>DeveloperFunctionList</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>sources</entry>
+              <entry><link linkend="google.protobuf.DeveloperFunctionSource">DeveloperFunctionSource</link></entry>
+              <entry>repeated</entry>
+              <entry><para>list of sources of dev functions</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.DeveloperFunctionSource">
+      <title>DeveloperFunctionSource</title>
+      <para>A source of developer functions</para>
+      
+      <table frame="all">
+        <title><classname>DeveloperFunctionSource</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>name</entry>
+              <entry><link linkend="string">string</link></entry>
+              <entry></entry>
+              <entry><para>title/header of this source. A short string</para></entry>
+            </row>
+            
+            <row>
+              <entry>functions</entry>
+              <entry><link linkend="google.protobuf.DeveloperFunctionDefinition">DeveloperFunctionDefinition</link></entry>
+              <entry>repeated</entry>
+              <entry><para>the list of functions</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.DirectoryMetaData">
+      <title>DirectoryMetaData</title>
+      <para>Describes a directory before transfer</para>
+      
+      <table frame="all">
+        <title><classname>DirectoryMetaData</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>directory_name</entry>
+              <entry><link linkend="string">string</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>directory_file_count</entry>
+              <entry><link linkend="int64">int64</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.DirectoryStreamingMessage">
+      <title>DirectoryStreamingMessage</title>
+      <para>Streams a directory's content.</para><para>Starts with a DirectoryMetaData.</para><para>Then for each file iterating on FileStreamingMessage</para><para>Then DirectoryTransferCompletedMessage when done.</para>
+      
+      <table frame="all">
+        <title><classname>DirectoryStreamingMessage</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>dir_meta_data</entry>
+              <entry><link linkend="google.protobuf.DirectoryMetaData">DirectoryMetaData</link></entry>
+              <entry></entry>
+              <entry><para>once in the beginning</para></entry>
+            </row>
+            
+            <row>
+              <entry>file_data</entry>
+              <entry><link linkend="google.protobuf.FileStreamingMessage">FileStreamingMessage</link></entry>
+              <entry></entry>
+              <entry><para>iterated per file</para></entry>
+            </row>
+            
+            <row>
+              <entry>dir_completed</entry>
+              <entry><link linkend="google.protobuf.DirectoryTransferCompletedMessage">DirectoryTransferCompletedMessage</link></entry>
+              <entry></entry>
+              <entry><para>once when done</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.DirectoryStreamingResponse">
+      <title>DirectoryStreamingResponse</title>
+      <para>used by rpc ImportMission, when import is done</para>
+      
+      <table frame="all">
+        <title><classname>DirectoryStreamingResponse</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>success</entry>
+              <entry><link linkend="bool">bool</link></entry>
+              <entry></entry>
+              <entry><para>true if import/directory transfer was a success</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.DirectoryTransferCompletedMessage">
+      <title>DirectoryTransferCompletedMessage</title>
+      <para>Sent when a directory transfer is done</para>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.DrillHole">
+      <title>DrillHole</title>
+      <para>A Drillhole in the nodetree, attached to a DrillMask</para>
+      
+      <table frame="all">
+        <title><classname>DrillHole</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>local_transform</entry>
+              <entry><link linkend="google.protobuf.Matrix4x4">Matrix4x4</link></entry>
+              <entry></entry>
+              <entry><para>this holes's transform relative to the drillmask</para></entry>
+            </row>
+            
+            <row>
+              <entry>name_unique_per_drillmask</entry>
+              <entry><link linkend="string">string</link></entry>
+              <entry></entry>
+              <entry><para>Drillhole's unique name. Unique per Drillmask, but not per NodeTree</para></entry>
+            </row>
+            
+            <row>
+              <entry>state</entry>
+              <entry><link linkend="google.protobuf.DrillHole.DrillHoleState">DrillHole.DrillHoleState</link></entry>
+              <entry></entry>
+              <entry><para>state of the hole</para></entry>
+            </row>
+            
+            <row>
+              <entry>parent_drillmask_name_unique</entry>
+              <entry><link linkend="string">string</link></entry>
+              <entry>optional</entry>
+              <entry><para>the drillmask's parent (not supplied in manual mode)</para></entry>
+            </row>
+            
+            <row>
+              <entry>d_x</entry>
+              <entry><link linkend="double">double</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>d_y</entry>
+              <entry><link linkend="double">double</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.DrillJob">
+      <title>DrillJob</title>
+      <para></para>
+      
+      <table frame="all">
+        <title><classname>DrillJob</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>drillmask_names</entry>
+              <entry><link linkend="string">string</link></entry>
+              <entry>repeated</entry>
+              <entry><para></para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.DrillMask">
+      <title>DrillMask</title>
+      <para>A DrillMask in the nodetree, attached to a Fastenertemplate</para>
+      
+      <table frame="all">
+        <title><classname>DrillMask</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>local_transform</entry>
+              <entry><link linkend="google.protobuf.Matrix4x4">Matrix4x4</link></entry>
+              <entry></entry>
+              <entry><para>this drillMask's transform relative to fastenerTemplate's Node parent. (FastenerTemplate has no transform itself)</para></entry>
+            </row>
+            
+            <row>
+              <entry>name_unique_per_node_tree</entry>
+              <entry><link linkend="string">string</link></entry>
+              <entry></entry>
+              <entry><para>Drillmask's unique name</para></entry>
+            </row>
+            
+            <row>
+              <entry>drill_holes</entry>
+              <entry><link linkend="google.protobuf.DrillHole">DrillHole</link></entry>
+              <entry>repeated</entry>
+              <entry><para>List of holes to drill</para></entry>
+            </row>
+            
+            <row>
+              <entry>parent_fastener_template_name_unique</entry>
+              <entry><link linkend="string">string</link></entry>
+              <entry></entry>
+              <entry><para>name of the DrillMask's parent.</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.FastenerTemplate">
+      <title>FastenerTemplate</title>
+      <para>A FastenerTemplate in the nodetree, attached to a node</para>
+      
+      <table frame="all">
+        <title><classname>FastenerTemplate</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>drill_masks</entry>
+              <entry><link linkend="google.protobuf.DrillMask">DrillMask</link></entry>
+              <entry>repeated</entry>
+              <entry><para>drillmasks contained in FastenerTemplate</para></entry>
+            </row>
+            
+            <row>
+              <entry>name_unique_per_node_tree</entry>
+              <entry><link linkend="string">string</link></entry>
+              <entry></entry>
+              <entry><para>FastenerTemplate's unique name.</para></entry>
+            </row>
+            
+            <row>
+              <entry>type_guid</entry>
+              <entry><link linkend="string">string</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>parent_node_name_unique</entry>
+              <entry><link linkend="string">string</link></entry>
+              <entry></entry>
+              <entry><para>name of the FastenerTemplate's parent.</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.FileMetaData">
+      <title>FileMetaData</title>
+      <para>Describes a file before transfer</para>
+      
+      <table frame="all">
+        <title><classname>FileMetaData</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>file_name</entry>
+              <entry><link linkend="string">string</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>file_size_bytes</entry>
+              <entry><link linkend="int64">int64</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>md5_hash</entry>
+              <entry><link linkend="string">string</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.FileStreamingMessage">
+      <title>FileStreamingMessage</title>
+      <para>streams any file. Starts with a FileMetaData, then bytes while streaming file content, then FileTransferCompletedMessage when done.</para>
+      
+      <table frame="all">
+        <title><classname>FileStreamingMessage</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>file_meta_data</entry>
+              <entry><link linkend="google.protobuf.FileMetaData">FileMetaData</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>file_chunk_data</entry>
+              <entry><link linkend="bytes">bytes</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>file_completed</entry>
+              <entry><link linkend="google.protobuf.FileTransferCompletedMessage">FileTransferCompletedMessage</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.FileTransferCompletedMessage">
+      <title>FileTransferCompletedMessage</title>
+      <para>Sent when a file transfer is done</para>
+      
+      <table frame="all">
+        <title><classname>FileTransferCompletedMessage</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>file_name</entry>
+              <entry><link linkend="string">string</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.Job">
+      <title>Job</title>
+      <para></para>
+      
+      <table frame="all">
+        <title><classname>Job</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>id_unique</entry>
+              <entry><link linkend="string">string</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>absolute_transform</entry>
+              <entry><link linkend="google.protobuf.Matrix4x4">Matrix4x4</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>enabled</entry>
+              <entry><link linkend="bool">bool</link></entry>
+              <entry></entry>
+              <entry><para>this cluster won't be scheduled</para></entry>
+            </row>
+            
+            <row>
+              <entry>drill_job</entry>
+              <entry><link linkend="google.protobuf.DrillJob">DrillJob</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>move_job</entry>
+              <entry><link linkend="google.protobuf.MoveJob">MoveJob</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>measure_job</entry>
+              <entry><link linkend="google.protobuf.MeasureJob">MeasureJob</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.MeasureJob">
+      <title>MeasureJob</title>
+      <para>not used in production</para>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.MissionDataResponse">
+      <title>MissionDataResponse</title>
+      <para>deep mission data, aka nodetree. returned by GetMissionData and StreamMissionData</para>
+      
+      <table frame="all">
+        <title><classname>MissionDataResponse</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>node_tree</entry>
+              <entry><link linkend="google.protobuf.Node">Node</link></entry>
+              <entry>repeated</entry>
+              <entry><para>the root nodes of this nodeTree</para></entry>
+            </row>
+            
+            <row>
+              <entry>jobs</entry>
+              <entry><link linkend="google.protobuf.Job">Job</link></entry>
+              <entry>repeated</entry>
+              <entry><para>list of jobs in order of operation. Disabled jobs are at the end of the array</para></entry>
+            </row>
+            
+            <row>
+              <entry>room_plan_md5</entry>
+              <entry><link linkend="string">string</link></entry>
+              <entry></entry>
+              <entry><para>md5 hash of linked roomplan obj file</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.MissionIdRequest">
+      <title>MissionIdRequest</title>
+      <para>simple request containing a mission ID</para>
+      
+      <table frame="all">
+        <title><classname>MissionIdRequest</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>mission_id</entry>
+              <entry><link linkend="int64">int64</link></entry>
+              <entry></entry>
+              <entry><para>the unique mission id</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.MissionList">
+      <title>MissionList</title>
+      <para>list containing all missions. Not deep data, just metadata</para>
+      
+      <table frame="all">
+        <title><classname>MissionList</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>missions</entry>
+              <entry><link linkend="google.protobuf.MissionMetaData">MissionMetaData</link></entry>
+              <entry>repeated</entry>
+              <entry><para>list of all missions stored on CCU</para></entry>
+            </row>
+            
+            <row>
+              <entry>current_active_mission_id</entry>
+              <entry><link linkend="int64">int64</link></entry>
+              <entry></entry>
+              <entry><para>id of current mission. -1 if not set.</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.MissionMetaData">
+      <title>MissionMetaData</title>
+      <para>Metadata for a single mission</para>
+      
+      <table frame="all">
+        <title><classname>MissionMetaData</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>id</entry>
+              <entry><link linkend="int64">int64</link></entry>
+              <entry></entry>
+              <entry><para>unique mission id</para></entry>
+            </row>
+            
+            <row>
+              <entry>name</entry>
+              <entry><link linkend="string">string</link></entry>
+              <entry></entry>
+              <entry><para>mission name, for visual use only</para></entry>
+            </row>
+            
+            <row>
+              <entry>predecessor_id</entry>
+              <entry><link linkend="int64">int64</link></entry>
+              <entry></entry>
+              <entry><para>mission id this mission is dervied from. -1 if not set.</para></entry>
+            </row>
+            
+            <row>
+              <entry>import_date</entry>
+              <entry><link linkend="google.protobuf.Timestamp">Timestamp</link></entry>
+              <entry></entry>
+              <entry><para>timestamp of when the mission was imported to CCU</para></entry>
+            </row>
+            
+            <row>
+              <entry>room_plan_md5</entry>
+              <entry><link linkend="string">string</link></entry>
+              <entry></entry>
+              <entry><para>md5 hash of linked roomplan obj file</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.MoveJob">
+      <title>MoveJob</title>
+      <para></para>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.Node">
+      <title>Node</title>
+      <para>A node in the nodetree</para>
+      
+      <table frame="all">
+        <title><classname>Node</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>children</entry>
+              <entry><link linkend="google.protobuf.Node">Node</link></entry>
+              <entry>repeated</entry>
+              <entry><para>node's children (if any)</para></entry>
+            </row>
+            
+            <row>
+              <entry>local_transform</entry>
+              <entry><link linkend="google.protobuf.Matrix4x4">Matrix4x4</link></entry>
+              <entry></entry>
+              <entry><para>transform relative to node's parent</para></entry>
+            </row>
+            
+            <row>
+              <entry>name_unique_per_node_tree</entry>
+              <entry><link linkend="string">string</link></entry>
+              <entry></entry>
+              <entry><para>node's unique name</para></entry>
+            </row>
+            
+            <row>
+              <entry>series</entry>
+              <entry><link linkend="string">string</link></entry>
+              <entry></entry>
+              <entry><para>node's series</para></entry>
+            </row>
+            
+            <row>
+              <entry>fastener_template</entry>
+              <entry><link linkend="google.protobuf.FastenerTemplate">FastenerTemplate</link></entry>
+              <entry>optional</entry>
+              <entry><para>the fastener template (if set)</para></entry>
+            </row>
+            
+            <row>
+              <entry>parent_node_name_unique</entry>
+              <entry><link linkend="string">string</link></entry>
+              <entry>optional</entry>
+              <entry><para>name of the node's parent. Can be unset if node is root.</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.NumericParameter">
+      <title>NumericParameter</title>
+      <para>defines a numeric parameter</para>
+      
+      <table frame="all">
+        <title><classname>NumericParameter</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>param_name</entry>
+              <entry><link linkend="string">string</link></entry>
+              <entry></entry>
+              <entry><para>name of the parameter</para></entry>
+            </row>
+            
+            <row>
+              <entry>param_value</entry>
+              <entry><link linkend="double">double</link></entry>
+              <entry></entry>
+              <entry><para>value of the parameter. Will also be used as the default value</para></entry>
+            </row>
+            
+            <row>
+              <entry>min_value</entry>
+              <entry><link linkend="double">double</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>max_value</entry>
+              <entry><link linkend="double">double</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>step_size</entry>
+              <entry><link linkend="double">double</link></entry>
+              <entry></entry>
+              <entry><para>step size for increment/decrement in GUI</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.ParameterDefinition">
+      <title>ParameterDefinition</title>
+      <para>defines a parameter for a developer function</para>
+      
+      <table frame="all">
+        <title><classname>ParameterDefinition</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>param_number</entry>
+              <entry><link linkend="google.protobuf.NumericParameter">NumericParameter</link></entry>
+              <entry></entry>
+              <entry><para>numeric parameter</para></entry>
+            </row>
+            
+            <row>
+              <entry>param_bool</entry>
+              <entry><link linkend="google.protobuf.BoolParameter">BoolParameter</link></entry>
+              <entry></entry>
+              <entry><para>bool parameter</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.RobotTransform">
+      <title>RobotTransform</title>
+      <para>Message to update the robot's transformations</para>
+      
+      <table frame="all">
+        <title><classname>RobotTransform</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>links</entry>
+              <entry><link linkend="google.protobuf.UpdateTransformMessage">UpdateTransformMessage</link></entry>
+              <entry>repeated</entry>
+              <entry><para>Collection of links that changed.</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.StartMissionResponse">
+      <title>StartMissionResponse</title>
+      <para>response to StartMission rpc</para>
+      
+      <table frame="all">
+        <title><classname>StartMissionResponse</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>success</entry>
+              <entry><link linkend="bool">bool</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.UpdateTransformMessage">
+      <title>UpdateTransformMessage</title>
+      <para>Contains a transformation update of a single link</para>
+      
+      <table frame="all">
+        <title><classname>UpdateTransformMessage</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>child_id</entry>
+              <entry><link linkend="string">string</link></entry>
+              <entry></entry>
+              <entry><para>this is the name of the element to be transformed</para></entry>
+            </row>
+            
+            <row>
+              <entry>transform_relative_to_parent</entry>
+              <entry><link linkend="google.protobuf.Matrix4x4">Matrix4x4</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    
+    <section id="google.protobuf.DrillHole.DrillHoleState">
+      <title>DrillHole.DrillHoleState</title>
+      <para></para>
+      <table frame="all">
+        <title><classname>DrillHole.DrillHoleState</classname> Values</title>
+        <tgroup cols="3">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Name</entry>
+              <entry>Number</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>UNDEFINED</entry>
+              <entry>0</entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>UNDRILLED</entry>
+              <entry>1</entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>SCHEDULED</entry>
+              <entry>2</entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>FINISHED</entry>
+              <entry>3</entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>IGNORE</entry>
+              <entry>4</entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>FAILED</entry>
+              <entry>5</entry>
+              <entry><para></para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+    </section>
+    
+
+    
+
+    
+    <section id="google.protobuf.BaseLayerService">
+      <title>BaseLayerService</title>
+      <para></para>
+      <table frame="all">
+        <title><classname>BaseLayerService</classname> Methods</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Method Name</entry>
+              <entry>Request Type</entry>
+              <entry>Response Type</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>BaseLayerStateStream</entry>
+              <entry><link linkend="google.protobuf.Empty">Empty</link></entry>
+              <entry><link linkend="google.protobuf.BaseLayerState">BaseLayerState</link> stream</entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>GetMissionList</entry>
+              <entry><link linkend="google.protobuf.Empty">Empty</link></entry>
+              <entry><link linkend="google.protobuf.MissionList">MissionList</link></entry>
+              <entry><para>get the list of available missions</para></entry>
+            </row>
+            
+            <row>
+              <entry>GetRoomPlanObjFile</entry>
+              <entry><link linkend="google.protobuf.MissionIdRequest">MissionIdRequest</link></entry>
+              <entry><link linkend="google.protobuf.FileStreamingMessage">FileStreamingMessage</link> stream</entry>
+              <entry><para>get a roomplan for a specific mission</para></entry>
+            </row>
+            
+            <row>
+              <entry>GetMissionData</entry>
+              <entry><link linkend="google.protobuf.MissionIdRequest">MissionIdRequest</link></entry>
+              <entry><link linkend="google.protobuf.MissionDataResponse">MissionDataResponse</link></entry>
+              <entry><para>get data for a specific mission</para></entry>
+            </row>
+            
+            <row>
+              <entry>StreamMissionData</entry>
+              <entry><link linkend="google.protobuf.Empty">Empty</link></entry>
+              <entry><link linkend="google.protobuf.MissionDataResponse">MissionDataResponse</link> stream</entry>
+              <entry><para>stream changes to mission data - a.k.a. "Tracking mode"</para></entry>
+            </row>
+            
+            <row>
+              <entry>StartMission</entry>
+              <entry><link linkend="google.protobuf.MissionIdRequest">MissionIdRequest</link></entry>
+              <entry><link linkend="google.protobuf.StartMissionResponse">StartMissionResponse</link></entry>
+              <entry><para>start a mission and stream mission events</para></entry>
+            </row>
+            
+            <row>
+              <entry>ImportMission</entry>
+              <entry><link linkend="google.protobuf.DirectoryStreamingMessage">DirectoryStreamingMessage</link> stream</entry>
+              <entry><link linkend="google.protobuf.DirectoryStreamingResponse">DirectoryStreamingResponse</link></entry>
+              <entry><para>HCU sends files contained in a directory to CCU in order to create a new mission</para></entry>
+            </row>
+            
+            <row>
+              <entry>GetBautiroDescription</entry>
+              <entry><link linkend="google.protobuf.Empty">Empty</link></entry>
+              <entry><link linkend="google.protobuf.BautiroDescriptionMessage">BautiroDescriptionMessage</link></entry>
+              <entry><para>get a description of the bautiro transform tree</para></entry>
+            </row>
+            
+            <row>
+              <entry>GetBautiroMesh</entry>
+              <entry><link linkend="google.protobuf.BautiroVisualFileRequest">BautiroVisualFileRequest</link></entry>
+              <entry><link linkend="google.protobuf.FileStreamingMessage">FileStreamingMessage</link> stream</entry>
+              <entry><para>download a visual mesh file</para></entry>
+            </row>
+            
+            <row>
+              <entry>StreamBautiroTransforms</entry>
+              <entry><link linkend="google.protobuf.Empty">Empty</link></entry>
+              <entry><link linkend="google.protobuf.RobotTransform">RobotTransform</link> stream</entry>
+              <entry><para>stream live transforms</para></entry>
+            </row>
+            
+            <row>
+              <entry>GetDeveloperFunctions</entry>
+              <entry><link linkend="google.protobuf.Empty">Empty</link></entry>
+              <entry><link linkend="google.protobuf.DeveloperFunctionList">DeveloperFunctionList</link></entry>
+              <entry><para>get all developer functions</para></entry>
+            </row>
+            
+            <row>
+              <entry>CallDeveloperFunction</entry>
+              <entry><link linkend="google.protobuf.DeveloperFunctionDefinition">DeveloperFunctionDefinition</link></entry>
+              <entry><link linkend="google.protobuf.DeveloperFunctionCallResult">DeveloperFunctionCallResult</link></entry>
+              <entry><para>call a developer function</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+    </section>
+    
+  </section>
+  
+  <section>
+    <title>common_types.proto</title>
+    <para></para>
+    
+    <section id="google.protobuf.Matrix4x4">
+      <title>Matrix4x4</title>
+      <para>Homogenous Matrix 4x4</para>
+      
+      <table frame="all">
+        <title><classname>Matrix4x4</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>r1c1</entry>
+              <entry><link linkend="double">double</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>r1c2</entry>
+              <entry><link linkend="double">double</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>r1c3</entry>
+              <entry><link linkend="double">double</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>r1c4</entry>
+              <entry><link linkend="double">double</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>r2c1</entry>
+              <entry><link linkend="double">double</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>r2c2</entry>
+              <entry><link linkend="double">double</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>r2c3</entry>
+              <entry><link linkend="double">double</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>r2c4</entry>
+              <entry><link linkend="double">double</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>r3c1</entry>
+              <entry><link linkend="double">double</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>r3c2</entry>
+              <entry><link linkend="double">double</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>r3c3</entry>
+              <entry><link linkend="double">double</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>r3c4</entry>
+              <entry><link linkend="double">double</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>r4c1</entry>
+              <entry><link linkend="double">double</link></entry>
+              <entry></entry>
+              <entry><para>X position</para></entry>
+            </row>
+            
+            <row>
+              <entry>r4c2</entry>
+              <entry><link linkend="double">double</link></entry>
+              <entry></entry>
+              <entry><para>Y position</para></entry>
+            </row>
+            
+            <row>
+              <entry>r4c3</entry>
+              <entry><link linkend="double">double</link></entry>
+              <entry></entry>
+              <entry><para>Z position</para></entry>
+            </row>
+            
+            <row>
+              <entry>r4c4</entry>
+              <entry><link linkend="double">double</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    
+
+    
+
+    
+  </section>
+  
+  <section>
+    <title>manual_mode_service.proto</title>
+    <para></para>
+    
+    <section id="google.protobuf.ControlState">
+      <title>ControlState</title>
+      <para>contains information of currently available actions</para>
+      
+      <table frame="all">
+        <title><classname>ControlState</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>can_drive_rpm</entry>
+              <entry><link linkend="bool">bool</link></entry>
+              <entry></entry>
+              <entry><para>Can the rpm be driven currently</para></entry>
+            </row>
+            
+            <row>
+              <entry>can_raise_lift</entry>
+              <entry><link linkend="bool">bool</link></entry>
+              <entry></entry>
+              <entry><para>Can the lift be raised currently (= Can the state be set to FINE_POSITIONING)</para></entry>
+            </row>
+            
+            <row>
+              <entry>can_lower_lift</entry>
+              <entry><link linkend="bool">bool</link></entry>
+              <entry></entry>
+              <entry><para>Can the lift be lowered currently (= Can the state be set to DRIVING)</para></entry>
+            </row>
+            
+            <row>
+              <entry>can_move_arm</entry>
+              <entry><link linkend="bool">bool</link></entry>
+              <entry></entry>
+              <entry><para>Can the arm be moved manually</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.DriveArmControlMessage">
+      <title>DriveArmControlMessage</title>
+      <para>send move commands to the robotic arm</para>
+      
+      <table frame="all">
+        <title><classname>DriveArmControlMessage</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>direction</entry>
+              <entry><link linkend="google.protobuf.DriveArmControlMessage.Direction">DriveArmControlMessage.Direction</link></entry>
+              <entry></entry>
+              <entry><para>direction, relative to base_link</para></entry>
+            </row>
+            
+            <row>
+              <entry>speed_mult</entry>
+              <entry><link linkend="float">float</link></entry>
+              <entry></entry>
+              <entry><para>a float from 0 to 1 that is a multiplier for the speed applied</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.DriveRpmControlMessage">
+      <title>DriveRpmControlMessage</title>
+      <para>Contains rpm driving commands</para>
+      
+      <table frame="all">
+        <title><classname>DriveRpmControlMessage</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>forward_backward_axis</entry>
+              <entry><link linkend="float">float</link></entry>
+              <entry></entry>
+              <entry><para>a float from -1 to 1 where -1 is backwards and 1 is forward</para></entry>
+            </row>
+            
+            <row>
+              <entry>left_right_axis</entry>
+              <entry><link linkend="float">float</link></entry>
+              <entry></entry>
+              <entry><para>a float from -1 to 1 where -1 is right and 1 is left</para></entry>
+            </row>
+            
+            <row>
+              <entry>speed_mult</entry>
+              <entry><link linkend="float">float</link></entry>
+              <entry></entry>
+              <entry><para>a float from 0 to 1 that is a multiplier for the speed applied</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.SetStateMessage">
+      <title>SetStateMessage</title>
+      <para>Sets a specific state for manual control</para>
+      
+      <table frame="all">
+        <title><classname>SetStateMessage</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>target_state</entry>
+              <entry><link linkend="google.protobuf.SetStateMessage.TargetState">SetStateMessage.TargetState</link></entry>
+              <entry></entry>
+              <entry><para>requested state</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.SetStateMessageResponse">
+      <title>SetStateMessageResponse</title>
+      <para>response after sending a SetStateMessage.</para><para>While the command is in progress, a SetStateProgressMessage is sent.</para><para>When done, a SetStateFinishedMessage is sent.</para>
+      
+      <table frame="all">
+        <title><classname>SetStateMessageResponse</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>progress</entry>
+              <entry><link linkend="google.protobuf.SetStateMessageResponse.SetStateProgressMessage">SetStateMessageResponse.SetStateProgressMessage</link></entry>
+              <entry></entry>
+              <entry><para>progress update of current setstate action</para></entry>
+            </row>
+            
+            <row>
+              <entry>finished</entry>
+              <entry><link linkend="google.protobuf.SetStateMessageResponse.SetStateFinishedMessage">SetStateMessageResponse.SetStateFinishedMessage</link></entry>
+              <entry></entry>
+              <entry><para>sent when setState is done or failed</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.SetStateMessageResponse.SetStateFinishedMessage">
+      <title>SetStateMessageResponse.SetStateFinishedMessage</title>
+      <para>Sent when done setting state</para>
+      
+      <table frame="all">
+        <title><classname>SetStateMessageResponse.SetStateFinishedMessage</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>success</entry>
+              <entry><link linkend="bool">bool</link></entry>
+              <entry></entry>
+              <entry><para>was setting state a success</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.SetStateMessageResponse.SetStateProgressMessage">
+      <title>SetStateMessageResponse.SetStateProgressMessage</title>
+      <para>Sent while the state is being set</para>
+      
+      <table frame="all">
+        <title><classname>SetStateMessageResponse.SetStateProgressMessage</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>progress</entry>
+              <entry><link linkend="float">float</link></entry>
+              <entry></entry>
+              <entry><para>progress update of current setstate action</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.StartDrillMessage">
+      <title>StartDrillMessage</title>
+      <para>Command to start drilling</para>
+      
+      <table frame="all">
+        <title><classname>StartDrillMessage</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>drill_holes</entry>
+              <entry><link linkend="google.protobuf.StartDrillMessage.ManualDrillHole">StartDrillMessage.ManualDrillHole</link></entry>
+              <entry>repeated</entry>
+              <entry><para>List of holes to drill</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.StartDrillMessage.ManualDrillHole">
+      <title>StartDrillMessage.ManualDrillHole</title>
+      <para>Definition of a hole to drill</para>
+      
+      <table frame="all">
+        <title><classname>StartDrillMessage.ManualDrillHole</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>local_transform</entry>
+              <entry><link linkend="google.protobuf.Matrix4x4">Matrix4x4</link></entry>
+              <entry></entry>
+              <entry><para>this holes's transform relative to the drillmask</para></entry>
+            </row>
+            
+            <row>
+              <entry>name</entry>
+              <entry><link linkend="string">string</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>depth_meter</entry>
+              <entry><link linkend="double">double</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>diameter_meter</entry>
+              <entry><link linkend="double">double</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.StartDrillResponse">
+      <title>StartDrillResponse</title>
+      <para>Respone while/after drilling</para>
+      
+      <table frame="all">
+        <title><classname>StartDrillResponse</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>progress</entry>
+              <entry><link linkend="float">float</link></entry>
+              <entry></entry>
+              <entry><para>When in progress, float from 0-1</para></entry>
+            </row>
+            
+            <row>
+              <entry>finished</entry>
+              <entry><link linkend="google.protobuf.StartDrillResponse.DrillFinishedMessage">StartDrillResponse.DrillFinishedMessage</link></entry>
+              <entry></entry>
+              <entry><para>When done</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    <section id="google.protobuf.StartDrillResponse.DrillFinishedMessage">
+      <title>StartDrillResponse.DrillFinishedMessage</title>
+      <para>Response when Drilling is done</para>
+      
+      <table frame="all">
+        <title><classname>StartDrillResponse.DrillFinishedMessage</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>success</entry>
+              <entry><link linkend="bool">bool</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+      
+      
+    </section>
+    
+    
+    <section id="google.protobuf.DriveArmControlMessage.Direction">
+      <title>DriveArmControlMessage.Direction</title>
+      <para></para>
+      <table frame="all">
+        <title><classname>DriveArmControlMessage.Direction</classname> Values</title>
+        <tgroup cols="3">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Name</entry>
+              <entry>Number</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>LEFT</entry>
+              <entry>0</entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>RIGHT</entry>
+              <entry>1</entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>FORWARD</entry>
+              <entry>2</entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>BACKWARD</entry>
+              <entry>3</entry>
+              <entry><para></para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+    </section>
+    
+    <section id="google.protobuf.SetStateMessage.TargetState">
+      <title>SetStateMessage.TargetState</title>
+      <para></para>
+      <table frame="all">
+        <title><classname>SetStateMessage.TargetState</classname> Values</title>
+        <tgroup cols="3">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Name</entry>
+              <entry>Number</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>UNUSED</entry>
+              <entry>0</entry>
+              <entry><para>placeholder</para></entry>
+            </row>
+            
+            <row>
+              <entry>DRIVING</entry>
+              <entry>10</entry>
+              <entry><para>mode for driving manually</para></entry>
+            </row>
+            
+            <row>
+              <entry>FINE_POSITIONING</entry>
+              <entry>20</entry>
+              <entry><para>mode for positioning Arm</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+    </section>
+    
+
+    
+
+    
+    <section id="google.protobuf.ManualModeService">
+      <title>ManualModeService</title>
+      <para></para>
+      <table frame="all">
+        <title><classname>ManualModeService</classname> Methods</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Method Name</entry>
+              <entry>Request Type</entry>
+              <entry>Response Type</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>ControlStateStream</entry>
+              <entry><link linkend="google.protobuf.Empty">Empty</link></entry>
+              <entry><link linkend="google.protobuf.ControlState">ControlState</link> stream</entry>
+              <entry><para>server streams the current state of allowed actions</para></entry>
+            </row>
+            
+            <row>
+              <entry>DriveRpmControlStream</entry>
+              <entry><link linkend="google.protobuf.DriveRpmControlMessage">DriveRpmControlMessage</link> stream</entry>
+              <entry><link linkend="google.protobuf.Empty">Empty</link></entry>
+              <entry><para>client streams RPM drive commands</para></entry>
+            </row>
+            
+            <row>
+              <entry>DriveArmControl</entry>
+              <entry><link linkend="google.protobuf.DriveArmControlMessage">DriveArmControlMessage</link></entry>
+              <entry><link linkend="google.protobuf.Empty">Empty</link></entry>
+              <entry><para>unary Arm move commands. returns when the arm has stopped moving</para></entry>
+            </row>
+            
+            <row>
+              <entry>SetState</entry>
+              <entry><link linkend="google.protobuf.SetStateMessage">SetStateMessage</link></entry>
+              <entry><link linkend="google.protobuf.SetStateMessageResponse">SetStateMessageResponse</link> stream</entry>
+              <entry><para>client requests a state change. Service call streams progress and ends with a SetStateFinishedMessage on completion or fail</para></entry>
+            </row>
+            
+            <row>
+              <entry>StartDrill</entry>
+              <entry><link linkend="google.protobuf.StartDrillMessage">StartDrillMessage</link></entry>
+              <entry><link linkend="google.protobuf.StartDrillResponse">StartDrillResponse</link> stream</entry>
+              <entry><para>start drilling at the current tool position</para></entry>
+            </row>
+            
+            <row>
+              <entry>Stop</entry>
+              <entry><link linkend="google.protobuf.Empty">Empty</link></entry>
+              <entry><link linkend="google.protobuf.Empty">Empty</link></entry>
+              <entry><para>Stop whatever bautiro is doing</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+    </section>
+    
+  </section>
+  
+
+  <section>
+    <title>Scalar Value Types</title>
+    <informaltable frame="all">
+      <tgroup cols="5">
+        <colspec colwidth="*"/>
+        <colspec colwidth="5*"/>
+        <colspec colwidth="*"/>
+        <colspec colwidth="*"/>
+        <colspec colwidth="*"/>
+        <thead>
+          <row>
+            <entry>.proto Type</entry>
+            <entry>Notes</entry>
+            <entry>C++</entry>
+            <entry>Java</entry>
+            <entry>Python</entry>
+            <entry>Go</entry>
+            <entry>C#</entry>
+            <entry>PHP</entry>
+            <entry>Ruby</entry>
+          </row>
+        </thead>
+        <tbody>
+          
+          <row>
+            <entry id="double">double</entry>
+            <entry></entry>
+            <entry>double</entry>
+            <entry>double</entry>
+            <entry>float</entry>
+            <entry>float64</entry>
+            <entry>double</entry>
+            <entry>float</entry>
+            <entry>Float</entry>
+          </row>
+          
+          <row>
+            <entry id="float">float</entry>
+            <entry></entry>
+            <entry>float</entry>
+            <entry>float</entry>
+            <entry>float</entry>
+            <entry>float32</entry>
+            <entry>float</entry>
+            <entry>float</entry>
+            <entry>Float</entry>
+          </row>
+          
+          <row>
+            <entry id="int32">int32</entry>
+            <entry>Uses variable-length encoding. Inefficient for encoding negative numbers – if your field is likely to have negative values, use sint32 instead.</entry>
+            <entry>int32</entry>
+            <entry>int</entry>
+            <entry>int</entry>
+            <entry>int32</entry>
+            <entry>int</entry>
+            <entry>integer</entry>
+            <entry>Bignum or Fixnum (as required)</entry>
+          </row>
+          
+          <row>
+            <entry id="int64">int64</entry>
+            <entry>Uses variable-length encoding. Inefficient for encoding negative numbers – if your field is likely to have negative values, use sint64 instead.</entry>
+            <entry>int64</entry>
+            <entry>long</entry>
+            <entry>int/long</entry>
+            <entry>int64</entry>
+            <entry>long</entry>
+            <entry>integer/string</entry>
+            <entry>Bignum</entry>
+          </row>
+          
+          <row>
+            <entry id="uint32">uint32</entry>
+            <entry>Uses variable-length encoding.</entry>
+            <entry>uint32</entry>
+            <entry>int</entry>
+            <entry>int/long</entry>
+            <entry>uint32</entry>
+            <entry>uint</entry>
+            <entry>integer</entry>
+            <entry>Bignum or Fixnum (as required)</entry>
+          </row>
+          
+          <row>
+            <entry id="uint64">uint64</entry>
+            <entry>Uses variable-length encoding.</entry>
+            <entry>uint64</entry>
+            <entry>long</entry>
+            <entry>int/long</entry>
+            <entry>uint64</entry>
+            <entry>ulong</entry>
+            <entry>integer/string</entry>
+            <entry>Bignum or Fixnum (as required)</entry>
+          </row>
+          
+          <row>
+            <entry id="sint32">sint32</entry>
+            <entry>Uses variable-length encoding. Signed int value. These more efficiently encode negative numbers than regular int32s.</entry>
+            <entry>int32</entry>
+            <entry>int</entry>
+            <entry>int</entry>
+            <entry>int32</entry>
+            <entry>int</entry>
+            <entry>integer</entry>
+            <entry>Bignum or Fixnum (as required)</entry>
+          </row>
+          
+          <row>
+            <entry id="sint64">sint64</entry>
+            <entry>Uses variable-length encoding. Signed int value. These more efficiently encode negative numbers than regular int64s.</entry>
+            <entry>int64</entry>
+            <entry>long</entry>
+            <entry>int/long</entry>
+            <entry>int64</entry>
+            <entry>long</entry>
+            <entry>integer/string</entry>
+            <entry>Bignum</entry>
+          </row>
+          
+          <row>
+            <entry id="fixed32">fixed32</entry>
+            <entry>Always four bytes. More efficient than uint32 if values are often greater than 2^28.</entry>
+            <entry>uint32</entry>
+            <entry>int</entry>
+            <entry>int</entry>
+            <entry>uint32</entry>
+            <entry>uint</entry>
+            <entry>integer</entry>
+            <entry>Bignum or Fixnum (as required)</entry>
+          </row>
+          
+          <row>
+            <entry id="fixed64">fixed64</entry>
+            <entry>Always eight bytes. More efficient than uint64 if values are often greater than 2^56.</entry>
+            <entry>uint64</entry>
+            <entry>long</entry>
+            <entry>int/long</entry>
+            <entry>uint64</entry>
+            <entry>ulong</entry>
+            <entry>integer/string</entry>
+            <entry>Bignum</entry>
+          </row>
+          
+          <row>
+            <entry id="sfixed32">sfixed32</entry>
+            <entry>Always four bytes.</entry>
+            <entry>int32</entry>
+            <entry>int</entry>
+            <entry>int</entry>
+            <entry>int32</entry>
+            <entry>int</entry>
+            <entry>integer</entry>
+            <entry>Bignum or Fixnum (as required)</entry>
+          </row>
+          
+          <row>
+            <entry id="sfixed64">sfixed64</entry>
+            <entry>Always eight bytes.</entry>
+            <entry>int64</entry>
+            <entry>long</entry>
+            <entry>int/long</entry>
+            <entry>int64</entry>
+            <entry>long</entry>
+            <entry>integer/string</entry>
+            <entry>Bignum</entry>
+          </row>
+          
+          <row>
+            <entry id="bool">bool</entry>
+            <entry></entry>
+            <entry>bool</entry>
+            <entry>boolean</entry>
+            <entry>boolean</entry>
+            <entry>bool</entry>
+            <entry>bool</entry>
+            <entry>boolean</entry>
+            <entry>TrueClass/FalseClass</entry>
+          </row>
+          
+          <row>
+            <entry id="string">string</entry>
+            <entry>A string must always contain UTF-8 encoded or 7-bit ASCII text.</entry>
+            <entry>string</entry>
+            <entry>String</entry>
+            <entry>str/unicode</entry>
+            <entry>string</entry>
+            <entry>string</entry>
+            <entry>string</entry>
+            <entry>String (UTF-8)</entry>
+          </row>
+          
+          <row>
+            <entry id="bytes">bytes</entry>
+            <entry>May contain any arbitrary sequence of bytes.</entry>
+            <entry>string</entry>
+            <entry>ByteString</entry>
+            <entry>str</entry>
+            <entry>[]byte</entry>
+            <entry>ByteString</entry>
+            <entry>string</entry>
+            <entry>String (ASCII-8BIT)</entry>
+          </row>
+          
+        </tbody>
+      </tgroup>
+    </informaltable>
+  </section>
+
+</article>

@@ -1,0 +1,18 @@
+"Staubsauger an":
+    description: Staubsauger an
+"Staubsauger aus":
+    description: Staubsauger aus
+PTU_starten:
+    parameters:
+        - name: rechts_drehend
+          type: bool
+          value: True
+        - name: drehzahl
+          type: numeric
+          value: 300.0
+          min: 0.0
+          max: 100000.0
+          step_size: 10.0
+    description: "PTU starten"
+"PTU stoppen":
+    description: "PTU stoppen"

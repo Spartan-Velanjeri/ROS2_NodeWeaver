@@ -1,0 +1,11 @@
+geometry_msgs/PointStamped[] border_points
+
+# Line or plane border points which limits the area
+# where measurements will be analyzed for ceiling distance
+# measurement. 
+# Returns distance to the ceiling or -1 if measures are too noisy
+
+---
+float64 distance
+bool success
+string message

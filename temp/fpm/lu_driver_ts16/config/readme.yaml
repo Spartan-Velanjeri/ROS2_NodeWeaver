@@ -1,0 +1,39 @@
+playback: |
+  Verify interface setings:
+  * Provide path as "playback_path" ROS param
+serial: |
+  Verify interface setings:
+  * in Settings/Connections/"All other connections"/GeoCOM/Edit/"Connect using" select "Cable RS232"
+  * in Meas&Stream/Fn/Settings/Interface/"Connect using" select "Configured interface"
+  * in Meas&Stream/Fn/Settings/Interface/Interface select GeoCOM
+  * in Meas&Stream/Fn/Settings/Interface/Format select "Pt, N, E, Ht, date"
+usb: |
+  Verify interface settings:
+  * in Settings/Connections/"All other connections"/GeoCOM/Edit/"Connect using" select Cable
+  * in Settings/Connections/"All other connections"/GeoCOM/Control verify the IP address and port
+  * in Meas&Stream/Fn/Settings/Interface/"Connect using" select "Configured interface"
+  * in Meas&Stream/Fn/Settings/Interface/Interface select GeoCOM
+  * in Meas&Stream/Fn/Settings/Interface/Format select "Pt, N, E, Ht, date"
+  * your computer needs to have a 192.168.254.X IP address on the USB ethernet adapter
+wlan: |
+  Verify interface settings:
+  * in Settings/Connections/"All other connections"/GeoCOM/Edit/"Connect using" select WLAN
+  * in Settings/Connections/"Internet wizard" connect to a WLAN network
+  * in Settings/Connections/"All other connections"/GeoCOM/Control verify the IP address and port
+  * in Meas&Stream/Fn/Settings/Interface/"Connect using" select "Configured interface"
+  * in Meas&Stream/Fn/Settings/Interface/Interface select GeoCOM
+  * in Meas&Stream/Fn/Settings/Interface/Format select "Pt, N, E, Ht, date"
+suffix: |
+  Verify tracking settings:
+  * Meas & Stream app is started
+  * Correct prism type is set (usually Leica Miniprism)
+  * Measurement mode is set to continuous
+
+  Notes on the output:
+  Since the data from the TS16 is subject to heavy jitter three topics are published
+  * position: using the measurement timestamps in the message header and drift compensation (default)
+  * pub_position_no_drift_compensation: using the measurement timestamps in the message header (default)
+  * position_raw_timing: using the ROS timestamps on data reception in the message header
+  * timeref: translates between both above timestamps
+
+  Continue by pressing any key

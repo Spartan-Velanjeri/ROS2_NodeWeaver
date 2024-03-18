@@ -1,0 +1,28 @@
+# no temporary ROS files
+build/**
+install/**
+log/**
+
+# dont store python cache files
+**/__pycache__/**
+
+# ignore temporary docubuild files
+**/temp/
+**/__OUTPUT/
+doc/*/
+**/Dockerfile
+
+# don't checkin individual tool-settings
+.vscode/
+.project
+
+# zip files, e.g. backups
+*.zip
+
+__pycache__
+*.pyc
+build
+log
+install
+.vscode
+.vscode/**

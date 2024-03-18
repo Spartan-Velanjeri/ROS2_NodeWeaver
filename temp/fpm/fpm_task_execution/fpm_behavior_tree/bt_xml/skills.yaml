@@ -1,0 +1,94 @@
+# Schema:
+#
+# <skill_input>:
+#     name: [Required, type: string]: Name of the input.
+#     type: [Required, type: string]: Type of the input. ["string", "int", "float", "bool"]
+#     description: [Required, type: string]: Description of the input.
+#     range: [Optional, type: list]: Range of the input.
+#     required: [Optional, type: bool]: If the input is required or not.
+#     default: [Optional, type: string]: Default value of the input.
+#
+# <skill_name>:
+#     xml: [Required, type: string]: Name of the xml file (Behavior tree file) in the same directory.
+#     inputs: [Required, type: list]: <list_of_inputs>
+#     description: [Required, type: string]: Description of the skill.
+#     released: [Required, type: bool]: If the skill is released it will be exposed/callable on the interface.
+#     test: [Optional, type: bool] Skills used for tests. They will not be exposed/callable on the interface.
+
+
+demo_cluster:
+    xml: "demo_cluster.xml"
+    inputs: []
+    description: "Check what is this for?"
+    released: false
+    test: false
+manual_drilling:
+    xml: "fpm_drill_manually.xml"
+    inputs: []
+    description: "Check what is this for?"
+    released: false
+drill_pattern:
+    xml: "fpm_drill_pattern_joint_pose.xml"
+    inputs: []
+    description: "Check what is this for?"
+    released: false
+drill_pattern_cartesian_pose:
+    xml: "fpm_drill_pattern.xml"
+    inputs: []
+    description: "Check what is this for?"
+    released: false
+move_handling_unit_to_pose:
+    xml: "fpm_handling_unit_move_to_pose.xml"
+    inputs: []
+    description: "Check what is this for?"
+    released: false
+move_lift_absolute:
+    xml: "fpm_lift_move_absolute.xml"
+    inputs: 
+        - name: "height"
+          type: "float"
+          description: "Height to move to."
+          range: [0.0, 1.6]
+          required: true
+          default: 0.0
+    description: "Moving the lift to a specific height (absolute)."
+    released: true
+move_lift_to_working_height:
+    xml: "fpm_lift_move_to_working_height.xml"
+    inputs: []
+    description: "Moves lift to the working height."
+    released: true
+localization:
+    xml: "lu_fpm.xml"
+    inputs: []
+    description: "Check what is this for?"
+    released: false
+test_skill:
+    xml: "test_skill.xml"
+    inputs: 
+        - name: "string_test_input"
+          type: "string"
+          description: "String test input."
+          required: true
+          default: "test_input"
+        - name: "float_test_input"
+          type: "float"
+          description: "Float test input."
+          range: [0.0, 1.0]
+          required: true
+          default: 0.5
+        - name: "int_test_input"
+          type: "int"
+          description: "Int test input."
+          range: [0, 10]
+          required: true
+          default: 5
+        - name: "bool_test_input"
+          type: "bool"
+          description: "Bool test input."
+          required: true
+          default: true
+    description: "This is only a test skill for testing the skill server."
+    released: false
+    test: true
+

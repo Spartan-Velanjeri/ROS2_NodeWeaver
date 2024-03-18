@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name="lab_131">      
+    <pose>0 0 0 0 0 0</pose>
+      <static>true</static>
+      <link name="lab">
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>meshes/labpillars.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>meshes/labpillars.obj</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.7 0.5 0 0.8</ambient>
+            <diffuse>0.7 0.5 0 0.8</diffuse>
+            <specular>1 1 1 0.8</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+</sdf>

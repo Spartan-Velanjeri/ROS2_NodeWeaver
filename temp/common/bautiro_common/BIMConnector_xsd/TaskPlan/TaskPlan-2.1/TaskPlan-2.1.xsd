@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" version="2.1">
+    <xs:annotation>
+        <xs:appinfo source="2.1" xml:lang="de-DE">- Angabe "version" in TaskPlan jetzt "required"
+- Attribut "taskname" im TaskPlan neu.
+- DrillJob: BaseObjectMl in BaseObjectMg umbenannt
+- OnSiteMarker: BaseObjectMl in BaseObjectMg umbenannt
+- MoveJob
+- Moving/MoveJobList1D neu
+- MoveJob neu; Damit kann (optional) eine Endpose für das RPM vorgegeben werden.
+- MoveJobRef in JobRefList1D neu
+- JobRefList1D optional, aber wenn vorhanden, dann muss mindestens 1 Job definiert sein.
+- DestMoveJobRef (JobRefList1D) neu; Damit wird eine Endpose aus der Liste der definierten MoveJobs ausgewählt. 
+- Attribute "name" für MoveJob, DrillJob und MeasureJob jetzt "required" (vorher "optional").
+- Element "MarkerPlan" neu. Hier können jetzt verschiedene Ansichten des Markerplanes eingetragen werden (optional). Hinweis: Wird keine Ansicht vorgegeben, kann diese auch nicht in der Aufstellanleitung (XSLT) verarbeitet werden; der MarkerPlan-Ansicht(en) fehlt bzw. fehlen dann dort.
+- OnSiteMarkerList1D jetzt optional. Falls sie gebraucht werden sollte, existieren ohnehin Verlinkungen, die deren Existenz erzwingen
+</xs:appinfo>
+        <xs:appinfo source="2.0" xml:lang="de-DE">- PatternTree 1.3 durch NodeTree 2.0 ersetzt
+- PatternRefList1D und PatternRef in DrillMaskRefList1D bzw. DrillMaskRef umbenannt. Funktion bleibt gleich.
+- Material aus DrillJob entfernt. Grund: der TaskPlanner kann das Material nicht ermitteln, da er diese Information nicht aus dem RoomPlan (OBJ-File) ableiten kann. Diese Information (z.B. in Form eines Bohrertyps muss daher eher im NodeTree (DrillHole oder DrillMask) enthalten sein. Dieses Wissen steckt im Revit-Modell.
+- materialType ebenso entfernt
+- SlopeCorrection aus Version 1.7 wieder entfernt.
+- Cookie (inkl Feature) entfernt und durch "Any (Skip)" ersetzt.</xs:appinfo>
+        <xs:appinfo source="1.7" xml:lang="de-DE">- Typ Vector2D entfernt (wird nicht benötigt)
+- Element Cluster entfernt (war verwaist)
+- Offset Parameter für die Rough Pose (DrillJob/SlopeCorrection) neu</xs:appinfo>
+        <xs:appinfo source="1.6" xml:lang="de-DE">- Element "Settings" neu
+- Eindeutiger Verweis auf den verwendeten RoomPlan eingeführt (MD5 und Filename)
+- TaskPlan constraints (AbsTime und RelTime) entfallen. Dafür gibt es jetzt ein Element "desiredStartTime" in "Settings".
+- Element "JobRef" entfallen. "JobRefList1D" hat sich dadurch vereinfacht.
+- PatternTree-1.3 wird jetzt unterstützt
+- Element "Cluster" entfallen, Material jetzt in DrillJobProperties, BaseObjectMl direktes Element von "DrillJob"
+- "codeType" jetzt in "DataTypes.xsd"</xs:appinfo>
+        <xs:appinfo source="1.5" xml:lang="de-DE">PatternTree ersetzt jetzt PatterList1D. </xs:appinfo>
+        <xs:documentation xml:lang="en">The "TaskPlan" contains all information to process a BAUTIRO job, e.g. drill jobs.</xs:documentation>
+        <xs:documentation xml:lang="de-DE">Der TaskPlan stellt alle Informationen zur Verfügung, damit die unter "tools" angegebene Maschine (z.B. BAUTIRO) arbeiten kann.
+</xs:documentation>
+    </xs:annotation>
+    <xs:include schemaLocation="../../DataTypes/DataTypes-1.0/DataTypes-1.0.xsd"/>
+    <xs:include schemaLocation="../../NodeTree/NodeTree-2.0/NodeTree-2.0.xsd"/>
+    <xs:element name="TaskPlan">
+        <xs:annotation>
+            <xs:appinfo xml:lang="de-DE">Bohrablaufplan</xs:appinfo>
+            <xs:documentation xml:lang="en">The overall task plan of BAUTIRO.</xs:documentation>
+            <xs:documentation xml:lang="de-DE">Der Taskplan enthält alle für den Arbeitsablauf geplanten Informationen.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="GlobalSettings">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="en">Global settings for the task plan.</xs:documentation>
+                        <xs:documentation xml:lang="de-DE">Globale Einstellungen für den TaskPlan.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="RoomPlan" type="roomPlanType">
+                                <xs:annotation>
+                                    <xs:documentation xml:lang="en">This element sequence defines the correlated room plan.</xs:documentation>
+                                    <xs:documentation xml:lang="de-DE">Umfasst diverse Parameter, die den RoomPlan möglichst eindeutig spezifizieren. Der RoomPlan selbst liegt als separate OBJ-Datei vor.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" name="MarkerPlan" maxOccurs="1">
+                                <xs:annotation>
+                                    <xs:documentation xml:lang="en">Optional list that definies images to visualize the marker distribution on construction site.</xs:documentation>
+                                    <xs:documentation xml:lang="de-DE">Optionale Liste zur Angabe von Abbildungen, welche die Markerverteilung im Bohrraum darstellen.</xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element maxOccurs="unbounded" name="Image" type="markerPlanType">
+                                            <xs:annotation>
+                                                <xs:documentation xml:lang="en">Single Image that should represent the marker distribution in the specified view graphically.</xs:documentation>
+                                                <xs:documentation xml:lang="de-DE">Abbildung, welche die Markerverteilung in der angegebenen Blickrichtung (view) grafisch darstellt.</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element minOccurs="0" name="Schedule">
+                                <xs:annotation>
+                                    <xs:documentation xml:lang="en">Time schedule for the task plan (optional).</xs:documentation>
+                                    <xs:documentation xml:lang="de-DE">Angaben zur zeitlichen Planung der Arbeitsabläufe im TaskPlan.</xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="desiredStartTime" type="xs:dateTime">
+                                            <xs:annotation>
+                                                <xs:appinfo xml:lang="en">ISO 8601
+https://de.wikipedia.org/wiki/ISO_8601</xs:appinfo>
+                                                <xs:documentation xml:lang="en">Desired start time of processing the task plan.</xs:documentation>
+                                                <xs:documentation xml:lang="de-DE">Absolutzeit. Gibt an, wann die Bearbeitung des TaskPlan starten soll. Liegt dieser Zeitpunkt bereits in der Vergangenheit, wird er ignoriert und der Job startet sofort.</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="JobRefList1D" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="en">This is a sorted list of all jobs.</xs:documentation>
+                        <xs:documentation xml:lang="de-DE">Geordnete Liste aller Jobs. Die Reihenfolge in der Liste definiert die zeitliche Reihenfolge der Durchführung.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:sequence maxOccurs="unbounded">
+                                <xs:choice>
+                                    <xs:element name="DrillJobRef" type="xs:NCName">
+                                        <xs:annotation>
+                                            <xs:documentation xml:lang="en">Reference of a single drill job. Each drill job must be done only once !</xs:documentation>
+                                            <xs:documentation xml:lang="de-DE">Referenziert einen bereits definierten DrillJob. Jeder DrillJob darf nur ein einziges Mal in dieser Liste vergeben sein. Grund ist hierbei, dass jedes Loch nur einmal gebohrt werden kann.</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element name="MoveJobRef" type="xs:NCName">
+                                        <xs:annotation>
+                                            <xs:documentation xml:lang="en">Reference to a single move job. Move jobs can be called several times.</xs:documentation>
+                                            <xs:documentation xml:lang="de-DE">Referenziert einen bereits definierten MoveJob. MoveJobs können auch mehrfach aufgerufen werden.</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element name="MeasureJobRef" type="xs:NCName">
+                                        <xs:annotation>
+                                            <xs:documentation xml:lang="en">Reference to a single measurement job.</xs:documentation>
+                                            <xs:documentation xml:lang="de-DE">Referenziert einen bereits definierten MeasureJob.</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                </xs:choice>
+                            </xs:sequence>
+                            <xs:element minOccurs="0" name="DestMoveJobRef" type="xs:NCName">
+                                <xs:annotation>
+                                    <xs:documentation xml:lang="en">Reference of a single MoveJob that points to the final pose of BAUTIRO. If there is no DestMoveJobRef definined, BAUTIRO has to move back to its start position.</xs:documentation>
+                                    <xs:documentation xml:lang="de-DE">Referenziert einen bereits definierten MoveJob. An diese Stelle bewegt sich der BAUTIRO nach dem Fertigstellen aller Arbeitsgänge und wartet dort. Ist keine DestMoveJobRef explizit vorgegeben, dann bewegt sich der BAUTIRO nach Beenden seiner Aktivitäten zurück zu seiner ursprünglichen Startposition.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                    <xs:unique name="uDrillJobRef">
+                        <xs:annotation>
+                            <xs:appinfo xml:lang="de-DE">Stellt sicher, dass jeder DrillJob nur ein einziges Mal geplant wurde. MeasureJobs können dagegen theoretisch beliebig oft durchgeführt werden.</xs:appinfo>
+                        </xs:annotation>
+                        <xs:selector xpath=".//DrillJobRef"/>
+                        <xs:field xpath="."/>
+                    </xs:unique>
+                </xs:element>
+                <xs:element name="OnSiteMarkerList1D" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="en">A simple list of predefined on-site-markers. All markers are using the PKS as their origin.</xs:documentation>
+                        <xs:documentation xml:lang="de-DE">Liste aller vordefinierten OnSiteMarker. Alle OnSiteMarker sind gegenüber dem PKS verortet.
+Wird von der Bohrablaufplanung aus dem Core-Marker-Plan hergeleitet.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="OnSiteMarker" maxOccurs="unbounded" minOccurs="5">
+                                <xs:annotation>
+                                    <xs:documentation xml:lang="en">Definition of a single on-site-marker.</xs:documentation>
+                                    <xs:documentation xml:lang="de-DE">Definition eines einzelnen OnSiteMarkers. Der Name eines Markers muss eine Nummer sein, die vom Präfix durch einen Punkt (.) getrennt ist.</xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="BaseObjectMg" type="Matrix">
+                                            <xs:annotation>
+                                                <xs:documentation xml:lang="en">Pose of the On-Site-Marker related to the PKS. Note that the orientation on the marker is included. The usage of this value depends on the state attribute. If state="planned" then the BaseObjectMl represents the planned value. If state="measured" then the BaseObjectMl represents the measured value.</xs:documentation>
+                                                <xs:documentation xml:lang="de-DE">Vorgeschlagene oder tatsächliche Pose des OnSiteMarkes gegenüber dem PKS. Ob der Wert als "vorgeschlagen" oder als "tatsächlich" interpretiert werden kann, hängt vom Inhalt des Attributes "state" ab.</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute name="name" type="xs:NCName" use="required" form="unqualified">
+                                        <xs:annotation>
+                                            <xs:documentation xml:lang="en">Unique name of the on-site-marker.</xs:documentation>
+                                            <xs:documentation xml:lang="de-DE">Eindeutiger Name eines OnSiteMarkers.</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="index" type="xs:unsignedInt" use="optional">
+                                        <xs:annotation>
+                                            <xs:documentation xml:lang="en">Numerical index that describes the OnSiteMarker uniquely within OnSiteMarkerList1D.</xs:documentation>
+                                            <xs:documentation xml:lang="de-DE">Eindeutiger numerischer Index, welcher den Marker eindeutig innerhalb der OnSiteMarkerList1D kennzeichnet.</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="parent" type="xs:NCName">
+                                        <xs:annotation>
+                                            <xs:documentation xml:lang="en">Parent name of the on-site-marker. Use this optional attribute to store the name of the core marker where the on-site-marker is derived from.</xs:documentation>
+                                            <xs:documentation xml:lang="de-DE">Diese optionale Bezeichnung gibt den Namen desjenigen CoreMarkers an, von welchem der OnSiteMarker abgeleitet wurde.
+Parent name of the on-site-marker.</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="code" type="codeType" use="required">
+                                        <xs:annotation>
+                                            <xs:documentation xml:lang="en">Code of the marker. This code must be a well known code for BAUTIRO. It represents the relevant properties of the marker.</xs:documentation>
+                                            <xs:documentation xml:lang="de-DE">Vermarkungscode; über diesen Code ist die Art des Reflektors dem BAUTIRO bekannt.
+Es dürfen nur solche Marker verwendet werden, deren Code im Datentyp codeType unterstützt ist.</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="state" type="stateType" use="required">
+                                        <xs:annotation>
+                                            <xs:documentation xml:lang="en">Actual state of the on-site-marker. The BaseObjectMl has to be used in the correct manner.</xs:documentation>
+                                            <xs:documentation xml:lang="de-DE">Aktuelle Situation des OnSiteMarkers. Zum Einen gibt er an, ob der OnSiteMarker bereits vermessen wurde oder nicht und zum Anderen muss diese Vermessung an derjenigen Pose, die durch die BaseObjectMl des OnSiteMarkers angegeben ist, erfolgt sein.
+Umgekehrt bedeutet dies: Ist state="planned", dann ist der Wert in BaseObjectMl als Positioniervorschlag für den anzubringenden Marker zu verstehen. Wurde dieser dann tatsächlich vermessen, muss die BaseObjectMl auf den gemessenen Wert gesetzt werden. Erst dann darf state="measured" gesetzt werden.</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="time" type="xs:dateTime">
+                                        <xs:annotation>
+                                            <xs:documentation xml:lang="en">Date and time of the measurement of the single on-site-marker (optional).</xs:documentation>
+                                            <xs:documentation xml:lang="de-DE">Zeitpunkt der durchgeführten Vermessung des OnSiteMarkers (optional).</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                    <xs:unique name="uIndex">
+                        <xs:selector xpath=".//OnSiteMarker"/>
+                        <xs:field xpath="@index"/>
+                    </xs:unique>
+                    <xs:unique name="uParent">
+                        <xs:annotation>
+                            <xs:appinfo xml:lang="de-DE">Jeder CoreMarker darf nur einmalig zugeordnet sein.</xs:appinfo>
+                        </xs:annotation>
+                        <xs:selector xpath=".//OnSiteMarker">
+                            <xs:annotation>
+                                <xs:appinfo xml:lang="en">The parent of the on-site-marker has to be unique in this list.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:selector>
+                        <xs:field xpath="@parent"/>
+                    </xs:unique>
+                </xs:element>
+                <xs:element name="Moving" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="en">A collection of moving settings.</xs:documentation>
+                        <xs:documentation xml:lang="de-DE">Sammlung aller Einstellungen für das einfache Bewegen des BAUTIRO.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="MoveJobList1D">
+                                <xs:annotation>
+                                    <xs:documentation xml:lang="en">List of move jobs.</xs:documentation>
+                                    <xs:documentation xml:lang="de-DE">Liste aller MoveJobs.</xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element maxOccurs="unbounded" name="MoveJob" minOccurs="1">
+                                            <xs:annotation>
+                                                <xs:documentation xml:lang="en">A move job element holds all informations for moving BAUTIRO to a certain position and is named uniquely.</xs:documentation>
+                                                <xs:documentation xml:lang="de-DE">Das MoveJob-Element beinhaltet alle Informationen, um den BAUTIRO an eine bestimmte vorgegebene Position (und Orientierung) in PKS-Koordinaten zu bewegen. Jeder MoveJob hat einen eindeutigen Namen über welchen er adressiert werden kann.</xs:documentation>
+                                            </xs:annotation>
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="BaseObjectMg" type="Matrix">
+                                                        <xs:annotation>
+                                                            <xs:documentation xml:lang="en">Pose of the RPM in PKS space. This pose defines the planned position and orientation of the RPM coordinate system (rough position).</xs:documentation>
+                                                            <xs:documentation xml:lang="de-DE">Pose des BAUTIRO in PKS-Koordinaten. Diese Pose definiert die Position und Orientierung des RPM-Koordinatensystems.</xs:documentation>
+                                                        </xs:annotation>
+                                                    </xs:element>
+                                                    <xs:element minOccurs="0" name="JobProperties">
+                                                        <xs:annotation>
+                                                            <xs:documentation xml:lang="en">Contains all information for the MoveJob.</xs:documentation>
+                                                            <xs:documentation xml:lang="de-DE">Enthält alle Prozessinformationen bezogen auf einen MoveJob.</xs:documentation>
+                                                        </xs:annotation>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                                <xs:attribute name="name" type="xs:NCName" use="required">
+                                                    <xs:annotation>
+                                                        <xs:documentation xml:lang="en">Unique name of the MoveJob.</xs:documentation>
+                                                        <xs:documentation xml:lang="de-DE">Eindeutiger Name des MoveJob</xs:documentation>
+                                                    </xs:annotation>
+                                                </xs:attribute>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##any" processContents="skip">
+                                <xs:annotation>
+                                    <xs:documentation xml:lang="en">Additional pattern specific properties can be added here. The will be ignored from xml-validator.</xs:documentation>
+                                    <xs:documentation xml:lang="de-DE">Ab hier können zusätzliche Eigenschaftswerte hinzugefügt werden. Diese werden jedoch vom XML-Validierer ignoriert.</xs:documentation>
+                                </xs:annotation>
+                            </xs:any>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element minOccurs="0" name="Measuring">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="en">A collection of measurement settings (only a sample, not relevant for BAUTIRO).</xs:documentation>
+                        <xs:documentation xml:lang="de-DE">Eine Sammlung von Paremetern für das Messen (nur fiktives Beispiel, keine Relevanz für BAUTIRO).</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element minOccurs="1" name="MeasureJobList1D">
+                                <xs:annotation>
+                                    <xs:documentation xml:lang="en">List of measurement jobs.</xs:documentation>
+                                    <xs:documentation xml:lang="de-DE">Liste von MeasurementJobs (nur fiktives Beispiel).</xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element maxOccurs="unbounded" name="MeasureJob">
+                                            <xs:annotation>
+                                                <xs:documentation xml:lang="en">Single Job for measuring of all on-site-markers of a single cluster.</xs:documentation>
+                                                <xs:documentation xml:lang="de-DE">Einzelner MeasurementJob (nur fiktives Beispiel).</xs:documentation>
+                                            </xs:annotation>
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="BaseObjectMg" type="Matrix">
+                                                        <xs:annotation>
+                                                            <xs:documentation xml:lang="en">Pose of the cluster element in PKS space. This pose defines the planned position and orientation of the robot coordinate system (rough position) from where all the cluster patterns can be reached.</xs:documentation>
+                                                            <xs:documentation xml:lang="de-DE">Aus dieser Pose heraus kann sowohl die Grobposition als auch die Richtung des RPM abgeleitet werden. Das globale Attribut "tool" hilft dabei, die für das RPM relevante Steuergröße zu berechnen (immerhin wird die Pose des Roboterfußes nicht mit dem charakteristischen Koordinatensystem des RPM zusammenfallen).</xs:documentation>
+                                                        </xs:annotation>
+                                                    </xs:element>
+                                                    <xs:element name="JobProperties">
+                                                        <xs:annotation>
+                                                            <xs:documentation xml:lang="en">Contains all information for the MeasureJob (cluster).</xs:documentation>
+                                                            <xs:documentation xml:lang="de-DE">Enthält alle Prozessinformationen bezogen auf einen MeasureJob.</xs:documentation>
+                                                        </xs:annotation>
+                                                        <xs:complexType>
+                                                            <xs:sequence>
+                                                                <xs:element ref="OnSiteMarkerRefList1D"/>
+                                                            </xs:sequence>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                                <xs:attribute name="name" type="xs:NCName" use="required">
+                                                    <xs:annotation>
+                                                        <xs:documentation xml:lang="en">Unique name of the job.</xs:documentation>
+                                                        <xs:documentation xml:lang="de-DE">Eindeutiger Jobname. Muss eindeutig im gesamten TaskPlan sein.</xs:documentation>
+                                                    </xs:annotation>
+                                                </xs:attribute>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##any" processContents="skip">
+                                <xs:annotation>
+                                    <xs:documentation xml:lang="en">Additional pattern specific properties can be added here. The will be ignored from xml-validator.</xs:documentation>
+                                    <xs:documentation xml:lang="de-DE">Ab hier können zusätzliche Eigenschaftswerte hinzugefügt werden. Diese werden jedoch vom XML-Validierer ignoriert.</xs:documentation>
+                                </xs:annotation>
+                            </xs:any>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Drilling" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="en">A collection of drilling settings.</xs:documentation>
+                        <xs:documentation xml:lang="de-DE">Sammlung aller Einstellungen für das Bohrvorhaben.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="DrillJobList1D">
+                                <xs:annotation>
+                                    <xs:documentation xml:lang="en">List of drilling jobs.</xs:documentation>
+                                    <xs:documentation xml:lang="de-DE">Liste aller DrillJobs.</xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="DrillJob" maxOccurs="unbounded">
+                                            <xs:annotation>
+                                                <xs:documentation xml:lang="en">Single job for drilling a full drill cluster.</xs:documentation>
+                                                <xs:documentation xml:lang="de-DE">Beschreibt die Pose und den Inhalt einen einzelnen DrillJob (Cluster).</xs:documentation>
+                                            </xs:annotation>
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="BaseObjectMg" type="Matrix">
+                                                        <xs:annotation>
+                                                            <xs:appinfo xml:lang="de-DE">Aus dieser Pose heraus können sowohl die Grobposition, die Richtung des RPM und die Neigung des RPM an der angegebenen Position abgeleitet werden.</xs:appinfo>
+                                                            <xs:documentation xml:lang="en">Pose of the cluster element in PKS space. This pose defines the planned position and orientation of the robot coordinate system (rough position) from where all the cluster patterns can be reached.</xs:documentation>
+                                                            <xs:documentation xml:lang="de-DE">Pose des DrillJob (Cluster) im PKS-Koordinaten. Diese Pose beschreibt die Position und Orientierung des Roboter-Basis-Koordinatensystems, von welcher aus die für den DrillJob geplanten Bohrvorgänge durchgeführt werden können.</xs:documentation>
+                                                        </xs:annotation>
+                                                    </xs:element>
+                                                    <xs:element name="JobProperties">
+                                                        <xs:annotation>
+                                                            <xs:documentation xml:lang="en">Contains all information for the DrillJob (cluster).</xs:documentation>
+                                                            <xs:documentation xml:lang="de-DE">Enthält alle Prozessinformationen bezogen auf einen DrillJob (Bohrcluster).</xs:documentation>
+                                                        </xs:annotation>
+                                                        <xs:complexType>
+                                                            <xs:sequence>
+                                                                <xs:element ref="DrillMaskRefList1D"/>
+                                                                <xs:element ref="OnSiteMarkerRefList1D"/>
+                                                            </xs:sequence>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                                <xs:attribute name="name" type="xs:NCName" use="required">
+                                                    <xs:annotation>
+                                                        <xs:documentation xml:lang="en">Unique name of the DrillJob.</xs:documentation>
+                                                        <xs:documentation xml:lang="de-DE">Eindeutiger Name des DrillJob.</xs:documentation>
+                                                    </xs:annotation>
+                                                </xs:attribute>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                                <xs:key name="DrillMaskRefKey">
+                                    <xs:selector xpath=".//DrillMaskRef"/>
+                                    <xs:field xpath="."/>
+                                </xs:key>
+                                <xs:keyref name="DrillMaskRefKeyRef" refer="DrillMaskRefKey">
+                                    <xs:annotation>
+                                        <xs:documentation xml:lang="de-DE">Stellt sicher, dass jedes "DrillMaskRef" nur ein einziges Mal innerhalb der "DrillJobList1D" auftreten kann.</xs:documentation>
+                                    </xs:annotation>
+                                    <xs:selector xpath=".//DrillMaskRef"/>
+                                    <xs:field xpath="."/>
+                                </xs:keyref>
+                            </xs:element>
+                            <xs:element ref="NodeTree"/>
+                            <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##any" processContents="skip">
+                                <xs:annotation>
+                                    <xs:documentation xml:lang="en">Additional pattern specific properties can be added here. The will be ignored from xml-validator.</xs:documentation>
+                                    <xs:documentation xml:lang="de-DE">Ab hier können zusätzliche Eigenschaftswerte hinzugefügt werden. Diese werden jedoch vom XML-Validierer ignoriert.</xs:documentation>
+                                </xs:annotation>
+                            </xs:any>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="version" type="xs:string" use="required">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Version number of the XML file.</xs:documentation>
+                    <xs:documentation xml:lang="de-DE">Versionsnummer des TaskPlan-Schemas, auf welches sich die jeweilige XML-Datei beziehen soll. Diese Information ist insbesondere dann wichtig, wenn die "NamespaceSchemaLocation" des verwendeten Schemas NICHT im xml-Header aufgeführt ist.</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="tool" type="toolType" use="required">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">The tool type (or machine type, e.g. BAUTIRO) that has to be used for the planned tasks.</xs:documentation>
+                    <xs:documentation xml:lang="de-DE">Enthält den Typ der verwendeten Arbeitsmaschine (z.B. BAUTIRO) für welche der TaskPlan erstellt wurde.</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="taskname" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Name of the task planning mission. This text describes the task shortly (max 80 characters).</xs:documentation>
+                    <xs:documentation xml:lang="de-DE">Name der Aufgabenplanung. Dieser Freitext beschreibt kurz die Aufgabe des Taskplanes (max. 80 Zeichen).</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+        <xs:key name="OnSiteMarkerKey">
+            <xs:selector xpath=".//OnSiteMarker"/>
+            <xs:field xpath="@name"/>
+        </xs:key>
+        <xs:keyref name="OnSiteMarkerRef" refer="OnSiteMarkerKey">
+            <xs:selector xpath=".//OnSiteMarkerRef"/>
+            <xs:field xpath="."/>
+        </xs:keyref>
+        <xs:key name="DrillMaskKey">
+            <xs:annotation>
+                <xs:appinfo xml:lang="de-DE">Erzeugt einen eindeutigen Schlüssel für ALLE Elemente vom Typ "Pattern". Dabei ist es unerheblich, ob ein "Pattern" in einer "Group" oder eigenständig auftritt.</xs:appinfo>
+            </xs:annotation>
+            <xs:selector xpath=".//DrillMask"/>
+            <xs:field xpath="@name"/>
+        </xs:key>
+        <xs:keyref name="DrillMaskKeyRef" refer="DrillMaskKey">
+            <xs:selector xpath=".//DrillMaskRef"/>
+            <xs:field xpath="."/>
+        </xs:keyref>
+        <xs:key name="MoveJobKey">
+            <xs:selector xpath=".//MoveJob"/>
+            <xs:field xpath="@name"/>
+        </xs:key>
+        <xs:keyref name="MoveJobKeyRef" refer="MoveJobKey">
+            <xs:selector xpath=".//MoveJobRef"/>
+            <xs:field xpath="."/>
+        </xs:keyref>
+        <xs:key name="MeasureJobKey">
+            <xs:selector xpath=".//MeasureJob"/>
+            <xs:field xpath="@name"/>
+        </xs:key>
+        <xs:keyref name="MeasureJobKeyRef" refer="MeasureJobKey">
+            <xs:selector xpath=".//MeasureJobRef"/>
+            <xs:field xpath="."/>
+        </xs:keyref>
+        <xs:key name="DrillJobKey">
+            <xs:selector xpath=".//DrillJob"/>
+            <xs:field xpath="@name"/>
+        </xs:key>
+        <xs:keyref name="DrillJobKeyRef" refer="DrillJobKey">
+            <xs:selector xpath=".//DrillJobRef"/>
+            <xs:field xpath="."/>
+        </xs:keyref>
+        <xs:key name="DestMoveJobKey">
+            <xs:selector xpath=".//MoveJob"/>
+            <xs:field xpath="@name"/>
+        </xs:key>
+        <xs:keyref name="DestMoveJobKeyRef" refer="MoveJobKey">
+            <xs:selector xpath=".//DestMoveJobRef"/>
+            <xs:field xpath="."/>
+        </xs:keyref>
+    </xs:element>
+    <xs:element name="OnSiteMarkerRefList1D">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">List of all on-site-markers they have to be used within the drill cluster.
+Not: Each on-site-marker is permitted to be once in this list but could be re-used in other lists.</xs:documentation>
+            <xs:documentation xml:lang="de-DE">Das ist eine Liste von OnSiteMarkern, die in dem jeweiligen Bohrcluster verwendet werden können.
+Hinweis: Die OnSiteMarker können in den unterschiedlichen Clustern mehrfach verwendet werden. Deshalb muss hier eine Referenz auf ein externes Listenelement angewendet werden.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="unbounded" minOccurs="5" name="OnSiteMarkerRef" type="xs:NCName">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="en">Referes to an on-site-marker. This marker has to be a member of the OnSiteMarkerList1D.</xs:documentation>
+                        <xs:documentation xml:lang="de-DE">Referenz auf einen in der OnSiteMarkerList1D existierenden OnSiteMarker.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+        <xs:unique name="uOnSiteMarkerRef">
+            <xs:annotation>
+                <xs:appinfo xml:lang="de-DE">OnSiteMarker dürfen in einem Cluster niemals mehrdeutig sein. Im Gegensatz zu "uPatternRef" darf diese Kontrolle nicht entfallen, da es hierfür keine externe Kontrollabfrage (wie "PatternRefKeyRef") existieren kann.</xs:appinfo>
+            </xs:annotation>
+            <xs:selector xpath="./OnSiteMarkerRef"/>
+            <xs:field xpath="."/>
+        </xs:unique>
+    </xs:element>
+    <xs:element name="DrillMaskRefList1D">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">List of DrillMask they have to be drilled in the related DrillJob.
+Note: Each DrillMask is permitted to be once in all DrillJobs.</xs:documentation>
+            <xs:documentation xml:lang="de-DE">Das ist die Liste derjenigen Bohrmuster (DrillMask), die in dem jeweiligen Cluster (DrillJob) gebohrt werden sollen. Hinweis: Die Bohrmuster dürfen nur einmal in allen DrillJobs auftauchen!</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="DrillMaskRef" type="xs:NCName">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="en">The name of the DrillMask that has to be drilled on this cluster.</xs:documentation>
+                        <xs:documentation xml:lang="de-DE">Name einer einzelnen DrillMask, die in dem zugeordneten DrillJob gebohrt werden soll.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+        <xs:unique name="uDrillMaskRef">
+            <xs:annotation>
+                <xs:appinfo xml:lang="de-DE">Kann theoretisch entfallen, da die Prüfung der Eindeutigkeit von einem externen Constraint erledigt wird.</xs:appinfo>
+            </xs:annotation>
+            <xs:selector xpath="./DrillMaskRef"/>
+            <xs:field xpath="."/>
+        </xs:unique>
+    </xs:element>
+    <xs:simpleType name="stateType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Data type for on-site-markers state. It describes the actual interpretation of the pose ralated to the marker.
+The value "planned" defines that the pose on-site-marker is just proposed and NOT measured. That means that the pose of this marker is unknown in the real world.</xs:documentation>
+            <xs:documentation xml:lang="de-DE">Datentyp für den Zustand eines OnSiteMarker. Er definiert, wie die angegebene Pose (BaseObjectMl) des OnSiteMarkers interpretiert werden muss.
+Ist der Wert "planned", so muss die Pose-Information des Markers als "Vorschlag" interpretiert werden. Der Marker muss wahrscheinlich noch angebracht werden. Die tatsächliche Position des Markers im Bohrraum ist also unbekannt.
+Ist der Wert jedoch "measured" dann kann davon ausgegangen werden, dass der Marker im Bohrraum an der beschriebenen Stelle existiert und die Pose-Koordinate stimmt.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="planned"/>
+            <xs:pattern value="measured"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="toolType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">The name of the tool that has to be used for the planned tasks.</xs:documentation>
+            <xs:documentation xml:lang="de-DE">Der Name der Arbeitsmaschine, für die der erstellte TaskPlan gelten soll.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="BAUTIRO"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MD5type">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">This is a 128 Bit MD5-Hashes („message-digests“) that will be represeted by a 32 byte string with hexadecimal numbers.</xs:documentation>
+            <xs:documentation xml:lang="de-DE">Die 128 Bit langen MD5-Hashes (englisch auch „message-digests“) werden normalerweise als 32-stellige Hexadezimalzahl notiert. </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[a-zA-Z0-9]{32}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="roomPlanType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Simple type to describe a room plan. This data type defines the filename of the room plan and a MD5 code of this file.</xs:documentation>
+            <xs:documentation xml:lang="de-DE">Einfacher Datentyp, der einen Raumplan beschreibt. Ein Raumplan besteht aus einer File-Uri und einem MD5-Code der Datei.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Filename" type="xs:anyURI"/>
+            <xs:element minOccurs="0" name="MD5" type="MD5type">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">The MD5 (Message-Digest Algorithm 5) of the file refered by its filename.</xs:documentation>
+                    <xs:documentation xml:lang="de-DE">MD5 (Message-Digest Algorithm) ist ein kryptografisches Protokoll, das zur Authentifizierung von Nachrichten sowie zur Überprüfung von Inhalten und digitalen Signaturen verwendet wird. In diesem Fall wird der MD5 dazu verwendet um sicherzustellen, dass der angegebene Filename auch tatsächlich der angegebenen Datei entspricht.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="faceType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Restrictions for marker distribution views</xs:documentation>
+            <xs:documentation xml:lang="de-DE">Einschränkungen für Markerverteilungs-Abbildungen</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="xy"/>
+            <xs:pattern value="xz"/>
+            <xs:pattern value="yz"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="drawingType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Simple type to specify the type of drawing, e.g. "layout" (floor plan) or "section".</xs:documentation>
+            <xs:documentation xml:lang="de-DE">Einfacher Datentyp zur Beschreibung von Ansichtsarten, z.B. Grundriss oder Schnitte.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="layout"/>
+            <xs:pattern value="section"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="markerPlanType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Simple type to describe an image represented by a specified filename.</xs:documentation>
+            <xs:documentation xml:lang="de-DE">Einfacher Datentyp zur Beschreibung einer Darstellung, die durch eine bestimmte Datei repräsentiert wird.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Filename" type="xs:anyURI">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">This is the filename uri of the image file.</xs:documentation>
+                    <xs:documentation xml:lang="de-DE">Dateiname der Datei, welche die Abbildung beinhaltet.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="drawing" type="drawingType">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">This (optional) attribute specifies the type of the image. The following settings are possible: "layout" defines an overall view (floor plan or ground plan), "section" is a special cross-section and will be used for detailed images. Is this attribut not set, then "layout" will be used as default.</xs:documentation>
+                <xs:documentation xml:lang="de-DE">Dieses (optionale) Attribut gibt an, um welche Art Abbildung es sich bei dem Image handelt.
+Folgende Möglichkeiten existieren: "layout" kennzeichnet ein Übersichtsbild (auch floor plan), "section" kennzeichnet einen Schnitt bzw. Detailbild. Wird das Attribut nicht angegeben, so wird automatisch "layout" als Voreinstellung angenommen.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="face" use="required" type="faceType">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">This attribute defines, which line of sight has been used by the picture. The following settings are permitted:
+xy for the x/y-Top view, xz for die x/z-Side view and yz for the y/z-Side view.</xs:documentation>
+                <xs:documentation xml:lang="de-DE">Dieses Attribut gibt an, um welche Blickrichtung es sich bei der angegebenen Darstellung handelt. Folgende Einstellungen sind möglich: 
+xy für die x/y-Draufsicht, xz für die x/z-Seitenansicht und yz für die y/z-Seitenansicht.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+</xs:schema>

@@ -1,0 +1,4 @@
+string NAME = "vacuum_start"
+---
+ResponseCode    response_code
+string          error_detail        ""

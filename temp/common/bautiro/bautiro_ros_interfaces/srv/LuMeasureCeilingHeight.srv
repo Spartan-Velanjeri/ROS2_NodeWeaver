@@ -1,0 +1,3 @@
+string NAME = "move_ts16_to_measure_ceiling_height"
+---
+geometry_msgs/PointStamped out_point

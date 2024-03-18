@@ -1,0 +1,15 @@
+@startuml Dependencies ccu_grpc
+rectangle ccu_grpc #Yellow
+rectangle ccu_data_services #BUSINESS
+rectangle ccu_hcu_abstraction #BUSINESS
+frame "3rd party" {
+    rectangle grpcio
+    rectangle protobuf
+}
+artifact " *.proto " as pb
+ccu_data_services ..> ccu_grpc : depends
+ccu_hcu_abstraction ..> ccu_grpc
+ccu_grpc ...> grpcio  : depends
+ccu_grpc ...> protobuf
+ccu_grpc <-[dotted]right- pb : codegen
+@enduml

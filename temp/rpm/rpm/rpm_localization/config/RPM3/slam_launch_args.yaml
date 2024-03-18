@@ -1,0 +1,72 @@
+slam_mode:
+  description: "The mode to run (slam, localization, lifelong_slam)"
+  default: "localization"
+  param_name: "slam_mode"
+bag:
+  description: "The bag to run slam on (with bagmode)"
+  param_name: "bag"
+  default: ""
+dir:
+  description: "The directory containing the bagfiles"
+  param_name: "dir"
+  default: ""
+map:
+  description: "The map to load"
+  param_name: "map_filename"
+  default: os.path.join(get_package_share_directory('lu_rough_localization'), 'maps', 'rosbag_shroom1_externed')
+rs_map:
+  description: "The road signature map to load"
+  default: ""
+  param_name: "rs_map"
+pole_map:
+  description: "The pole map to load"
+  param_name: "pole_map_file"
+  default: ""
+lls_load_map:
+  description: "The path where to load the lifelong slam map from"
+  param_name: "lls/map_path_loading"
+  default: ""
+lls_save_map:
+  description: "The path to save the lifelong slam map to"
+  param_name: "lls/map_path_saving"
+  default: ""
+gt:
+  description: "Which ground truth mode to use. Incomplete set of options are: 'from_scan', 'ground_truth_odom'. Complete set of options depends on available plugins."
+  param_name: "ground_truth_mode"
+  default: ""
+odo_mode:
+  description: "The odometry mode to use"
+  default: ""
+  param_name: "odo_mode"
+prefix:
+  description: "launch prefix (e.g., valgrind), currently used for ROS2 only"
+  default: ""
+  param_name: "prefix"
+gt_file:
+  description: "A file containing groundtruth data."
+  default: ""
+  param_name: "gt_file"
+config_template_general:
+  description: "config_template_general"
+  default: ""
+  param_name: "config_template_general"
+config_template_lidar:
+  description: "config_template_lidar"
+  default: ""
+  param_name: "config_template_lidar"
+mode:
+  description: "RPM_LOCALIZATION mode: simulation or real hardware (real, gazebo_sim)"
+  default: "gazebo_sim"
+  param_name: "mode"
+hw_sample: 
+  description: "RPM_LOCALIZATION mode: simulation or real hardware (RMP1, RPM2, ...)"
+  default: "RPM3"
+  param_name: "hw_sample"
+config_file_with_path: 
+  description: "(NOT USED AT THE MOMENT)"
+  default: ""
+  param_name: "config_file_with_path"
+namespace: 
+  description: "(NOT USED AT THE MOMENT)"
+  default: ""
+  param_name: "namespace"

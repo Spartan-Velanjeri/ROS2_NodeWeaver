@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CycloneDDS xmlns="https://cdds.io/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/master/etc/cyclonedds.xsd">
+    <Domain id="any">
+        <General>
+<!--            <NetworkInterfaceAddress>enp0s31f6</NetworkInterfaceAddress>  -->
+          <NetworkInterfaceAddress>wlp0s20f3</NetworkInterfaceAddress>
+          <AllowMulticast>false</AllowMulticast>
+        </General>
+        <Discovery>
+            <MaxAutoParticipantIndex>120</MaxAutoParticipantIndex>  <!-- Default is 9, which is much to small for ROS applications -->
+            <ParticipantIndex>auto</ParticipantIndex>
+            <Peers>
+                <Peer Address="localhost" />
+                <Peer Address="10.28.178.134" />   <!--  IP address of other machine in the network -->
+                <Peer Address="10.28.177.173" />  <!--  IP address of other machine in the network -->
+                <Peer Address="192.168.88.243" />
+                <Peer Address="192.168.88.244" />
+                <Peer Address="192.168.88.245" />
+                <Peer Address="192.168.88.246" />
+                <Peer Address="192.168.88.247" />
+                <Peer Address="192.168.88.248" />
+            </Peers>
+        </Discovery>
+    </Domain>
+</CycloneDDS>

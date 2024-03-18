@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<robot name="calibration" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:arg name="calibration_file" default="../../config/FUS/$(arg robot_name)/calibration_bautiro.yaml" /> <!-- path to calibration file of bautiro -->
+    <xacro:arg name="calibration_file_rpm" default="../../config/RPM/$(arg rpm_version)/calibration_rpm.yaml" /> <!-- path to calibration file of rpm -->
+    <xacro:arg name="calibration_file_fpm" default="../../config/FPM/$(arg fpm_version)/calibration_fpm.yaml" /> <!-- path to calibration file of fpm -->
+
+    <!--===========================Properties =================================================-->
+    <!--<xacro:property name="calibration" value="${load_yaml('$(arg calibration_file)')}" />-->
+    <xacro:property name="calibration" value="${dict(
+    **load_yaml('$(arg calibration_file)'),
+    **load_yaml('$(arg calibration_file_rpm)'),
+    **load_yaml('$(arg calibration_file_fpm)'))}" />
+
+    <!-- Include calibration URDF for macro: spawn calibrated links-->
+    <xacro:include filename="$(cwd)/urdf/tools/calibration.urdf.xacro" />
+
+    <!-- create bautiro base_link-->
+    <link name="base_link" />
+
+    <!-- Include RPM URDF -->
+    <xacro:include filename="$(cwd)/urdf/RPM/$(arg rpm_version)/rpm.urdf.xacro"/>
+
+    <!-- Load simulation controllers -->
+    <xacro:arg name="simulation_controllers" default="$(arg installation_path)/config/FPM/$(arg fpm_version)/ur_controller.yaml" />
+
+    <xacro:spawn_calibrated_joint
+        name="bautiro2rpm"
+        parent="base_link"
+        child="rpm_base_link"
+        dict_key="bautiro_base_link_to_rpm_base_link"/>
+
+    <!-- Include FPM URDF -->
+    <xacro:include filename="$(cwd)/urdf/FPM/$(arg fpm_version)/fpm.urdf.xacro"/>
+    <xacro:spawn_calibrated_joint name="rpm_fpm_lift" parent="lift_base_mount" child="lift_base" dict_key="rpm_fpm_lift"/>
+
+
+    <!-- ROS 2 Control PlugIn for Simulation-->
+    <!-- PlugIn can be load only one time. These plugins are necessary for both fpm and rpm.-->
+    <gazebo>
+        <!-- ROS 2 control plugin only will be loaded with gazebo -->
+        <plugin filename="ign_ros2_control-system" name="ign_ros2_control::IgnitionROS2ControlPlugin">
+            <parameters>$(arg simulation_controllers)</parameters>
+        </plugin>
+        <!-- Plugin for leica simulation only will be loaded with gazebo -->
+        <plugin filename="libLocalPosePublisher.so" name="ignition::gazebo::systems::LocalPosePublisher">
+            <set_subscriber_topic_name>/reference_frame</set_subscriber_topic_name>
+        </plugin>
+
+        <plugin filename="libignition-gazebo-joint-state-publisher-system.so"
+          name="ignition::gazebo::systems::JointStatePublisher">
+          <update_rate>20</update_rate>
+        </plugin>
+    </gazebo>
+</robot>

@@ -1,0 +1,82 @@
+@startuml Overview
+
+
+folder missions #LightPink{
+    folder m3 as "3" #LightPink
+    folder m2 as "2" #LightPink
+    folder m1 as "1" {
+        file mim as "metadata" 
+        file mi as "<size:20>mission</size>" #IndianRed
+    }
+}
+folder workplans #Business{
+    folder w3 as "3" #Business
+    folder w2 as "2" #Business
+    folder w1 as "1" {
+        file wpm as "metadata"
+        file wp as "<size:20>workplan</size>" #Yellow
+        file de1 as "1.processdata" #PowderBlue
+        file de2 as "2.processdata" #PowderBlue
+        file de3 as "3.processdata" #PowderBlue
+
+    }
+}
+folder taskplans #TECHNOLOGY{
+    folder t3 as "3" #TECHNOLOGY
+    folder t2 as "2" #TECHNOLOGY
+    folder t1 as "1" {
+        file tpm as "metadata"
+        artifact tp as "<size:20>taskplan</size>" #LightGreen
+    }
+}
+folder navigationhintss {
+    card " ..."
+}
+folder roomplans {
+    card " .."
+}
+navigationhintss -[hidden]- roomplans
+
+(execution) as "Mission\nExecution" #LightSkyBlue
+(import)  #LightSkyBlue
+() ti as " " 
+() wi as " " 
+actor o1 as "Operator"
+actor o2 as "Operator"
+
+
+
+tpm -[dashed]- tp
+wpm -[dashed]- wp
+mim -[dashed]- mi
+
+w3 -[hidden]- w1
+t3 -[hidden]- t1
+m3 -[hidden]- m1
+
+wp o-- de1
+wp o-- de2
+wp o-- de3
+
+
+tp -> ti #Line:Blue;line.dotted
+ti -> wp   #Line:Blue;line.dotted;text:blue : import to\nown model
+
+
+wp -> wi #Line:Blue;line.dotted;text:blue : Jobs\nas\nmission
+wi -> mi #Line:Blue;line.dotted
+
+
+mi -[dotted]-> execution
+execution -[dotted]r-> de1 : "1<i>st</i>"
+execution -[dotted]r-> de2 : "2<i>nd</i>"
+execution -[dotted]r-> de3 : "3<i>rd</i>"
+
+
+execution <- o1 : start
+
+o2 -> import
+ti <-[dotted]- import
+
+
+@enduml

@@ -1,0 +1,6 @@
+geometry_msgs/Pose target_pose
+---
+geometry_msgs/Twist vel_cmd
+std_msgs/Bool pose_reached
+---
+std_msgs/Bool feedback

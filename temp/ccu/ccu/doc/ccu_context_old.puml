@@ -1,0 +1,86 @@
+@startuml CCU Context
+component HCU {
+    node " " << gRPC >> as hcu #IMPLEMENTATION
+}
+component BAUTIRO_CORE {
+    component CCU {
+        rectangle ccu_hcu_abstraction #BUSINESS {
+            node manual_mode as man #APPLICATION
+            node start_mission #APPLICATION
+            node data_service_bridge as bridge #APPLICATION
+            node " ... " as dot #APPLICATION
+            node " " << gRPC >> as grpc #IMPLEMENTATION
+        }
+        rectangle ccu_data_services #BUSINESS {
+            node HALC #APPLICATION
+            node CORE #APPLICATION
+        }
+        frame ccu_task_execution {
+
+            rectangle ccu_behavior_tree #BUSINESS {
+                node ccu_bt_navigators as me #APPLICATION
+            }
+            rectangle ccu_bt_tree_nodes #BUSINESS {
+                control " " as move_to_pose  #APPLICATION
+                control " " as start_drill  #APPLICATION
+                control " " as add_mission_event  #APPLICATION
+            }
+            me -- start_drill
+            me -- move_to_pose
+            me -- add_mission_event
+        }
+        rectangle " " as xyz #BUSINESS {
+            database CDataService #BUSINESS
+        }
+        frame //codegen//  {
+            rectangle CBautiro #BUSINESS
+            file proto #IMPLEMENTATION
+            note bottom #WhiteSmoke: Message/\nService-\nDefinition
+            rectangle Cgrpc #BUSINESS
+            file ecore
+            note top #WhiteSmoke: Model-\nDefinition
+            Cgrpc -[dotted]right- proto : //codegen//
+            Cgrpc -[hidden]-- CBautiro
+            CBautiro  -[dotted]right- ecore : //codegen//
+        }
+    }
+    component FPM {
+        node fpm_task_execution
+    }
+    component RPM {
+        node rpm_task_execution
+    }
+rpm_task_execution - move_to_pose
+fpm_task_execution - move_to_pose
+FPM -[hidden]- RPM
+}
+
+CDataService -[dotted]right- CBautiro
+CORE -- CDataService
+HALC -- CDataService
+ccu_hcu_abstraction -[dotted]- Cgrpc
+Cgrpc -[dotted]- ccu_data_services
+me -- CORE
+hcu -- grpc
+dot - grpc
+grpc - man
+grpc -- bridge
+man -[hidden]- bridge
+grpc -[bold]down-> start_mission
+me <-[bold]right- start_mission
+bridge -- HALC
+
+
+'bautiro_common
+' bautiro_ros_interfaces
+'   /package.xml:
+'     bautiro_ros_interfaces
+'ccu_task_execution
+' ccu_behavior_tree
+'   /package.xml:
+'     ccu_behavior_tree
+'ccu_task_execution
+' ccu_bt_tree_nodes
+'   /package.xml:
+'     ccu_bt_tree_nodes
+@enduml

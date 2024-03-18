@@ -1,0 +1,4 @@
+string NAME = "get_markers_cluster"
+---
+# Markers at current/next ClusterPosition (empty when no current/next available)
+Marker[] markers

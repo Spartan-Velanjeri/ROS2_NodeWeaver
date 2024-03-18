@@ -1,0 +1,32 @@
+@startuml Overview
+skinparam note {
+   BackgroundColor Salmon
+}
+
+folder taskplans #Beige{
+   folder "1" as tp1 {
+      file taskplan as "TaskPlan.XML"
+   }
+}
+folder missions #AntiqueWhite{
+   folder m2 as "2" {
+      database db2 as "                \n\n\n"  #LightSteelBlue
+   }
+   folder m1 as "1" {
+      database db1 as "            \n     <b>30%</b> \n    done   \n"  #LightSteelBlue;text:OrangeRed
+   }
+}
+
+
+db1 -[hidden]r- db2
+taskplan -up- db1 #Gray;line.dotted;text:Gray :"\n\n orgin"
+taskplan -[bold]r-> db2 #OrangeRed : " Create <i>new</i> Mission            \nfrom origin TaskPlan              "
+note right of link
+  BAUTIRO might <i>"<u>forget</u>"</i>
+  what has been done already
+  and could drill same hole again !!!
+end note
+db1 -[hidden]r-> db2
+
+
+@enduml

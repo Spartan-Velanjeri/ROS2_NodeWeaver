@@ -1,0 +1,18 @@
+# REQUEST
+# 1-dimensional length 2 [x,y]
+float32[] relative_target_position
+---
+# RESULT
+# response_code:
+#   0 - request position achieved
+#   1 - action failed: out of reach
+#   2 - action failed: current state (ccu_coordinator)
+#                      does not allow this operation
+#   3 - action failed: ... t.b.d. ...
+int32 response_code
+float32[] current_position
+---
+# Feedback
+# position relative to worklane origin
+float32[] current_position
+float32 progress_normalized

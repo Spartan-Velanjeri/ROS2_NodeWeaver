@@ -1,0 +1,7 @@
+execute_mission:
+    xml: "execute_mission.yml"
+    description: "This is - START MISSION - function"
+"nächste Gobpose anfahren":
+    xml: "grob_pose_anfahren.xml"
+    description: "Only moves RPM. to NEXT Cluster To Drill (sub-set of execute mission)"
+

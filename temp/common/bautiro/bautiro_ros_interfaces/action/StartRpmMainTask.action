@@ -1,0 +1,14 @@
+#action to start the RPM Behavior Tree
+#Goal
+bool start
+string bt_xml
+ClusterPosition des_cluster_pose
+string reference_frame
+---
+#Result
+string message
+ClusterPosition act_cluster_pose
+NavigationResult nav_result 
+
+---
+#Feedback

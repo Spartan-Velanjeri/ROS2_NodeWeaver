@@ -1,0 +1,13 @@
+#generic action to start the fpm skill (beavior tree)
+#data type      variable                        description                                     used with skill
+string          skill_name                      # name of the behavior tree/skill               all
+float32         lift_setpoint_position          # setpoint for the lift                         lift_move_absolute
+float32         platform_ceiling_distance       # distance from ceiling to platfrom in [m]      lift_move_to_working_height
+int32           handling_unit_configured_pose   # requested predefined pose for robot           robot_arm_move_to_pose
+DrillMask[]      drill_masks                     # drill mask to be able to drill pattern 
+Marker[]        markers                         # fine localization
+---
+#Result
+int32           response_code                   #check msg.ResponseCode for reponse codes
+---
+#Feedback

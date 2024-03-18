@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<robot name="fpm_sensorrack" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <link name="fpm_assembly_calibration_reference" />
+  <link name="fpm_imu" />
+  <link name="fpm_totalstation" />
+  <link name="fpm_inclinometer" />
+
+  <!-- LEICA TS16 -->
+  <xacro:spawn_calibrated_joint name="fpm_ace2totalstation" parent="fpm_assembly_calibration_reference" child="fpm_totalstation" dict_key="fpm_srr_leica"/>    
+
+  <!-- Imu XSENS: Height is 7 mm over mounting plate -->
+  <xacro:spawn_calibrated_joint name="fpm_acr2fpm_imu" parent="fpm_assembly_calibration_reference" child="fpm_imu" dict_key="fpm_srr_imu"/>    
+  
+  <!-- FPM inclinometer -->
+  <xacro:spawn_calibrated_joint name="fpm_acr2fpm_inc" parent="fpm_assembly_calibration_reference" child="fpm_inclinometer" dict_key="fpm_srr_inc"/>    
+  
+</robot>

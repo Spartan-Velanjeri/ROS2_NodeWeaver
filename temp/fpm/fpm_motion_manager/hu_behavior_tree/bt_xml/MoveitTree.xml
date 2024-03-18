@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+        <Sequence>
+            <Action ID="brakerelease"/>
+            <Action ID="loadprogram" file_name="moveit.urp"/>
+            <Action ID="getloadedprogram"/>
+            <Action ID="toolforce"/>
+            <Action ID="jointstates"/>
+            <Action ID="tooltemp"/>
+            <Action ID="play"/>
+            <Action ID="moveit" goal="0.38;-0.315;0.5;0.493;0.094;3.139"/>
+            <Action ID="loadprogram" file_name="drill.urp"/>
+            <Action ID="play"/>
+        </Sequence>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <Action ID="getloadedprogram"/>
+        <Action ID="iostatecondition"/>
+        <Action ID="iostates"/>
+        <Condition ID="isrobotrunning"/>
+        <Action ID="jointstates"/>
+        <Action ID="loadinstallation"/>
+        <Action ID="loadprogram">
+            <input_port name="file_name"/>
+        </Action>
+        <Action ID="moveit"/>
+        <Action ID="brakerelease"/>
+        <Action ID="pause"/>
+        <Action ID="play"/>
+        <Action ID="stop"/>
+        <Action ID="toolforce"/>
+        <Action ID="tooltemp"/>
+        <Action ID="turnoff"/>
+        <Action ID="turnon"/>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>

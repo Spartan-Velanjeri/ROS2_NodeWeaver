@@ -1,0 +1,25 @@
+
+rpm_cmd_vel:
+  parameters:
+    - name: translation
+      type: numeric
+      value: 0.5
+      min: -10.0
+      max: 10.0
+      step_size: 0.1
+    - name: rotation
+      type: numeric
+      value: 0.0
+      min: -10.0
+      max: 10.0
+      step_size: 0.1
+  description: "1s @ 3Hz publish /cmd_vel"
+"move rpm to cluster No":
+  parameters:
+    - name: cluster_No
+      type: numeric
+      value: 0
+      min: 0
+      max: 99
+      step_size: 1.0
+  description: "Send coord. to RPM-nav of cluster No, according to Scheduled JobList."

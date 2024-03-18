@@ -1,0 +1,14 @@
+# action to start the FPM Behavior Tree
+#Goal
+bool start
+string bt_xml
+DrillMask[] drill_masks
+Marker[] markers
+
+---
+#Result
+DrillHoleFeedback[] drill_results
+string message
+
+---
+#Feedback

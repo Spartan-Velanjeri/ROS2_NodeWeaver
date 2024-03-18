@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+        <Sequence>
+            <Action ID="LiftMoveToWorkingHeight" platform_ceiling_distance="{platform_ceiling_distance}"/>
+            <Action ID="HUSkillExecute" skill_name="execute_urp_program.xml"/>
+        </Sequence>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <Action ID="ConfiguredPose">
+            <input_port name="handling_unit_configured_pose"/>
+        </Action>
+        <Action ID="FpmLiftMoveAbsolute">
+            <input_port name="lift_setpoint_position">Setpoint for lift motion.</input_port>
+        </Action>
+        <Action ID="HUSkillExecute">
+            <input_port name="skill_name">Name of the skill to be executed (name of the xml file).</input_port>
+        </Action>
+        <Action ID="Keyboard">
+            <input_port name="input"/>
+            <output_port name="output"/>
+        </Action>
+        <Action ID="KeyboardClient">
+            <input_port name="kb_choice">Choice for selection.</input_port>
+            <input_port name="kb_choice_description">Description for every choice.</input_port>
+            <output_port name="kb_selection">Selected choice.</output_port>
+        </Action>
+        <Action ID="LiftMoveToWorkingHeight">
+            <input_port name="platform_ceiling_distance">Distance from ceiling to platfrom in [m].</input_port>
+        </Action>
+        <Action ID="brakerelease"/>
+        <Action ID="bt_utils"/>
+        <Action ID="execscript"/>
+        <Action ID="getloadedprogram"/>
+        <Action ID="getpoi">
+            <output_port name="drill_point" type="geometry_msgs::msg::Pose_&lt;std::allocator&lt;void&gt; &gt;"/>
+            <output_port name="end_point" type="geometry_msgs::msg::Pose_&lt;std::allocator&lt;void&gt; &gt;"/>
+            <input_port name="point_index" type="int"/>
+            <input_port name="point_list"/>
+            <input_port name="total" type="int"/>
+        </Action>
+        <Action ID="iostatecondition"/>
+        <Action ID="iostates"/>
+        <Condition ID="isrobotrunning"/>
+        <Action ID="jointstates"/>
+        <Action ID="loadinstallation"/>
+        <Action ID="loadpoints">
+            <output_port name="totalpoints" type="int"/>
+        </Action>
+        <Action ID="loadscene">
+            <input_port name="scene_file"/>
+        </Action>
+        <Action ID="loadscript"/>
+        <Action ID="loadur">
+            <input_port name="file_name" type="std::string"/>
+        </Action>
+        <Action ID="moveabsolute_sim">
+            <input_port name="absolute_target_position" type="geometry_msgs::msg::Pose_&lt;std::allocator&lt;void&gt; &gt;"/>
+        </Action>
+        <Action ID="moveit">
+            <input_port name="goal" type="Pose2D"/>
+        </Action>
+        <Action ID="moveitcluster">
+            <input_port name="current_point"/>
+        </Action>
+        <Action ID="moveitcontrol"/>
+        <Action ID="moveitjoints"/>
+        <Action ID="moveliftabsolute_sim">
+            <input_port name="requested_target_lift_level" type="std_msgs::msg::Float32_&lt;std::allocator&lt;void&gt; &gt;"/>
+        </Action>
+        <Action ID="pause"/>
+        <Action ID="play"/>
+        <Action ID="playur"/>
+        <Action ID="programcondition"/>
+        <Action ID="removescene"/>
+        <Action ID="stop"/>
+        <Action ID="toolforce"/>
+        <Action ID="tooltemp"/>
+        <Action ID="turnoff"/>
+        <Action ID="turnon"/>
+        <Action ID="updatepoi">
+            <input_port name="point_index" type="int"/>
+            <input_port name="total" type="int"/>
+            <output_port name="update_index" type="int"/>
+        </Action>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>

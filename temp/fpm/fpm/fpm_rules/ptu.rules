@@ -1,0 +1,1 @@
+SUBSYSTEM=="tty", ATTRS{idVendor}=="239a", MODE="666", SYMLINK+="ptu"

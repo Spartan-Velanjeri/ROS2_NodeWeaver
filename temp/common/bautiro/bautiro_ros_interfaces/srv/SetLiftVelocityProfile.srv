@@ -1,0 +1,6 @@
+string NAME = "set_lift_velocity"
+
+float32 lift_profile_velocity
+---
+ResponseCode    response_code
+string          error_detail        ""

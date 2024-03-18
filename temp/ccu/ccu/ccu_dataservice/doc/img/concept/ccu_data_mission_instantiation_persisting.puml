@@ -1,0 +1,60 @@
+@startuml Overview
+
+
+folder taskplans #Beige{
+    folder "2" as tp2 {
+        file ftp as "TaskPlan.XML"
+    }
+}
+
+frame bdom as "Bautiro\nDomain\nModel" {
+    card Mission
+    card Drilling
+    card Pattern
+    collections DrillHoles
+}
+
+folder missions #AntiqueWhite{
+    folder m2 as "2" {
+        file fini as "metadta.ini"
+        database  "mission-db"   as db2 #LightSteelBlue {
+            card PatternTable #LightSteelBlue
+            card DrillHoleTable #LightSteelBlue
+        }
+    }
+}
+
+ftp -right-> bdom #Black;text:Green : "   load into\n           DOM      "
+
+Mission *- Drilling: [1]
+Drilling *- Pattern: [0..*]
+Pattern *- DrillHoles: [0..*]
+
+fini -[hidden]r-> db2
+PatternTable -right- DrillHoleTable #Black;line.dotted : ""
+
+
+Mission -down-> fini #Black;text:OrangeRed :  "persist as\n<b>INI</b>\nfile"
+
+Drilling -right-> fini 
+note left of link
+     <b>LOW</b>
+   frequent 
+   changes
+end note
+
+Pattern -right--> PatternTable#Black;text:OrangeRed : "         persist as\n           <b>SQLite</b>"
+DrillHoles -right-> DrillHoleTable 
+note right of link 
+     <b>HIGH</b>
+   frequent 
+   changes
+end note
+
+
+
+
+
+
+
+@enduml

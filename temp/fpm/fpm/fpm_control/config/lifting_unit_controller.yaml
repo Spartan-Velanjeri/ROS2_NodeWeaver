@@ -1,0 +1,9 @@
+/lift_controller:
+  ros__parameters:
+
+    type: lift_command_controller/LiftCommandController
+    joints:
+      - segment1_segment2
+      - segment2_segment3
+      - segment3_segment4
+    interface_name: position

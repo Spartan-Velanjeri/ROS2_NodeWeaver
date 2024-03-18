@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<robot>
+
+  <gazebo>
+    <plugin filename="ign_ros2_control-system" name="ign_ros2_control::IgnitionROS2ControlPlugin">
+      <parameters>$(cwd)/config/RPM/$(arg rpm_version)/gazebo_default_controller.yaml</parameters>
+    </plugin>
+  </gazebo>
+
+
+</robot>

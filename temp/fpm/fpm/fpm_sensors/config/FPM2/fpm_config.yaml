@@ -1,0 +1,16 @@
+totalstation:
+  package: 'fpm_sensors'
+  driver_package: 'ts16'
+  executable: 'driver'
+  launch_file: 'totalstation_launch.py'
+  name: 'driver'
+  namespace: 'fpm/sensors/totalstation'
+  parameters: 'ts16_node.yaml'
+imu:
+  package: 'fpm_sensors'
+  driver_package: 'bluespace_ai_xsens_mti_driver'
+  executable: 'xsens_mti_node'
+  launch_file: 'xsens_launch.py'
+  name: 'xsens_mti_node'
+  namespace: 'fpm/sensors/imu'
+  parameters: 'xsens_mti_node.yaml'

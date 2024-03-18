@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>fpm_localization</name>
+  <version>0.0.0</version>
+  <description>Fine localization for BAUTIRO</description>
+  <maintainer email="michael.erz@de.bosch.com">Michael Erz (CR/AAS5)</maintainer>
+  <license>Robert Bosch GmbH proprietary</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>ament_btr_cmake</buildtool_depend>
+
+  <build_depend>bautiro_ros_interfaces</build_depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <exec_depend>ros2launch</exec_depend>
+  <exec_depend>bautiro_ros_interfaces</exec_depend>
+  <exec_depend>rpm_localization</exec_depend>
+  <exec_depend>lu_rough_localization</exec_depend>
+  <exec_depend>lu_fine_localization</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

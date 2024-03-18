@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<robot name="fpm_assembly" xmlns:xacro="http://ros.org/wiki/xacro">
+  <!-- Properties-->
+  <xacro:property name="thick" value="0.0" />
+
+  <link name="fpm_assembly_calibration_reference" />
+  <link name="fpm_imu" />
+  
+  <link name="fpm_usb_hub">
+    <visual>
+      <geometry>
+        <box size="0.51 0.21 0.18"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.51 0.21 0.18"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="blue"/>
+    </collision>
+  </link>
+
+  <link name="fpm_vaccum_cleaner">
+    <visual>
+      <geometry>
+        <box size="0.56 0.38 0.40"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="green"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.56 0.38 0.40"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="green"/>
+    </collision>
+  </link>
+
+  <link name="fpm_totalstation">
+   <visual>
+    <origin xyz="0 0 -0.05" rpy="0 0 0"/>
+    <geometry>
+      <cylinder radius="0.145" length="${0.28+0.05}"/>
+    </geometry>
+    <material name="blue"/>
+   </visual>
+   <collision>
+    <origin xyz="0 0 -0.05" rpy="0 0 0"/>
+    <geometry>
+      <cylinder radius="0.145" length="${0.28+0.05}"/>
+    </geometry>
+    <material name="blue"/>
+   </collision>
+  </link>
+  <link name="fpm_inclinometer" />
+  <link name="handling_unit_mount" />
+
+  <!-- Mounting point for the assembly-->
+  <link name="assembly_top_base">
+    <visual>
+        <geometry>
+          <box size="0.595 0.44 ${thick}"/>
+        </geometry>
+        <origin xyz="-0.0925 0 0"/>
+    </visual>
+    <collision>
+        <geometry>
+          <box size="0.595 0.44 ${thick}"/>
+        </geometry>
+        <origin xyz="-0.0925 0 0"/>
+    </collision>
+
+    <visual>
+        <geometry>
+          <box size="${thick} 0.44 0.20"/>
+        </geometry>
+        <origin xyz="${0.205-thick/2} 0 ${-0.1-thick/2}"/>
+    </visual>
+    <collision>
+        <geometry>
+          <box size="${thick} 0.44 0.20"/>
+        </geometry>
+        <origin xyz="${0.205-thick/2} 0 ${-0.1-thick/2}"/>
+    </collision>
+
+    <visual>
+        <geometry>
+          <box size="0.595 ${thick} 0.20"/>
+        </geometry>
+        <origin xyz="-0.0925 -0.22 ${-0.1-thick/2}"/>
+    </visual>
+    <collision>
+        <geometry>
+          <box size="0.595 ${thick} 0.20"/>
+        </geometry>
+        <origin xyz="-0.0925 -0.22 ${-0.1-thick/2}"/>
+    </collision>
+  </link>
+
+  <xacro:spawn_calibrated_joint name="fpm_atb2acr" parent="assembly_top_base" child="fpm_assembly_calibration_reference" dict_key="fpm_atb_acr"/>    
+
+  <!-- Mounting point for the handling unit-->
+  <xacro:spawn_calibrated_joint name="fpm_acr2hum" parent="fpm_assembly_calibration_reference" child="handling_unit_mount" dict_key="fpm_acr_hum"/>    
+
+  <!-- LEICA TS16 -->
+  <xacro:spawn_calibrated_joint name="fpm_acr2totalstation" parent="fpm_assembly_calibration_reference" child="fpm_totalstation" dict_key="fpm_acr_leica"/>    
+
+  <!-- Imu XSENS: Height is 7 mm over mounting plate -->
+  <xacro:spawn_calibrated_joint name="fpm_acr2imu" parent="fpm_assembly_calibration_reference" child="fpm_imu" dict_key="fpm_acr_imu"/>    
+  
+  <!-- FPM inclinometer -->
+  <xacro:spawn_calibrated_joint name="fpm_acr2inc" parent="fpm_assembly_calibration_reference" child="fpm_inclinometer" dict_key="fpm_acr_inc"/>    
+
+  <!-- FPM usb hub -->
+  <xacro:spawn_calibrated_joint name="fpm_acr2hub" parent="fpm_assembly_calibration_reference" child="fpm_usb_hub" dict_key="fpm_acr_hub"/>    
+
+  <!-- FPM usb hub -->
+  <xacro:spawn_calibrated_joint name="fpm_acr2vac" parent="fpm_assembly_calibration_reference" child="fpm_vaccum_cleaner" dict_key="fpm_acr_vac"/> 
+</robot>

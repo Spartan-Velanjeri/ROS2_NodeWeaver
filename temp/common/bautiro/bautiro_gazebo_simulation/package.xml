@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>bautiro_gazebo_simulation</name>
+  <version>0.0.0</version>
+  <description>Package for the bautiro simulation, contains simulation worlds, lauch files, simulation only configurations</description>
+  <maintainer email="andreas.mogck@de.bosch.com">mia4si</maintainer>
+  <maintainer email="ingo.luetkebohle@de.bosch.com">Ingo Lütkebohle</maintainer>
+  <license>Robert Bosch GmbH proprietary</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>ament_btr_cmake</buildtool_depend>
+  <depend>launch</depend>
+  <depend>launch_ros</depend>
+  <depend>bautiro_launch</depend>
+
+  <exec_depend>ros_ign_gazebo</exec_depend>
+  <exec_depend>ros_ign_bridge</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>rviz2</exec_depend>
+  <exec_depend>bautiro_description</exec_depend>
+  <exec_depend>leica_ign_gz_plugin</exec_depend>
+  <exec_depend>rpm_bringup</exec_depend>
+  <exec_depend>rpm_control</exec_depend>
+  <exec_depend>fpm_control</exec_depend>
+  <exec_depend>python3-yaml</exec_depend>
+
+  <test_depend>bosch_copyright_extension</test_depend>
+  <test_depend>ament_cmake_pytest</test_depend>
+
+  <!-- FIXME: Add all packages referenced in the launch files as exec_depend -->
+  <!-- FIXME: Add all simulation packages needed as exec_depend -->
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

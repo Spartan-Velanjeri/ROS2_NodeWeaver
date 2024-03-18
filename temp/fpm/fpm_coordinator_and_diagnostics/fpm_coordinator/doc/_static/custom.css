@@ -1,0 +1,29 @@
+/*Adjust the visible text area of RTD theme to be 95%*/
+.wy-nav-content {
+    max-width: 95% !important;
+}
+
+
+.rst-content blockquote {
+    width: 70%;
+    /*background-color: rgb(255, 255, 228);*/
+    padding: 7px;
+    margin: 7px;
+    margin-left: 30px;
+    border-width: 0px;
+}
+
+/*Global table settings*/
+table.align-default {
+    margin-left: 0px;
+}
+
+.rst-content section ul  {
+    margin-bottom: auto;
+}
+.rst-content section ol.arabic  {
+    margin-bottom: auto;
+}
+
+
+

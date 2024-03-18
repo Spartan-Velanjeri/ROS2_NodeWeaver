@@ -1,0 +1,27 @@
+@startuml workfow
+skinparam ConditionEndStyle hline
+
+start
+: __TaskPlan.xml__
+available on PC;
+:copy to USB-Stick;
+if (plug USB-Stick into) then
+  partition "CCU" {
+    :HCU-Dialog pop-up;
+    :copy
+    from USB
+    to CCU ;
+  }
+else
+  partition "HCU" {
+    :HCU-Dialog pop-up;
+    :transfer
+    per Wifi
+    to CCU;
+  }
+endif
+:__TaskPlan.xml__
+on CCU;
+stop
+
+@enduml

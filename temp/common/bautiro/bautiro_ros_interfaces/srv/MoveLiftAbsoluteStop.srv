@@ -1,0 +1,3 @@
+string NAME = "move_lift_absolute_stop"
+---
+ResponseCode response_code

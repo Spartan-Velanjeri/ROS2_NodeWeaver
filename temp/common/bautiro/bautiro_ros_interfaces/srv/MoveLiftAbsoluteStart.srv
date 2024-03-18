@@ -1,0 +1,5 @@
+string NAME = "move_lift_absolute_start"
+float32 requested_target_lift_level
+---
+ResponseCode response_code
+

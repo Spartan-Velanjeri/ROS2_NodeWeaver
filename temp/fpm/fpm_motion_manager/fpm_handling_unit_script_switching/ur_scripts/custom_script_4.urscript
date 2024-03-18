@@ -1,0 +1,7 @@
+textmsg("Custom script 4...")
+RobotPos = get_actual_tcp_pose() 
+RobotPos[2] = RobotPos[2] + 0.05
+movel(RobotPos, a=0.5, v=0.01)
+RobotPos[1] = RobotPos[1] + 0.05
+movel(RobotPos, a=0.5, v=0.01)
+set_digital_out(1, True)

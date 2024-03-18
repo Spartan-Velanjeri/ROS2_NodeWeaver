@@ -1,0 +1,39 @@
+@startuml workfow
+skinparam ConditionEndStyle diamond
+
+
+
+start
+#TECHNOLOGY:Transfer TaskPlan to CCU;
+#TECHNOLOGY:create Mission from Taskplan;
+if (edit Mission) then (yes)
+    partition "user interaction" #Cornsilk {
+        repeat
+            :Send Data to HCU;
+            :Edit on HCU;
+            :Receive Data from HCU;
+        repeat while (Validation OK) is (no)
+        ->yes;
+    }
+else (no)
+endif
+#TECHNOLOGY:Start Mission;
+repeat
+   #TECHNOLOGY:Halt]
+   note right: by programm, user\nor circumstances
+   if (Mission\n<b>Done</b>) then (yes)
+      break
+   else (no)
+       split
+           #Cornsilk:edit Mission]
+       split again
+           #LightPink:Manual Control]
+       endsplit
+      #TECHNOLOGY:Resume Mission;
+
+   endif
+repeat while
+#TECHNOLOGY:Mission Finished;
+stop
+
+@enduml

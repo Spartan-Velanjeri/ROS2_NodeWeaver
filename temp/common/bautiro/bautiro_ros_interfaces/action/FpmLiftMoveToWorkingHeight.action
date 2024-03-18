@@ -1,0 +1,9 @@
+# REQUEST height in meter
+float32 platform_ceiling_distance  # distance from ceiling to platfrom in [m]
+---
+# RESULT
+# response_code: check msg.ResponseCode for possible reponse codes
+# working_height: working hight at end of movement
+int32 response_code
+float32 working_height
+---

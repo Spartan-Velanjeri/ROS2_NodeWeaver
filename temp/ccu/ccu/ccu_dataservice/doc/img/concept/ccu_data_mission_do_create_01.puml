@@ -1,0 +1,14 @@
+@startuml Overview
+folder taskplans #Beige{
+   folder "1" as tp1 {
+      file taskplan as "TaskPlan.XML"
+   }
+}
+folder missions #AntiqueWhite{
+   folder m1 as "1" {
+      database database  #LightSteelBlue
+   }
+}
+
+taskplan -[bold]up-> database #Orange : " Create Mission\nfrom TaskPlan"
+@enduml

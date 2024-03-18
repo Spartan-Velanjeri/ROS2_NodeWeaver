@@ -1,0 +1,49 @@
+@startuml Context HALC
+
+skinparam NoteTextAlignment center
+skinparam NoteBackgroundColor #GhostWhite
+
+
+component HCU {
+    node client << GRPC >>
+}
+folder ccu_data_services {
+    node ds << Node >>
+}
+folder ccu_hcu_abstraction {
+    node halc << Node >>
+    node server << GRPC >>
+}
+
+folder ccu_grpc #BUSINESS{
+    artifact base_service <<PYTHON>>  #BUSINESS
+}
+
+frame bautiro_common {
+    folder hcu_ccu_interface_definitions {
+        file base_service.proto
+    }
+}
+
+
+server - halc
+
+server -[bold]- client #Salmon
+note left of link
+    <FONT COLOR=Salmon>protobuf</FONT>
+    in <FONT COLOR=Salmon>gRPC</FONT>
+end note
+
+halc -[bold]- ds #SteelBlue
+note left of link
+    <FONT COLOR=Salmon>protobuf</FONT>
+    in <FONT COLOR=SteelBlue>ROS</FONT>
+end note
+
+ccu_grpc <-[dashed]down- ccu_hcu_abstraction : depends
+ccu_grpc <-[dashed]down- ccu_data_services : depends
+
+base_service.proto -[dotted]left-> base_service : """code""     \n      ""generation""               "
+
+@enduml
+

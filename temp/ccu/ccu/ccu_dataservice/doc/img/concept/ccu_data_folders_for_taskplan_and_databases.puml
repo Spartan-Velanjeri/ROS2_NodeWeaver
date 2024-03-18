@@ -1,0 +1,31 @@
+@startuml Overview
+node BAUTIRO {
+   folder data #BUSINESS{
+      folder roomplans #LightGray{
+         folder "1" as rp1 {
+            file frp1 as "RoomPlan.OBJ"
+         }
+      }
+      folder taskplans #Beige{
+         folder "2" as tp2 {
+            file ftp2 as "OtherTaskPlan1.XML"
+         }
+         folder "1" as tp1 {
+            file ftp1 as "TaskPlan1.XML"
+         }
+      }
+      folder missions #AntiqueWhite{
+         folder m2 as "2" {
+            database  "db"   as db2 #LightSteelBlue
+         }
+         folder m1 as "1" {
+            database "db" as db1  #LightSteelBlue
+         }
+      }
+   }
+}
+frp1 <-- ftp1 #Black;text:Grey : "\n\n\n\n  uses"
+frp1 <-- ftp2
+ftp1 <-- db1 
+ftp2 <-- db2 #Black;text:Grey : "\n\n\n\ncreated\nfrom"
+@enduml

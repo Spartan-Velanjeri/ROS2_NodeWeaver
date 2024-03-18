@@ -1,0 +1,15 @@
+@startuml
+
+rectangle ccu_bautiro #Yellow
+rectangle ccu_dataservice #BUSINESS
+rectangle ccu_data_services #BUSINESS
+rectangle ccu_hcu_abstraction #BUSINESS
+rectangle pyecore
+artifact "ccu_bautiro.ecore" as ecore #IMPLEMENTATION
+ccu_dataservice ..> ccu_bautiro
+ccu_data_services ..> ccu_bautiro
+ccu_hcu_abstraction ..> ccu_bautiro
+ccu_bautiro ..> pyecore
+ccu_bautiro -[dotted]right- ecore : codegen
+
+@enduml

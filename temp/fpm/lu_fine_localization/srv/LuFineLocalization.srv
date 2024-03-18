@@ -1,0 +1,4 @@
+string NAME = "fine_localization"
+bautiro_ros_interfaces/Marker[] markers
+---
+geometry_msgs/PoseWithCovarianceStamped pose

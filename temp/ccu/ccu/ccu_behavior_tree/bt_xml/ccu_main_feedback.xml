@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+                <Sequence>  
+                    <Action ID="getSize" name="get_size" list_size="{numPoints}"/>
+                    <Repeat num_cycles="{numPoints}">
+                        <Sequence>  
+                            <Action ID="getPose" name="get_navigation_pose" poi_pose_id="{poi_pose_id}" poi_pose="{pose}"/>
+                            <Action ID="StartRPM" name="move_to_pose" goal_pose="{pose}" navigation_result="{nav_res}"/>
+                            <Action ID="getDrillMask" name="get_drill_mask" drill_mask_array="{drill_points}"/>
+                            <Action ID="StartFPM" name="start_drill_job" drill_mask_array="{drill_points}" drill_result="{drill_res}"/>
+                            <Action ID="addMissionEvent" name="add_mission_event" navigation_result="{nav_res}" drill_result="{drill_res}"/>
+                        </Sequence>
+                    </Repeat>
+                </Sequence>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <Action ID="getDrillMask">
+            <output_port name="drill_mask_array"/>
+        </Action>
+        <Action ID="StartRPM">
+            <input_port name="goal_pose"/>
+            <output_port name="navigation_result"/>
+        </Action>  
+        <Action ID="getPose">
+            <output_port name="poi_pose"/>
+            <output_port name="poi_pose_id"/>
+        </Action>
+        <Action ID="moveToPose">
+            <input_port name="goal_pose"/>
+            <output_port name="pose_reached"/>
+        </Action>
+        <Action ID="StartFPM">
+            <input_port name="drill_mask_array"/>
+            <output_port name="drill_result"/>
+        </Action>
+        <Action ID="addMissionEvent">
+            <input_port name="navigation_result"/>
+            <input_port name="drill_result"/>
+        </Action>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>

@@ -1,0 +1,26 @@
+controller:
+  ros__parameters:
+    frames:
+      center_of_rotation:
+      reference_frame:
+      left_wheel:
+      right_wheel:
+    controller:
+      gain:
+        p: 0.0
+        i: 0.0
+        d: 0.0
+      threshold: 0.1
+    velocity_limits:
+      wheel:
+        left: 0.1
+        right: 0.1
+      twist:
+        linear:
+          x:
+          y:
+          Z:
+        angular:
+          x:
+          y:
+          z:

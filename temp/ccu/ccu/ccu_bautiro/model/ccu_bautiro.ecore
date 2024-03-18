@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="ccu_bautiro" nsURI="http://www.bosch.com/ccu_bautiro" nsPrefix="CB">
+  <eClassifiers xsi:type="ecore:EClass" name="CWorkPlan" eSuperTypes="#//Types/IID #//Types/IINDEX">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nodeTree" upperBound="-1"
+        eType="#//NodeTree/CNode"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="fasteners" upperBound="-1"
+        eType="#//NodeTree/CFastener" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="drillMasks" upperBound="-1"
+        eType="#//NodeTree/CDrillMask" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="drillHoles" upperBound="-1"
+        eType="#//NodeTree/CDrillHole" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="markers" upperBound="-1"
+        eType="#//Types/CMarker" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="jobs" upperBound="-1" eType="#//Jobs/CJob"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="jobSchedule" upperBound="-1"
+        eType="#//Jobs/CJob"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="destMoveJob" eType="#//Jobs/CMoveJob"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="drillingCookie" lowerBound="1"
+        upperBound="-1" eType="#//Types/Cookie" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="measureCookie" lowerBound="1"
+        upperBound="-1" eType="#//Types/Cookie" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"
+        eType="#//NodeTree/CNode" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CMission" eSuperTypes="#//Types/IID #//Types/IINDEX">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="jobs" upperBound="-1" eType="#//Jobs/CJob"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="workPlan" lowerBound="1"
+        eType="#//CWorkPlan"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CProcessData" eSuperTypes="#//Types/IID #//Types/IINDEX #//Types/ICreationDateTime">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="workPlanIndex" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="missionIndex" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="drillHolePD" upperBound="-1"
+        eType="#//ProcessData/CDrillHolePD" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="navigationPD" upperBound="-1"
+        eType="#//ProcessData/CNavigationPD" containment="true"/>
+  </eClassifiers>
+  <eSubpackages name="MetaData" nsURI="http://www.bosch.com/bautiro/CMetaData" nsPrefix="CMD">
+    <eClassifiers xsi:type="ecore:EClass" name="CMetaData" abstract="true" interface="true"
+        eSuperTypes="#//Types/IID #//Types/IINDEX #//Types/INAME #//Types/ICreationDateTime">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="relPath" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eAnnotations>
+          <details key="doc" value="relative path to Conf().data_folder_path &#xA;&#xA;relPath contains e.g.  -->  &quot;taskplans/1/taskplan.xml&quot;&#xA;&#xA;And more detailed: when &#xA;Conf.data_folder_path  is at /home/bautiro/bautiro_data_tp21&#xA;then taskplan is expected at  /home/bautiro/bautiro_data_tp21/taskplans/1/taskplan.xml&#xA;&#xA;&#xA;"/>
+        </eAnnotations>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="originImportSource" lowerBound="1"
+          eType="#//Types/IMPORT_SOURCE"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="originFileName" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="originFilePath" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="CRoomPlanMD" eSuperTypes="#//MetaData/CMetaData">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="calculated_MD5_32bitHex"
+          lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="CTaskPlanMD" eSuperTypes="#//MetaData/CMetaData">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="globalSettings_RoomPlan_Filename"
+          lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="globalSettings_RoomPlan_MD5_32bitHex"
+          lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="globalSettings_MarkerPlan_Images"
+          upperBound="-1" eType="#//Types/CImage" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="globalSettings_Schedule_desiredStartTime"
+          lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="taskPlanXsdVersion" lowerBound="1"
+          eType="#//Types/TP_XSD_VERSION" defaultValueLiteral="UNDEFINED"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="roomPlanIndex" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="roomPlanMD" eType="#//MetaData/CRoomPlanMD"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="taskname" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="tool" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+          defaultValueLiteral="BAUTIRO"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="CWorkPlanMD" eSuperTypes="#//MetaData/CMetaData">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="taskPlanIndex" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="roomPlanIndex" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="CMissionMD" eSuperTypes="#//MetaData/CMetaData">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="workPlanIndex" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="predecessorIDs" upperBound="-1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+    </eClassifiers>
+  </eSubpackages>
+  <eSubpackages name="NodeTree" nsURI="http://www.bosch.com/bautiro/CNodeTree" nsPrefix="CNT">
+    <eClassifiers xsi:type="ecore:EClass" name="CNode" eSuperTypes="#//Types/IID #//Types/INAME #//Types/ITM">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="desc" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="series" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="fastener" eType="#//NodeTree/CFastener"
+          eOpposite="#//NodeTree/CFastener/parent"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
+          eType="#//NodeTree/CNode" eOpposite="#//NodeTree/CNode/parent"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//NodeTree/CNode"
+          eOpposite="#//NodeTree/CNode/children"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="CFastener" eSuperTypes="#//Types/IID #//Types/INAME #//Types/ITolerance2D">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="guid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="drillMasks" upperBound="-1"
+          eType="#//NodeTree/CDrillMask" eOpposite="#//NodeTree/CDrillMask/parent"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="parent" lowerBound="1"
+          eType="#//NodeTree/CNode" eOpposite="#//NodeTree/CNode/fastener"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="CDrillMask" eSuperTypes="#//Types/IID #//Types/INAME #//Types/ITM #//Types/ITolerance2D">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="drillHoles" upperBound="-1"
+          eType="#//NodeTree/CDrillHole" eOpposite="#//NodeTree/CDrillHole/parent"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="parent" lowerBound="1"
+          eType="#//NodeTree/CFastener" eOpposite="#//NodeTree/CFastener/drillMasks"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="CDrillHole" eSuperTypes="#//Types/IID #//Types/INAME #//Types/ITM #//Types/ITolerance2D">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="parent" lowerBound="1"
+          eType="#//NodeTree/CDrillMask" eOpposite="#//NodeTree/CDrillMask/drillHoles"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="depth" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="diameter" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="state" lowerBound="1"
+          eType="#//Types/DRILL_HOLE_STATE"/>
+    </eClassifiers>
+  </eSubpackages>
+  <eSubpackages name="ProcessData" nsURI="http://www.bosch.com/bautiro/CProcessData"
+      nsPrefix="CPD">
+    <eClassifiers xsi:type="ecore:EClass" name="CDrillHolePD" eSuperTypes="#//Types/IID">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="absPosePKSFinish" eType="#//Types/CPose"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="absPosePKSStart" eType="#//Types/CPose"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="drillHole" lowerBound="1"
+          eType="#//NodeTree/CDrillHole"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="CNavigationPD" eSuperTypes="#//Types/IID">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="nav_goal_reached" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="job" lowerBound="1" eType="#//Jobs/CJob"/>
+    </eClassifiers>
+  </eSubpackages>
+  <eSubpackages name="Jobs" nsURI="http://www.bosch.com/bautiro/CJobs" nsPrefix="CJ">
+    <eClassifiers xsi:type="ecore:EClass" name="CJob" abstract="true" interface="true"
+        eSuperTypes="#//Types/IID #//Types/INAME #//Types/ITM">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="marker" upperBound="-1"
+          eType="#//Types/CMarker"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="CDrillJob" eSuperTypes="#//Jobs/CJob">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="drillMasks" upperBound="-1"
+          eType="#//NodeTree/CDrillMask"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="material" lowerBound="1"
+          eType="#//Types/MATERIAL_TYPE"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="CMeasureJob" eSuperTypes="#//Jobs/CJob"/>
+    <eClassifiers xsi:type="ecore:EClass" name="CMoveJob" eSuperTypes="#//Jobs/CJob"/>
+  </eSubpackages>
+  <eSubpackages name="Types" nsURI="http://www.bosch.com/bautiro/CTypes" nsPrefix="CTY">
+    <eClassifiers xsi:type="ecore:EEnum" name="MATERIAL_TYPE">
+      <eLiterals name="UNDEFINED" literal="UNDEFINED"/>
+      <eLiterals name="OTHER" value="1" literal="OTHER"/>
+      <eLiterals name="CONCRETE" value="2"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="TP_XSD_VERSION">
+      <eLiterals name="UNDEFINED" literal="UNDEFINED"/>
+      <eLiterals name="TaskPlan_2_0" value="20" literal="TaskPlan_2_0"/>
+      <eLiterals name="TaskPlan_2_1" value="21" literal="TaskPlan_2_1"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="IMPORT_SOURCE">
+      <eLiterals name="UNDEFINED" literal="UNDEFINED"/>
+      <eLiterals name="USB" value="1" literal="USB"/>
+      <eLiterals name="HCU" value="2" literal="HCU"/>
+      <eLiterals name="MISSION" value="3"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="MARKER_STATE">
+      <eLiterals name="UNDEFINED" literal="UNDEFINED"/>
+      <eLiterals name="planned" value="1"/>
+      <eLiterals name="measured" value="2"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="DRILL_HOLE_STATE">
+      <eLiterals name="UNDEFINED"/>
+      <eLiterals name="UNDRILLED" value="1"/>
+      <eLiterals name="SCHEDULED" value="2"/>
+      <eLiterals name="FINISHED" value="3"/>
+      <eLiterals name="IGNORE" value="4"/>
+      <eLiterals name="FAILED" value="5"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="CMarker" eSuperTypes="#//Types/IID #//Types/INAME #//Types/ITM">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="parent" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="time" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="state" lowerBound="1"
+          eType="#//Types/MARKER_STATE"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="CMatrix">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="v0x" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="v0y" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="v0z" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="v1x" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="v1y" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="v1z" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="v2x" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="v2y" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="v2z" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="v3x" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="v3y" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="v3z" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Cookie" eSuperTypes="#//Types/IID #//Types/INAME">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="property" upperBound="-1"
+          eType="#//Types/KeyValuePair" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="cookie" upperBound="-1"
+          eType="#//Types/Cookie" eOpposite="#//Types/Cookie/parent"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//Types/Cookie"
+          eOpposite="#//Types/Cookie/cookie"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="KeyValuePair">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ICreationDateTime" abstract="true"
+        interface="true">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="dateTimeCreation" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="IID" abstract="true" interface="true">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+          iD="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="IINDEX" abstract="true" interface="true">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="index" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="INAME" abstract="true" interface="true">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ITM" abstract="true" interface="true">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="tm" lowerBound="1" eType="#//Types/CMatrix"
+          containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ITolerance2D" abstract="true" interface="true">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="dx" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+          defaultValueLiteral="0"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="dy" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+          defaultValueLiteral="0"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="CPose">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="vx" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="vy" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="vz" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="qx" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="qy" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="qz" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="qw" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="CImage">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="drawingType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="faceType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="filename" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+  </eSubpackages>
+</ecore:EPackage>

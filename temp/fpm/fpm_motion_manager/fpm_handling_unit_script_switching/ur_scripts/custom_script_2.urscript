@@ -1,0 +1,170 @@
+textmsg("Custom script 2...")
+# HEADER_BEGIN
+
+# BEGIN: variable to set before script is sent to the robot
+global DrillPosX=<<DRILL_POS_X_REPLACE>>
+global DrillPosY=<<DRILL_POS_Y_REPLACE>>
+global DrillPosZ=<<DRILL_POS_Z_REPLACE>>
+global DrillDepthSet=<<DRILL_DEPTH_REPLACE>>
+
+textmsg("Set variables are:")
+textmsg(" DrillPosX: ", DrillPosX)
+textmsg(" DrillPosY: ", DrillPosY)
+textmsg(" DrillPosZ: ", DrillPosZ)
+textmsg(" DrillDepthSet: ", DrillDepthSet)
+
+# END: variable to set before script is sent to the robot
+
+global PressForceSet=80
+global DrillTimeSet=10
+global ForceDampingSet=0.07
+global Nz=0
+global Nx=0
+global FeedSpeed = 0.005
+global Loop_active=True
+global work_dist_move = 0.02
+global DrillDepth=0.2
+global SpringRate=13700
+global SpringWork=PressForceSet / SpringRate
+global dt_proc_ctrl=0.040
+global Delta=0
+global ProcTime=0.0
+set_digital_out(1, False)
+global StopProc=False
+global DrillTime=2.5 * DrillDepth / FeedSpeed
+global RobotPos=get_actual_tcp_pose ()
+global StartDrilling=True
+global Depth_reached=False
+global ForceGainSet=0.5
+global ShearForceSet=30
+global ForceMode=2
+global dT_force_ctrl=2.0
+
+def calculate_point_to_move_towards(feature, direction, position_distance):
+    local posDir=[direction[0], direction[1], direction[2]]
+    if (norm(posDir) < 1e-6):
+      return get_target_waypoint()
+    end
+    local direction_vector_normalized=normalize(posDir)
+    local displacement_pose=p[direction_vector_normalized[0] * position_distance,direction_vector_normalized[1] * position_distance,direction_vector_normalized[2] * position_distance,0,0,0]
+    local wanted_displacement_in_base_frame=pose_sub(pose_trans(feature, displacement_pose), feature)
+    return pose_add(get_target_waypoint(), wanted_displacement_in_base_frame)
+end
+
+thread Thread_drill_proc():
+      if (StartDrilling):
+          while (not Depth_reached):
+              actual_tcp = get_actual_tcp_pose()
+              Delta = pose_dist(below_touch_tcp, actual_tcp)
+              if (Delta > DrillDepth):  
+                  global Depth_reached = True
+                  textmsg("depth reached")
+              else:
+                  global Depth_reached = False
+                  sleep(dt_proc_ctrl)
+                  ProcTime = ProcTime + dt_proc_ctrl
+                  if (ProcTime > DrillTimeSet):
+                    StopProc = True
+                    textmsg("time done")
+                  end 
+              end    
+          end
+      end
+end
+
+thread Thread_force_control():
+    PressForce = PressForceSet
+    ForceGain = ForceGainSet
+    ShearForce = ShearForceSet
+    while (True):
+      ForceDamping = ForceDampingSet
+      force_mode_set_damping(ForceDamping)
+      force_mode_set_gain_scaling(ForceGain)
+      force_mode(tool_pose, [0, 0, 1, 0, 0, 0], [ShearForce, ShearForce, PressForce, 0.0, 0.0, 0.0], ForceMode, [0.020, 0.010, FeedSpeed, 0.1, 0.1, 0.1])
+      sleep(dT_force_ctrl)
+      # modify force if necesseary
+      PressForce = PressForce
+    end
+end
+
+global origin_joint= get_actual_joint_positions() 
+global origin_tcp =  get_actual_tcp_pose()
+global move_thread_flag_3=0
+thread move_thread_3():
+    enter_critical
+    move_thread_flag_3 = 1
+    local towardsPos=calculate_point_to_move_towards(p[0.0,0.0,0.0,0.0,0.0,0.0], [0.0,-1.0,0.0], 1)
+    RobotPos = get_actual_tcp_pose()
+    movel(towardsPos, a=1.0, v=0.015)
+    move_thread_flag_3 = 2
+    exit_critical
+end
+move_thread_flag_3 = 0
+move_thread_han_3 = run move_thread_3()
+while (True):
+    local targetTcpDirection=get_target_tcp_speed()
+    local stepsToRetract=tool_contact(direction=targetTcpDirection)
+    if (stepsToRetract > 0):
+      kill move_thread_han_3
+      stopl(3.0)
+      local backTrackMovement=get_actual_joint_positions_history(stepsToRetract)
+      local contactPose=get_forward_kin(backTrackMovement)
+      local posDir=[targetTcpDirection[0],targetTcpDirection[1],targetTcpDirection[2]]
+      local retractTo=contactPose
+      if (norm(posDir) > 1e-6):
+        local normalizedPosDir=normalize(posDir)
+        local additionalRetraction=p[normalizedPosDir[0] * 0.0, normalizedPosDir[1] * 0.0, normalizedPosDir[2] * 0.0, 0, 0, 0]
+        retractTo = pose_sub(contactPose, additionalRetraction)
+      end
+      movel(retractTo, a=1.0, v=0.1)
+      $ 4 "Until (tool_contact_detection)"
+      $ 5 "Popup: This is the Action"
+      popup("This is the Action", "Message", False, False, blocking=True)
+      break
+    end
+    sync()
+end
+sleep(1.0)
+global touch_tcp = get_actual_tcp_pose ()
+global below_touch_tcp = touch_tcp
+below_touch_tcp[1] = below_touch_tcp[1] + work_dist_move
+movel(below_touch_tcp, a=1.0, v=0.125)
+global touch_tcp = get_actual_tcp_pose()
+global tool_pose = get_forward_kin()
+global PressForce = PressForceSet
+global ForceGain = ForceGainSet
+global ShearForce = ShearForceSet
+global ForceDamping = ForceDampingSet
+global force_control_handler = run Thread_force_control()
+global main_move_thread = run Thread_drill_proc()
+global move_thread_flag_109 = 0
+thread move_thread_109():
+    enter_critical
+    move_thread_flag_109 = 1
+    local towardsPos=calculate_point_to_move_towards(p[0.0,0.0,0.0,0.0,0.0,0.0], [0.0,-1.0,0.0], 1)
+    RobotPos = get_actual_tcp_pose()
+    movel(towardsPos, a=0.5, v=0.01)
+    move_thread_flag_109 = 2
+    exit_critical
+end
+move_thread_flag_109 = 0
+move_thread_han_109 = run move_thread_109()
+while (True):
+  if ((Depth_reached  or  StopProc)):
+    kill move_thread_han_109
+    stopl(0.5)
+    break
+  end
+  sync()
+end
+kill force_control_handler
+kill main_move_thread
+end_force_mode()
+global current_tcp = get_actual_tcp_pose ()
+current_tcp[1] = current_tcp[1] + 0.1
+movel(current_tcp, a=1.2, v=0.05)
+sleep(5)
+set_digital_out(1, True)
+
+
+

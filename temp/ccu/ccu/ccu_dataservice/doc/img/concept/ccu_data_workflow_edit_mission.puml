@@ -1,0 +1,49 @@
+@startuml workfow
+skinparam ConditionEndStyle diamond
+skinparam defaultTextAlignment center
+
+
+
+start
+:Mission <b>2.7</b>]
+note right: example
+
+#TECHNOLOGY:Load 
+Mission-Data 
+to DOM;
+
+
+partition "Edit Mission" #BUSINESS  {
+
+    #LIGHTPINK:Send
+    <b>original</b>
+    Mission-Data
+    to HCU;
+    note left: using \nros-bridge
+
+    repeat :Edit on HCU;
+
+    #LIGHTPINK:Receive
+    <b>edited</b>
+    Mission-Data
+    from HCU;
+
+    #TECHNOLOGY:Load
+    Mission-Data
+    to DOM;
+
+    #TECHNOLOGY:Validate Data;
+
+    repeat while (Validation OK) is (no)
+    ->yes;
+}
+
+#TECHNOLOGY:Persist
+Mission-Data 
+from DOM;
+
+#TECHNOLOGY:Mission <b>2.8]
+
+stop
+
+@enduml

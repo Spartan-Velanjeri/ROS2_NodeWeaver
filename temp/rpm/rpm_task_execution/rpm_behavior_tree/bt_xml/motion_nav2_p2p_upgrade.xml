@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+        <Sequence>
+            <Action ID="Switch_point" pose_switch_point="{controller_switch_pose}" target_pose="{target_pose}"/>
+            <Action ID="Transform_pose" offset_target_pose="{nav2_goal_pose}" target_pose="{controller_switch_pose}"/>
+            <Action ID="NavigateToPose" target_pose="{nav2_goal_pose}"/>
+            <Action ID="Movep2p" goal_pose="{target_pose}"/>
+        </Sequence>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <Action ID="Movep2p">
+            <input_port name="goal_pose"/>
+        </Action>
+        <Action ID="NavigateToPose">
+            <input_port name="target_pose"/>
+        </Action>
+        <Action ID="Switch_point">
+            <output_port name="pose_switch_point"/>
+            <input_port name="target_pose"/>
+        </Action>
+        <Action ID="Transform_pose">
+            <output_port name="offset_target_pose"/>
+            <input_port name="target_pose"/>
+        </Action>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>

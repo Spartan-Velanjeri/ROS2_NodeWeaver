@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>rpm_actuators</name>
+  <version>0.0.0</version>
+  <description>This package contains configuration and launch files for actuators in rpm.</description>
+  <maintainer email="QuangHuy.Nguyen2@de.bosch.com">ngq3fe</maintainer>
+  <license>TODO: License declaration</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <build_depend>lely_core_libraries</build_depend>
+
+  <exec_depend>bautiro_description</exec_depend>
+  <exec_depend>rpm_powertrain_driver</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

@@ -1,0 +1,213 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="rpm_track">
+
+  <xacro:macro name="wheel" params="prefix is_sim">
+
+    <link name="${prefix}_wheel">
+      <inertial>
+        <mass value="500" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="0.02467" ixy="0" ixz="0" iyy="0.04411" iyz="0" izz="0.02467" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
+        <geometry>
+          <cylinder radius="${wheel_diameter/2}" length="0.1"/>
+        </geometry>
+        <material name="blue"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
+        <geometry>
+          <cylinder radius="${wheel_diameter/2}" length="0.001"/>
+        </geometry>
+        <surface>
+            <friction>
+              <ode>
+                <mu>0.000000</mu>
+                <mu2>0.000000</mu2>
+                <slip1>0.000000</slip1>
+                <slip2>0.000000</slip2>
+              </ode>
+            </friction>
+          </surface>
+      </collision>
+    </link>
+
+    <gazebo reference="${prefix}_wheel">
+      <mu1>200.0</mu1>
+      <mu2>100.0"</mu2>
+      <kp value="10000000.0" />
+      <kd value="1.0" />
+      <fdir1 value="1 0 0"/>
+      <material>
+        <diffuse>1 0.423529412 0.039215686 1</diffuse>
+        <ambient>1 0.423529412 0.039215686 1</ambient>
+        <specular>1 0.423529412 0.039215686 1</specular>
+      </material>
+    </gazebo>
+
+    <link name="${prefix}_wheel_base" />
+    <joint name="${prefix}_wheel_base_joint" type="fixed">
+      <parent link="${prefix}_base"/>
+      <child link="${prefix}_wheel_base"/>
+      <!-- Fix Constant only for RPM2 in November Demo. ToDo put this as argument-->
+      <origin xyz="-0.16 0 -${wheel_diameter/2}" rpy="0 0 0"/>
+    </joint>
+
+
+    <joint name="${prefix}_wheel_joint" type="continuous">
+      <axis xyz="0 1 0" rpy="0 0 0"/>
+      <parent link="${prefix}_wheel_base"/>
+      <child link="${prefix}_wheel"/>
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+    </joint>
+
+    <xacro:if value="${is_sim}">
+      <ros2_control name="IgnitionSystem" type="system">
+        <hardware>
+          <plugin>ign_ros2_control/IgnitionSystem</plugin>
+        </hardware>
+        <joint name="${prefix}_wheel_joint">
+          <command_interface name="velocity">
+            <param name="min">-1</param>
+            <param name="max">1</param>
+          </command_interface>
+          <state_interface name="position"/>
+          <state_interface name="velocity"/>
+          <state_interface name="effort"/>
+        </joint>
+      </ros2_control>
+    </xacro:if>
+
+  </xacro:macro>
+
+  <xacro:macro name="roller" params="prefix suffix reflect is_sim">
+
+    <link name="${prefix}_${suffix}_roller">
+      <visual>
+        <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
+        <geometry>
+          <cylinder radius="${track_diameter/2}" length="${track_width}"/>
+        </geometry>
+        <material name="black"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
+        <geometry>
+          <cylinder radius="${track_diameter/2}" length="${track_width}"/>
+        </geometry>
+        <surface>
+            <friction>
+              <ode>
+                <mu>0.000000</mu>
+                <mu2>0.000000</mu2>
+                <slip1>0.000000</slip1>
+                <slip2>0.000000</slip2>
+              </ode>
+            </friction>
+          </surface>
+      </collision>
+      <xacro:default_inertial mass="2.637"/>
+    </link>
+
+    <gazebo reference="${prefix}_${suffix}_roller">
+      <mu1>0.0</mu1>
+      <mu2>0.0</mu2>
+      <material>
+        <diffuse>1 0.423529412 0.039215686 1</diffuse>
+        <ambient>1 0.423529412 0.039215686 1</ambient>
+        <specular>1 0.423529412 0.039215686 1</specular>
+      </material>
+    </gazebo>
+
+    <joint name="${prefix}_${suffix}_roller_joint" type="continuous">
+      <axis xyz="0 1 0" rpy="0 0 0"/>
+      <parent link="${prefix}_base"/>
+      <child link="${prefix}_${suffix}_roller"/>
+      <origin xyz="${reflect*(track_length - track_diameter)/2} 0 ${-track_diameter/2}"/>
+    </joint>
+
+    <xacro:if value="${is_sim}">
+      <ros2_control name="IgnitionSystem" type="system">
+        <hardware>
+          <plugin>ign_ros2_control/IgnitionSystem</plugin>
+        </hardware>
+        <joint name="${prefix}_${suffix}_roller_joint">
+          <state_interface name="position"/>
+          <state_interface name="velocity"/>
+          <state_interface name="effort"/>
+        </joint>
+      </ros2_control>
+    </xacro:if>
+
+  </xacro:macro>
+
+
+  <xacro:macro name="track" params="prefix reflect is_sim">
+    <link name="${prefix}_track">
+      <visual>
+        <geometry>
+          <box size="${track_length-track_diameter} ${track_width} ${track_diameter}"/>
+        </geometry>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <material name="green"/>
+      </visual>
+      <xacro:default_inertial mass="1"/>
+    </link>
+
+    <gazebo reference="${prefix}_track">
+      <mu1>0.0</mu1>
+      <mu2>0.0</mu2>
+      <material>
+        <diffuse>1 0.423529412 0.039215686 1</diffuse>
+        <ambient>1 0.423529412 0.039215686 1</ambient>
+        <specular>1 0.423529412 0.039215686 1</specular>
+      </material>
+    </gazebo>
+
+    <joint name="base_to_${prefix}_track" type="fixed">
+      <parent link="rpm_base_link"/>
+      <child link="${prefix}_track"/>
+      <origin xyz="0 ${reflect*(track/2- track_width/2)} 0.0"/>
+    </joint>
+
+    <link name="${prefix}_base">
+      <visual>
+        <geometry>
+          <box size="${baselen} 0.1 0.05"/>
+        </geometry>
+        <material name="white"/>
+      </visual>
+      <!-- <collision>
+        <geometry>
+          <box size="${baselen} 0.1 0.05"/>
+        </geometry>
+      </collision> -->
+      <xacro:default_inertial mass="1"/>
+    </link>
+
+    <gazebo reference="${prefix}_base">
+      <mu1>0.0</mu1>
+      <mu2>0.0</mu2>
+      <material>
+        <diffuse>1 0.423529412 0.039215686 1</diffuse>
+        <ambient>1 0.423529412 0.039215686 1</ambient>
+        <specular>1 0.423529412 0.039215686 1</specular>
+      </material>
+    </gazebo>
+
+
+
+    <joint name="${prefix}_base_joint" type="fixed">
+      <parent link="${prefix}_track"/>
+      <child link="${prefix}_base"/>
+      <origin xyz="0 0 ${track_diameter/2}"/>
+    </joint>
+
+    <xacro:wheel prefix="${prefix}" is_sim="${is_sim}"/>
+    <xacro:roller prefix="${prefix}" suffix="front" reflect="1" is_sim="${is_sim}"/>
+    <xacro:roller prefix="${prefix}" suffix="rear" reflect="-1" is_sim="${is_sim}"/>
+  </xacro:macro>
+</robot>

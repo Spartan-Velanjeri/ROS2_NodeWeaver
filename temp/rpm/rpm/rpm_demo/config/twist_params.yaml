@@ -1,0 +1,21 @@
+twist_message_publisher:
+  ros__parameters:
+    controller_name: "rpm_velocity_controller"
+    wait_sec_between_publish: 5
+    goal_names: ["twist_1", "twist_2", "twist_3", "twist_4", "twist_5"]
+    twist_1:
+      linear: [-10.0, 0.0, 0.0]
+      angular: [0.0, 0.0, 0.0]
+    twist_2:
+      linear:  [-0.5, 0.0, 0.0]
+      angular: [0.0, 0.0, 0.5]
+    twist_3:
+      linear:  [-6.0, 0.0, 0.0]
+      angular: [0.0, 0.0, 0.0]
+    twist_4:
+      linear:  [-4.0, 0.0, 0.0]
+      angular: [0.0, 0.0, 0.0]
+    twist_5:
+      linear:  [-0.5, 0.0, 0.0]
+      angular: [0.0, 0.0, 0.5]
+

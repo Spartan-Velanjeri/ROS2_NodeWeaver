@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+                <Sequence>  
+                    <Action ID="getSize" name="get_size" list_size="{numPoints}"/>
+                    <Repeat num_cycles="{numPoints}">
+                        <Sequence>  
+                            <Action ID="getPose" name="get_pose" num_points="{numPoints}" poi_pose="{pose}" success="{drill_job_flag}"/>
+                            <Action ID="moveToPose" name="move_to_pose" goal_pose="{pose}" pose_reached="{position_flag}"/>
+                            <Action ID="StartFPM" name="start_drill_job" start_drill_job="{position_flag}" drill_job_done="{drill_job_flag}"/>
+                        </Sequence>
+                    </Repeat>
+                </Sequence>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <!-- <Action ID="updateIndex">
+            <input_port name="flag"/>
+            <output_port name="idx"/>
+        </Action> -->
+        <!-- <Action ID="writeClusterPositionOnBB">
+            <input_port name="idx"/>
+            <output_port name="pose"/>
+        </Action>   -->
+        <Action ID="getPose">
+            <output_port name="list_size"/>
+            <input_port name="success"/>
+            <output_port name="poi_pose"/>
+        </Action>
+        <Action ID="moveToPose">
+            <input_port name="goal_pose"/>
+            <output_port name="pose_reached"/>
+        </Action>
+        <Action ID="StartFPM">
+            <input_port name="start_drill_job"/>
+            <output_port name="drill_job_done"/>
+        </Action>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>

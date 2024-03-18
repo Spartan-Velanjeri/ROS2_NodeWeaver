@@ -1,0 +1,56 @@
+@startuml Overview
+
+
+
+folder missions #AntiqueWhite{
+    folder m2 as "2" {
+        database  "mission-db"   as db2 #LightSteelBlue {
+            card PatternTable #LightSteelBlue
+            card DrillHoleTable #LightSteelBlue
+        }
+    }
+}
+node CCU {
+    component sl as "<b>service logic</b>" #BUSINESS 
+    component cds as "CCU_DATA_SERVICES" #BUSINESS {
+        frame bdom as "Bautiro\nDomain\nModel" #IVORY{
+            card Mission
+            card Pattern
+            collections DrillHoles
+        }
+    }
+}
+
+
+Mission *- Pattern
+Pattern *- DrillHoles
+
+PatternTable -[dotted]r- DrillHoleTable
+
+
+PatternTable -[dotted]d-->  Pattern #Black;text:DarkGreen : "  load from\n  persistency\n to <b>DOM</b>"
+DrillHoleTable -[dotted]d->  DrillHoles
+
+() ifc3 as "get <i>latest</i> mission event"
+() ifc1 as "get <i>next</i> cluster"
+() ifc2 as "get cluster drillholes"
+() ifc4 as "..."
+() ifc5 as "update drill hole state" #LightPink
+
+
+sl -down-> ifc1 #Green
+sl -down-> ifc2 #Green
+sl -down-> ifc3 #Green
+sl -down-> ifc4 #Green
+sl <-down- ifc5 #RED;text:OrangeRed : update status\n<b>Hole is_drilled</b>\nService... from FPM
+
+
+bdom -down-> sl #Green
+bdom <-down- sl #Red
+
+
+
+
+
+
+@enduml

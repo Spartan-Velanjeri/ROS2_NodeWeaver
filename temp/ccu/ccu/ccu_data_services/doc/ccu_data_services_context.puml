@@ -1,0 +1,63 @@
+@startuml ccu_data_services context
+
+component CCU {
+    folder ccu_hcu_abstraction {
+        node "manual | bridge" as bridge
+    }
+    folder ccu_data_services #BUSINESS {
+        rectangle "main" as exe_2 <<executable>> #Yellow  {
+            node "data_service" as CORE_HALC #APPLICATION
+        }
+    }
+    folder ccu_util #BUSINESS {
+        card util #BUSINESS
+    }
+    folder ccu_interfaces #BUSINESS {
+        card srv #BUSINESS
+        card msg #BUSINESS
+    }
+    folder ccu_task_execution {
+        node ccu_bt_navigators as me
+    }
+    folder ccu_dataservice #LightYellow {
+        rectangle "\n   core-library   \n" as lib #LightYellow
+    }
+    frame codegen  {
+        folder ccu_bautiro #LightYellow {
+            file "//*.ecore//" as ecore #LightSlateGrey
+            note right #WhiteSmoke: Model-\nDefinition
+        }
+        folder ccu_grpc #LightYellow {
+            file "//*.proto//" as proto #LightSlateGrey
+            note right #WhiteSmoke: Message\n& Service-\nDefinition
+        }
+        ccu_grpc -[dotted]right- proto
+        ccu_grpc -[hidden]- ccu_bautiro
+        ccu_bautiro  -[dotted]right- ecore
+    }
+    rectangle #WhiteSmoke {
+        folder data_dir #IndianRed{
+            database TaskPlan.xml #LightGreen
+            database progress.xml #LightCoral
+        }
+    }
+}
+
+
+
+ccu_hcu_abstraction -[dashed]--> codegen         #Gray: //depends//
+ccu_dataservice     -[dashed]-> ccu_bautiro    #Gray: //depends//
+ccu_data_services   -[dashed]right-> codegen       #Gray: //depends//
+ccu_data_services   -[dashed]---> ccu_dataservice  #Gray: //depends//
+ccu_data_services   -[dashed]--> ccu_util         #Gray: //depends//
+ccu_data_services   -[dashed]--> ccu_interfaces   #Gray: //depends//
+
+lib -[bold]-> progress.xml #RED
+TaskPlan.xml -[bold]up-> lib #GREEN
+me -[bold]- CORE_HALC #BLUE
+
+
+me <-[bold]right- bridge #BLUE : "   start-mission "
+bridge -[bold]- CORE_HALC #BLUE
+
+@enduml

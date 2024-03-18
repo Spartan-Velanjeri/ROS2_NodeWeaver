@@ -1,0 +1,70 @@
+# === Major modes ====
+sensor_mode: multi_sensor
+
+scan_combiner/lidars: [ouster_R, ouster_F]
+
+# Ouster Front Right: FuS1
+# os-122227002402.local
+# configured as static IP: 192.168.1.8
+ouster_F/type: ouster 
+ouster_F/lidar_filter/class: interpolator3
+ouster_F/lidar_filter/name: interpolator3
+ouster_F/topic_name: "/rpm/sensors/front/lidar3d/points" 
+ouster_F/base_link_to_sensor:  [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0]  # will be populated by TF tree values during SLAM launch
+
+# Ouster Rear Left: FuS1
+# os-122227000236.local
+# configured as static IP: 192.168.1.7
+ouster_R/type: ouster
+ouster_R/lidar_filter/class: interpolator3
+ouster_R/lidar_filter/name: interpolator3
+ouster_R/topic_name: "/rpm/sensors/rear/lidar3d/points" 
+ouster_R/base_link_to_sensor:  [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0]  # will be populated by TF tree values during SLAM launch
+
+# == Lidar Filter ==
+lidar_filter/class: interpolator3
+lidar_filter/name: interpolator3
+# == Interpolator3 ==
+interpolator3/min_range_m: 2.5
+interpolator3/max_range_m: 50.0
+#interpolator3/filter_mode: vertical
+#interpolator3/threshold_vertical_rad: 0.15
+interpolator3/filter_mode: ray_filter
+
+interpolator3/enable_undistortion: true
+interpolator3/enable_publish_pointclouds: true
+interpolator3/shall_create_full_point_cloud: true
+interpolator3/estimate_scan_duration_from_header_stamp: false
+interpolator3/default_scan_duration: 0.1
+
+introspection/tracker/enabled: false
+introspection/lidar_odometry/enabled: false
+
+# === enable/disable Z estimation globally ===
+optimizer/enable_estimate_z: true
+slam/enable_z_matching_for_odo: true
+slam/enable_z_matching_for_loop_closures: true
+
+
+#=========================For simulation only================================
+
+# Ouster Rear Left: FuS1
+# os-122227000236.local
+# configured as static IP: 192.168.1.7
+ouster_RL_sim/type: ouster
+ouster_RL_sim/lidar_filter/class: interpolator3
+ouster_RL_sim/lidar_filter/name: interpolator3
+ouster_RL_sim/topic_name: "/rpm_lidar_rear_lidar_data/points" 
+ouster_RL_sim/base_link_to_sensor:  [-0.992, 0.467, 0.636, -0.002, 0.006, 0.364, 0.932]  
+#ouster_RL/base_link_to_sensor:  [2.059, 0.072, 0.015, 0.0, 0.0, 0.40814267195752296, 0.912918155875637]  # UPDATE NEEDED! calibration taken from TS60 15.02.2023
+# [2.059, 0.072, 0.015, 0.0, 0.0, 0.3805755848001144, 0.9247498171149053]  # calibration taken from TS60 15.02.2023
+# Ouster Front Right: FuS1
+# os-122227002402.local
+# configured as static IP: 192.168.1.8
+ouster_FR_sim/type: ouster 
+ouster_FR_sim/lidar_filter/class: interpolator3
+ouster_FR_sim/lidar_filter/name: interpolator3
+ouster_FR_sim/topic_name: "/rpm_lidar_front_lidar_data/points" 
+ouster_FR_sim/base_link_to_sensor:  [0.936, -0.480, 0.637, -0.030, 0.012, 0.938, -0.346]  
+#ouster_FR/base_link_to_sensor:  [-0.050, -0.938, 0.015, 0.0, 0.0, -0.9125427012946495, 0.4089814400603821]  #  UPDATE NEEDED! calibration taken from TS60 15.02.2023
+# [-0.050, -0.938, 0.015, 0.0, 0.0, -0.9243996907446073, 0.381425237433595]

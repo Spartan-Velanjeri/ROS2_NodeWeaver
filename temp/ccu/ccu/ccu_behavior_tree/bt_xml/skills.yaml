@@ -1,0 +1,39 @@
+# Schema:
+#
+# <skill_input>:
+#     name: [Required, type: string]: Name of the input.
+#     type: [Required, type: string]: Type of the input. ["string", "int", "float", "bool"]
+#     description: [Required, type: string]: Description of the input.
+#     range: [Optional, type: list]: Range of the input.
+#     required: [Optional, type: bool]: If the input is required or not.
+#     default: [Optional, type: string]: Default value of the input.
+#
+# <skill_name>:
+#     xml: [Required, type: string]: Name of the xml file (Behavior tree file) in the same directory.
+#     inputs: [Required, type: list]: <list_of_inputs>
+#     description: [Required, type: string]: Description of the skill.
+#     released: [Required, type: bool]: If the skill is released it will be exposed/callable on the interface.
+#     test: [Optional, type: bool] Skills used for tests. They will not be exposed/callable on the interface.
+
+
+execute_mission:
+    xml: "execute_mission.xml"
+    inputs: []
+    description: "getPose, StartRpm, getDrillMask, createDrillResult, addDrillEvent"
+    released: false
+    test: false
+ccu_data_service_test:
+    xml: "ccu_data_service_test.xml"
+    inputs: []
+    description: "Test interplay with DataService, No Action but report NavResult and DrillResult"
+    released: false
+motion_cluster:
+    xml: "motion_cluster.xml"
+    inputs: []
+    description: "getPose, moveToPose, StartFpm"
+    released: false
+ccu_main_feedback:
+    xml: "ccu_main_feedback.xml"
+    inputs: []
+    description: "StartRpm, StartFpm, AddDrillEvent"
+    released: false

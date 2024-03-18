@@ -1,0 +1,3 @@
+string NAME = "set_handling_unit_configured_pose_result"
+HandlingUnitPose current_pose
+ResponseCode response_code

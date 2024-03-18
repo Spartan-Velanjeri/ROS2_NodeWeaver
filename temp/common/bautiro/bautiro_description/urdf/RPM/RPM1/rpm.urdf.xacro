@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<robot name="rpm" xmlns:xacro="http://ros.org/wiki/xacro">
+  
+  <!-- Include the common RPM snippets-->
+  <xacro:include filename="$(cwd)/urdf/RPM/rpm.urdf.xacro"/>
+
+  <!-- working space center point -->
+  <link name="rpm_working_space_center_point">
+    <visual>
+      <geometry>
+        <cylinder radius="0.1" length="0.05"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </visual>    
+  </link>
+  
+  <joint name="baselink2workingspace" type="fixed">
+    <origin xyz="1.5 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    <parent link="rpm_base_link"/>
+    <child link="rpm_working_space_center_point"/>
+  </joint>
+
+
+  <!-- Add calidation points for Schillerhöher Construction Site
+  <link name="rpm_validation_point_01" />
+  <xacro:spawn_calibrated_joint name="rpm2validationpoint01" parent="base_link" child="rpm_validation_point_01" dict_key="rpm_validation_point_01"/>  
+  <link name="rpm_validation_point_02" />
+  <xacro:spawn_calibrated_joint name="rpm2validationpoint02" parent="base_link" child="rpm_validation_point_02" dict_key="rpm_validation_point_02"/>  
+  <link name="rpm_validation_point_03" />
+  <xacro:spawn_calibrated_joint name="rpm2validationpoint03" parent="base_link" child="rpm_validation_point_03" dict_key="rpm_validation_point_03"/>  
+  <link name="rpm_validation_point_04" />
+  <xacro:spawn_calibrated_joint name="rpm2validationpoint04" parent="base_link" child="rpm_validation_point_04" dict_key="rpm_validation_point_04"/>  
+  <link name="rpm_validation_point_05" />
+  <xacro:spawn_calibrated_joint name="rpm2validationpoint05" parent="base_link" child="rpm_validation_point_05" dict_key="rpm_validation_point_05"/>  
+  <link name="rpm_validation_point_06" />
+  <xacro:spawn_calibrated_joint name="rpm2validationpoint06" parent="base_link" child="rpm_validation_point_06" dict_key="rpm_validation_point_06"/>  
+  <link name="rpm_validation_point_07" />
+  <xacro:spawn_calibrated_joint name="rpm2validationpoint07" parent="base_link" child="rpm_validation_point_07" dict_key="rpm_validation_point_07"/>  
+  <link name="rpm_validation_point_08" />
+  <xacro:spawn_calibrated_joint name="rpm2validationpoint08" parent="base_link" child="rpm_validation_point_08" dict_key="rpm_validation_point_08"/>  
+  <link name="rpm_validation_point_09" />
+  <xacro:spawn_calibrated_joint name="rpm2validationpoint09" parent="base_link" child="rpm_validation_point_09" dict_key="rpm_validation_point_09"/>  
+  <link name="rpm_validation_point_10" />  
+  <xacro:spawn_calibrated_joint name="rpm2validationpoint10" parent="base_link" child="rpm_validation_point_10" dict_key="rpm_validation_point_10"/>  
+  <link name="rpm_validation_point_11" />
+  <xacro:spawn_calibrated_joint name="rpm2validationpoint11" parent="base_link" child="rpm_validation_point_11" dict_key="rpm_validation_point_11"/>  
+  <link name="rpm_validation_point_12" />
+  <xacro:spawn_calibrated_joint name="rpm2validationpoint12" parent="base_link" child="rpm_validation_point_12" dict_key="rpm_validation_point_12"/>  -->
+</robot>

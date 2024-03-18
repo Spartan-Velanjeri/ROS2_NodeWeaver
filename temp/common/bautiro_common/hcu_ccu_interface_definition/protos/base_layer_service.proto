@@ -1,0 +1,296 @@
+syntax = "proto3";
+
+package google.protobuf;
+option csharp_namespace = "BautiroGrpcLib";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "common_types.proto";
+
+service BaseLayerService{
+
+    rpc BaseLayerStateStream(google.protobuf.Empty) returns (stream BaseLayerState);
+
+    // get the list of available missions
+    rpc GetMissionList(google.protobuf.Empty) returns (MissionList);
+    // get a roomplan for a specific mission
+    rpc GetRoomPlanObjFile(MissionIdRequest) returns (stream FileStreamingMessage);
+    // get data for a specific mission
+    rpc GetMissionData(MissionIdRequest) returns (MissionDataResponse);
+    // stream changes to mission data - a.k.a. "Tracking mode"
+    rpc StreamMissionData(google.protobuf.Empty) returns (stream MissionDataResponse);
+
+    // start a mission and stream mission events
+    rpc StartMission(MissionIdRequest) returns (StartMissionResponse);
+
+    // HCU sends files contained in a directory to CCU in order to create a new mission
+    rpc ImportMission(stream DirectoryStreamingMessage) returns (DirectoryStreamingResponse);
+
+    // get a description of the bautiro transform tree
+    rpc GetBautiroDescription(google.protobuf.Empty) returns (BautiroDescriptionMessage);
+    // download a visual mesh file
+    rpc GetBautiroMesh(BautiroVisualFileRequest) returns (stream FileStreamingMessage);
+    // stream live transforms
+    rpc StreamBautiroTransforms(google.protobuf.Empty) returns (stream RobotTransform);
+
+    // get all developer functions
+    rpc GetDeveloperFunctions(google.protobuf.Empty) returns (DeveloperFunctionList);
+    // call a developer function
+    rpc CallDeveloperFunction(DeveloperFunctionDefinition) returns (DeveloperFunctionCallResult);
+}
+
+/////////////////////////////////////
+/////// BaseLayerStateStream ////////
+/////////////////////////////////////
+
+// contains information about the current capabilities
+message BaseLayerState {
+    bool can_switch_to_manual_mode = 1; // Is Bautiro state ready to switch to manual mode
+    bool can_start_mission = 2; // Is Bautiro state ready to accept a new mission. This will enable/disable start buttons in UI
+    optional MissionMetaData mission_in_progress = 10; // Holds Metadata about the current mission in progress
+}
+
+
+/////////////////////////////////////
+/////// Mission Handling ////////////
+/////////////////////////////////////
+
+// simple request containing a mission ID
+message MissionIdRequest {
+    int64 mission_id = 1; // the unique mission id
+}
+
+// response to StartMission rpc
+message StartMissionResponse {
+    bool success = 1;
+}
+
+// list containing all missions. Not deep data, just metadata
+message MissionList {
+    repeated MissionMetaData missions = 1; // list of all missions stored on CCU
+    int64 current_active_mission_id = 2; // id of current mission. -1 if not set.
+}
+
+// Metadata for a single mission
+message MissionMetaData {
+    int64 id = 1; // unique mission id
+    string name = 2; // mission name, for visual use only
+    int64 predecessor_id = 3; // mission id this mission is dervied from. -1 if not set.
+    google.protobuf.Timestamp import_date = 4; // timestamp of when the mission was imported to CCU
+    string room_plan_md5 = 5; // md5 hash of linked roomplan obj file
+}
+
+// deep mission data, aka nodetree. returned by GetMissionData and StreamMissionData
+message MissionDataResponse {
+    repeated Node node_tree = 1; // the root nodes of this nodeTree
+    repeated Job jobs = 2; // list of jobs in order of operation. Disabled jobs are at the end of the array
+    string room_plan_md5 = 3; // md5 hash of linked roomplan obj file
+}
+
+// A node in the nodetree
+message Node {
+    repeated Node children = 1; // node's children (if any)
+    Matrix4x4 local_transform = 2; // transform relative to node's parent
+    string name_unique_per_node_tree = 3; // node's unique name
+    string series = 4; // node's series
+    optional FastenerTemplate fastener_template = 5; // the fastener template (if set)
+    optional string parent_node_name_unique = 6; // name of the node's parent. Can be unset if node is root.
+}
+
+// A FastenerTemplate in the nodetree, attached to a node
+message FastenerTemplate {
+    repeated DrillMask drill_masks = 1; // drillmasks contained in FastenerTemplate
+    string name_unique_per_node_tree = 2; // FastenerTemplate's unique name.
+    string type_guid = 3;
+    string parent_node_name_unique = 4; // name of the FastenerTemplate's parent.
+}
+
+// A DrillMask in the nodetree, attached to a Fastenertemplate
+message DrillMask {
+    Matrix4x4 local_transform = 1; // this drillMask's transform relative to fastenerTemplate's Node parent. (FastenerTemplate has no transform itself)
+    string name_unique_per_node_tree = 2; // Drillmask's unique name
+    repeated DrillHole drill_holes = 3; // List of holes to drill
+    string parent_fastener_template_name_unique = 4; // name of the DrillMask's parent.
+}
+
+// A Drillhole in the nodetree, attached to a DrillMask
+message DrillHole {
+    Matrix4x4 local_transform = 1; // this holes's transform relative to the drillmask
+    string name_unique_per_drillmask = 2; // Drillhole's unique name. Unique per Drillmask, but not per NodeTree
+    DrillHoleState state = 3; // state of the hole
+    optional string parent_drillmask_name_unique = 4; // the drillmask's parent (not supplied in manual mode)
+    double d_x = 5;
+    double d_y = 6;
+
+    enum DrillHoleState {
+        UNDEFINED = 0;
+        UNDRILLED = 1;
+        SCHEDULED = 2;
+        FINISHED  = 3;
+        IGNORE    = 4;
+        FAILED    = 5;
+}
+}
+
+message Job {
+    string id_unique = 1;
+    Matrix4x4 absolute_transform = 2;
+    bool enabled = 3; // this cluster won't be scheduled
+    oneof data  {
+        DrillJob drill_job = 10;
+        MoveJob move_job = 11;
+        MeasureJob measure_job = 12;
+    }
+}
+
+message DrillJob {
+    repeated string drillmask_names = 1;
+}
+
+message MoveJob {}
+
+// not used in production
+message MeasureJob {}
+
+/////////////////////////////////
+/////// File Transfer ///////////
+/////////////////////////////////
+
+// Describes a file before transfer
+message FileMetaData {
+    string file_name = 1;
+    int64 file_size_bytes = 2;
+    string md5_hash = 3;
+}
+
+// streams any file. Starts with a FileMetaData, then bytes while streaming file content, then FileTransferCompletedMessage when done.
+message FileStreamingMessage {
+    oneof data {
+        FileMetaData file_meta_data = 2;
+        bytes file_chunk_data = 3;
+        FileTransferCompletedMessage file_completed = 4;
+    }
+}
+
+// Sent when a file transfer is done
+message FileTransferCompletedMessage {
+    string file_name = 1;
+}
+
+// Streams a directory's content.
+// Starts with a DirectoryMetaData.
+// Then for each file iterating on FileStreamingMessage
+// Then DirectoryTransferCompletedMessage when done.
+message DirectoryStreamingMessage {
+    oneof data {
+        DirectoryMetaData dir_meta_data = 1; // once in the beginning
+        FileStreamingMessage file_data = 2; // iterated per file
+        DirectoryTransferCompletedMessage dir_completed = 3; // once when done
+    }
+}
+
+// Describes a directory before transfer
+message DirectoryMetaData {
+    string directory_name = 1;
+    int64 directory_file_count = 2;
+}
+
+// Sent when a directory transfer is done
+message DirectoryTransferCompletedMessage {
+
+}
+
+// used by rpc ImportMission, when import is done
+message DirectoryStreamingResponse {
+    bool success = 1; // true if import/directory transfer was a success
+}
+
+/////////////////////////////////
+/////// Developer Functions /////
+/////////////////////////////////
+
+// contains a list of developer fucntions
+message DeveloperFunctionList {
+    repeated DeveloperFunctionSource sources = 1; // list of sources of dev functions
+}
+
+// A source of developer functions
+message DeveloperFunctionSource {
+    string name = 1; // title/header of this source. A short string
+    repeated DeveloperFunctionDefinition functions = 2; // the list of functions
+}
+
+// defines a developer function
+message DeveloperFunctionDefinition {
+    string name = 1; // name and identifier of the function. Unique for every function.
+    string description = 2; // short description
+    repeated ParameterDefinition parameters = 3; // list of the function's parameters
+}
+
+// defines a parameter for a developer function
+message ParameterDefinition {
+    oneof parameter {
+        NumericParameter param_number = 1; // numeric parameter
+        BoolParameter param_bool = 2; // bool parameter
+    }
+}
+
+// defines a numeric parameter
+message NumericParameter {
+    string param_name = 1; // name of the parameter
+    double param_value = 2; // value of the parameter. Will also be used as the default value
+    double min_value = 3;
+    double max_value = 4;
+    double step_size = 5; // step size for increment/decrement in GUI
+}
+
+// defines a boolean parameter
+message BoolParameter {
+    string param_name = 1; // name of the parameter
+    bool param_value = 2; // value of the parameter. Will also be used as the default value
+}
+
+// result of the function call. will be shown in GUI
+message DeveloperFunctionCallResult {
+    string message = 1;
+}
+
+/////////////////////////////////
+/////// Robot Description ///////
+/////////////////////////////////
+
+// Message describing the robot
+message BautiroDescriptionMessage {
+    repeated BautiroUrdfLink links = 1; // collection of links
+}
+
+// a single link
+message BautiroUrdfLink {
+    string name = 1; // Name of the link. If name=="base_link", parent_id is empty and this is the root
+    string parent = 2; // Name of the parent. Empty if root link
+    Matrix4x4 transform_relative_to_parent = 3;
+    repeated BautiroUrdfVisualMesh visuals = 4; // collection of visuals
+}
+
+// A visual representation
+message BautiroUrdfVisualMesh {
+    string mesh_file_path = 1;
+    string mesh_file_md5_hash = 2;
+    Matrix4x4 offset = 3;
+}
+
+// Request to download a visual file (.obj or .mtl)
+message BautiroVisualFileRequest {
+    string file_path = 1;
+}
+
+// Message to update the robot's transformations
+message RobotTransform {
+    repeated UpdateTransformMessage links = 1; // Collection of links that changed.
+}
+
+// Contains a transformation update of a single link
+message UpdateTransformMessage {
+    string child_id = 1; // this is the name of the element to be transformed
+    Matrix4x4 transform_relative_to_parent = 2;
+}

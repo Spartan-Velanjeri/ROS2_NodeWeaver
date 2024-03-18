@@ -1,0 +1,4 @@
+string NAME = "start_bt"
+bool START = true
+---
+bool start_confirm

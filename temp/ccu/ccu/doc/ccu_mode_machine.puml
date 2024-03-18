@@ -1,0 +1,58 @@
+@startuml
+
+'skinparam Ranksep 20
+skinparam Nodesep 10
+
+state INITIALIZATION {
+    [*] -> INIT
+    INIT --> CONFIGURED
+    state WAITING
+    CONFIGURED --> WAITING
+}
+
+state CONFIGURATION {
+    SERVICE --> SUPERUSER
+
+}
+WAITING -left--> CONFIGURATION
+state MANUAL_CONTROL {
+
+    state LIFT_LOW{
+        RPM_HALT --> RPM_MOVING
+    }
+
+    state LIFT_HIGH{
+        HU_HALT --> HU_MOVING
+
+        HU_HALT --> DRILLING
+    }
+    [*] -> HALT
+    HALT --> RPM_HALT
+    HALT --> HU_HALT
+}
+
+
+state SHUTDOWN {
+    [*] --> SHUTDOWN_1
+    SHUTDOWN_1 --> SHUTDOWN_2
+    SHUTDOWN_2 --> [*]
+}
+WAITING -right--> SHUTDOWN
+state MISSION {
+    PAUSE -left-> EXECUTION : Resume
+    EXECUTION -right-> PAUSE : Stop
+    state start_mission <<entryPoint>>
+    start_mission -down-> EXECUTION
+    EXECUTION --> SUCCESS
+    EXECUTION --> FAIL
+    state finished <<exitPoint>>
+    SUCCESS --> finished
+    FAIL --> finished
+
+}
+WAITING ---> MISSION
+WAITING --> MANUAL_CONTROL
+
+
+
+@enduml

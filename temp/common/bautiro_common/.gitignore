@@ -1,0 +1,29 @@
+**/bin/**
+
+# no temporary ROS files
+build/**
+install/**
+log/**
+**rosbag2**
+
+# dont store python cache files
+**/__pycache__/**
+
+# ignore temporary docubuild files
+**/temp/
+**/__OUTPUT/
+doc/*/
+**/Dockerfile
+
+# don't checkin individual tool-settings
+.vscode/
+.settings/
+
+.project
+__pycache__
+*.pyc
+build
+log
+install
+.vscode
+.vscode/**

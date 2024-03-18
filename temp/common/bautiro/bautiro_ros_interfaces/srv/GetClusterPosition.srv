@@ -1,0 +1,10 @@
+# DISCUSSED: new name suggestion
+#      FILE:   I10GetNavTargetCluster.srv
+#      NAME = "i10_get_nav_target_cluster"
+
+string NAME = "get_cluster_position"
+int64 number_of_next
+---
+ClusterPosition[] cluster_positions
+
+int32 CURRENT_NEXT_INDEX=0

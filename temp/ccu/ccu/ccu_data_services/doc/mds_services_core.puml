@@ -1,0 +1,27 @@
+@startuml Overview
+
+frame f as "BAUTIRO_CORE\nROS2 services"   {
+    () i1 as "get_cluster_job"
+    () i2 as "get_drillholes_cluster"
+    () i3 as "add_mission_event"
+}
+
+class "DataService**Core**"  as dsc  << Node >> #APPLICATION
+
+i1 -up- dsc
+i2 -left- dsc
+i3 -down- dsc
+
+i1 -[hidden]- i2
+i2 -[hidden]- i3
+
+class CDataService << Python >> {
+    + get_cluster_job()
+    + get_drillholes_at_cluster()
+    + add_mission_even()
+}
+
+dsc o-down- CDataService
+dsc -left[hidden]- f
+
+@enduml

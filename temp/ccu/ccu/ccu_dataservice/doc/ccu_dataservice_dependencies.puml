@@ -1,0 +1,46 @@
+@startuml ccu_dataservice dependencies
+
+'left to right direction
+
+skinparam DefaultTextAlignment center
+skinparam MinClassWidth 135
+skinparam Nodesep 50
+skinparam Ranksep 50
+
+rectangle 3rd_party {
+    rectangle lxml
+    rectangle protobuf
+    rectangle pyecore
+}
+frame ccu {
+    rectangle " **ccu_dataservice** " as ds #Yellow
+'    note left
+'        TaskPlan-2.1.xsd
+'    end note
+    rectangle ccu_bautiro
+    rectangle ccu_grpc
+    rectangle ccu_data_services
+
+
+    ds -[dotted]down-> ccu_grpc
+    ds -[dotted]down-> ccu_bautiro
+    ccu_data_services -[dotted]down->  ds
+    ccu_data_services -[dotted]down->  ccu_grpc
+    ds -[dotted]down--->  3rd_party
+    ccu_bautiro  -[dotted]down-> pyecore #Gray
+    ccu_grpc  -[dotted]down-> protobuf #Gray
+
+}
+
+
+' ccu_grpc <. ccu_dataservice
+' ccu_data_services .> ccu_dataservice
+' ccu_data_services ..> ccu_bautiro
+' ccu_data_services .> ccu_grpc
+' ccu_dataservice .....> 3rd_party
+' ccu_dataservice ...> ccu_bautiro
+
+' ccu_bautiro ..> pyecore
+
+
+@enduml

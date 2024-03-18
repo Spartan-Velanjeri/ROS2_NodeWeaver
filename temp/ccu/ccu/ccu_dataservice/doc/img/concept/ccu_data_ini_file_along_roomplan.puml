@@ -1,0 +1,12 @@
+@startuml Overview
+
+   folder data #BUSINESS{
+      folder roomplans #LightGray{
+         folder "1" as rp1 {
+            file frp1 as "RoomPlan.OBJ"
+            file fini as "metadata.ini" #LightCoral
+         }
+      }
+   }
+fini -up[dashed]-> frp1 #LightCoral
+@enduml

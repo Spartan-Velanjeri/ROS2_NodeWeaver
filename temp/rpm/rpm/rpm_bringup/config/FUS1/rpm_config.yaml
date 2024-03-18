@@ -1,0 +1,5 @@
+rpm:
+  navigation:
+    bt_navigator:
+      ros__parameters:
+        robot_base_frame: base_link_modified

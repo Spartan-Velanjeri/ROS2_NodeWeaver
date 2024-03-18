@@ -1,0 +1,2 @@
+ccu_grpc==2.1.0
+ccu_bautiro==2.1.0

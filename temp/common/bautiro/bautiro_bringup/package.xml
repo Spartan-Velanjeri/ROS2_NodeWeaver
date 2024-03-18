@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>bautiro_bringup</name>
+  <version>0.0.0</version>
+  <description>Package to start the bautiro robot</description>
+  <maintainer email="andreas.mogck@de.bosch.com">mia4si</maintainer>
+  <license>Robert Bosch GmbH proprietary</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>ament_btr_cmake</buildtool_depend>
+
+  <!-- ROS runtime dependencies -->
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>joint_state_publisher</exec_depend>
+  <exec_depend>controller_manager</exec_depend>
+  <exec_depend>rviz2</exec_depend>
+
+  <!-- BAUTIRO runtime dependencies -->
+  <exec_depend>ccu_data_services</exec_depend>
+  <exec_depend>ccu_behavior_tree</exec_depend>
+  <exec_depend>fpm_moveit</exec_depend>
+  <exec_depend>p2p_offset_controller</exec_depend>
+
+  <test_depend>bosch_copyright_extension</test_depend>
+  <test_depend>ament_lint_auto</test_depend>
+  <!-- <test_depend>ament_pycodestyle</test_depend> -->  
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

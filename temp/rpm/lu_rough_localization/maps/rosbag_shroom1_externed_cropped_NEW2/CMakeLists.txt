@@ -1,0 +1,1 @@
+download_map(rosbag_shroom1_externed_cropped_NEW2 rosbag2_2023_10_16-12_10_12_0.db3)

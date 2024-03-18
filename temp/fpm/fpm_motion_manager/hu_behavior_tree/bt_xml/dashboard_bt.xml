@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+        <Sequence>
+            <Fallback>
+                <Condition ID="isrobotrunning"/>
+                <Action ID="turnon"/>
+                <Action ID="brakerelease"/>
+            </Fallback>
+            <Action ID="loadur" file_name="demo.urp"/>
+            <Action ID="getloadedprogram"/>
+            <Action ID="toolforce"/>
+            <Action ID="jointstates"/>
+            <Action ID="tooltemp"/>
+            <Action ID="iostates"/>
+            <Action ID="play"/>
+            <Inverter>
+                <KeepRunningUntilFailure>
+                    <Sequence>
+                        <Action ID="iostatecondition"/>
+                    </Sequence>
+                </KeepRunningUntilFailure>
+            </Inverter>
+            <Action ID="stop"/>
+        </Sequence>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <Action ID="brakerelease"/>
+        <Action ID="bt_utils"/>
+        <Action ID="getloadedprogram"/>
+        <Action ID="iostatecondition"/>
+        <Action ID="iostates"/>
+        <Condition ID="isrobotrunning"/>
+        <Action ID="jointstates"/>
+        <Action ID="loadinstallation"/>
+        <Action ID="loadur">
+            <input_port name="file_name"/>
+        </Action>
+        <Action ID="moveit"/>
+        <Action ID="pause"/>
+        <Action ID="play"/>
+        <Action ID="stop"/>
+        <Action ID="toolforce"/>
+        <Action ID="tooltemp"/>
+        <Action ID="turnoff"/>
+        <Action ID="turnon"/>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>

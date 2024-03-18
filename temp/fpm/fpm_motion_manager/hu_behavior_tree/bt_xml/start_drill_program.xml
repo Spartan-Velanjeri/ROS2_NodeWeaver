@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+        <Sequence>
+            <Action ID="loadur" file_name="ROS2.urp"/>
+            <Action ID="getloadedprogram"/>
+            <Action ID="play"/>
+            <Action ID="ConfiguredPose" handling_unit_configured_pose="0"/>
+            <Action ID="ConfiguredPose" handling_unit_configured_pose="1"/>
+            <Action ID="ConfiguredPose" handling_unit_configured_pose="0"/>
+            <Action ID="stop"/>
+            <Action ID="loadur" file_name="ros_call_test.urp"/>
+            <Action ID="play"/>
+            <Inverter>
+                <KeepRunningUntilFailure>
+                    <Sequence>
+                        <Action ID="iostatecondition"/>
+                    </Sequence>
+                </KeepRunningUntilFailure>
+            </Inverter>
+            <Action ID="stop"/>
+            <Action ID="loadur" file_name="ROS2.urp"/>
+            <Action ID="play"/>
+            <Action ID="ConfiguredPose" handling_unit_configured_pose="1"/>
+        </Sequence>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <Action ID="ConfiguredPose">
+            <input_port name="handling_unit_configured_pose"/>
+        </Action>
+        <Action ID="brakerelease"/>
+        <Action ID="bt_utils"/>
+        <Action ID="getloadedprogram"/>
+        <Action ID="iostatecondition"/>
+        <Action ID="iostates"/>
+        <Condition ID="isrobotrunning"/>
+        <Action ID="jointstates"/>
+        <Action ID="loadinstallation"/>
+        <Action ID="loadur">
+            <input_port name="file_name"/>
+        </Action>
+        <Action ID="moveit">
+            <input_port name="goal"/>
+        </Action>
+        <Action ID="moveitcontrol"/>
+        <Action ID="pause"/>
+        <Action ID="play"/>
+        <Action ID="stop"/>
+        <Action ID="toolforce"/>
+        <Action ID="tooltemp"/>
+        <Action ID="turnoff"/>
+        <Action ID="turnon"/>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>

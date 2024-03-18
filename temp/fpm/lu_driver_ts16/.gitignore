@@ -1,0 +1,12 @@
+__pycache__
+.pyc
+.vscode/*.db*
+*.pyc
+build
+log
+install
+.vscode
+build/**
+log/**
+install/**
+.vscode/**

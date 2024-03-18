@@ -1,0 +1,14 @@
+.vscode/ipch/*
+*.bak*
+*.pyc
+
+
+__pycache__
+build
+log
+install
+.vscode
+build/**
+log/**
+install/**
+.vscode/**

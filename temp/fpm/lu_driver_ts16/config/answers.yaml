@@ -1,0 +1,30 @@
+GRC_OK: 
+- '%R8P,0,0:0' 
+- 'Function successfully completed'
+GRC_DIST_ERR:
+- '%R8P,0,0:26'
+- 'Unable measure the distance'
+GRC_DIST_ERR_NOT_DOCUMENTED:
+- '%R8P,0,0:28'
+- 'Marker not found.'
+GRC_STOP_DIST_FAILED: 
+- '%R8P,0,0:29'
+- 'Unable stop the measurement process'
+GRC_START_FAILED:
+- '%R8P,0,0:50'
+- 'Start streaming failed'
+GRC_STREAM_ACITVE:
+- '%R8P,0,0:51'
+- 'Streaming is already active'
+GRC_STOP_FAILED:
+- '%R8P,0,0:52'
+- 'Stop streaming failed'
+GRC_STREAM__NOT_ACITVE:
+- '%R8P,0,0:53'
+- 'Streaming is not active'
+GRC_NOT_OK:
+- '%R8P,0,0:40'
+- 'Unable to start the positioning procedure'
+GRC_PositioningFailed:
+- '%R8P,0,0:41'
+- 'Positioning failed'

@@ -1,0 +1,9 @@
+string NAME = "add_mission_event"
+
+
+DrillHoleFeedback[] drill_results
+NavigationResult navigation_result
+---
+int64 r_code 0
+int64 OKAY          = 0
+int64 UNKNOWN_ERROR = 1

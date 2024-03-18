@@ -1,0 +1,8 @@
+digipas_driver_node:
+  ros__parameters:
+    port: "/dev/digipas"
+    baudrate: 115200
+    parity: "N"
+    stopbits: 1.0
+    bytesize: 8
+    xonxoff: false

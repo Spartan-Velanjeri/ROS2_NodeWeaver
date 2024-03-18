@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+        <Sequence>
+            <Action ID="stop"/>
+            <Action ID="loadur" file_name="Construction_wo_drilling.urp"/>
+            <Action ID="play"/>
+            <Action ID="programcondition"/>
+            <Action ID="stop"/>
+        </Sequence>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <Action ID="ConfiguredPose">
+            <input_port name="handling_unit_configured_pose"/>
+        </Action>
+        <Action ID="brakerelease"/>
+        <Action ID="bt_utils"/>
+        <Action ID="getloadedprogram"/>
+        <Action ID="iostatecondition"/>
+        <Action ID="iostates"/>
+        <Condition ID="isrobotrunning"/>
+        <Action ID="jointstates"/>
+        <Action ID="loadinstallation"/>
+        <Action ID="loadur">
+            <input_port name="file_name" type="std::string"/>
+        </Action>
+        <Action ID="moveit">
+            <input_port name="goal" type="Pose2D"/>
+        </Action>
+        <Action ID="moveitcontrol"/>
+        <Action ID="pause"/>
+        <Action ID="play"/>
+        <Action ID="programcondition"/>
+        <Action ID="stop"/>
+        <Action ID="toolforce"/>
+        <Action ID="tooltemp"/>
+        <Action ID="turnoff"/>
+        <Action ID="turnon"/>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>

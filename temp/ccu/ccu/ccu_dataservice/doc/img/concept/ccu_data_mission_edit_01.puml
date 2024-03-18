@@ -1,0 +1,41 @@
+@startuml Overview
+skinparam note{
+   BackgroundColor TECHNOLOGY
+}
+
+
+folder missions #AntiqueWhite{
+   folder m14 as "1.<i>n</i>" {
+      database db14 as "                \n"  #LightSteelBlue
+   }
+   folder m13 as "1.3" {
+      database db13 as "                \n"  #LightSteelBlue
+   }
+   folder m12 as "1.2" {
+      database db12 as "                \n"  #LightSteelBlue
+   }
+   folder m11 as "1.1" {
+      database db11 as "                \n"  #LightSteelBlue
+   }
+   folder m1 as "1" {
+      database db1 as "                \n"  #LightSteelBlue
+   }
+}
+
+db1 -> db11 
+note top of link
+  edit by
+   user
+end note
+db11 -> db12
+note top of link
+  edit by
+   user
+end note
+db12 -> db13
+note top of link
+  ...
+end note
+
+
+@enduml

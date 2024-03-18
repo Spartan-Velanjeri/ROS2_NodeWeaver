@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<robot>
+
+
+  <!-- Visuals-->
+  <gazebo reference="lift_base">
+    <visual>
+      <material>
+        <ambient>0 0 0.8 1</ambient>
+        <diffuse>0 0 0.8 1</diffuse>
+        <specular>0 0 0.8 1</specular>
+      </material>
+    </visual>
+  </gazebo>
+
+
+  <gazebo reference="lift_segment1">
+    <visual>
+      <material>
+        <ambient>0 0.8 0 1</ambient>
+        <diffuse>0 0.8 0 1</diffuse>
+        <specular>0 0.8 0 1</specular>
+      </material>
+    </visual>
+  </gazebo>
+
+  <gazebo reference="lift_segment2">
+    <visual>
+      <material>
+        <ambient>0.4 0.4 0.4 1</ambient>
+        <diffuse>0.4 0.4 0.4 1</diffuse>
+        <specular>0.4 0.4 0.4 1</specular>
+      </material>
+    </visual>
+  </gazebo>
+
+  <gazebo reference="lift_segment3">
+    <visual>
+      <material>
+        <ambient>0.4 0.4 0.4 1</ambient>
+        <diffuse>0.4 0.4 0.4 1</diffuse>
+        <specular>0.4 0.4 0.4 1</specular>
+      </material>
+    </visual>
+  </gazebo>
+
+  <gazebo reference="lift_segment4">
+    <visual>
+      <material>
+        <ambient>0.4 0.4 0.4 1</ambient>
+        <diffuse>0.4 0.4 0.4 1</diffuse>
+        <specular>0.4 0.4 0.4 1</specular>
+      </material>
+    </visual>
+  </gazebo>
+
+  <gazebo reference="assembly_top_mount">
+    <visual>
+      <material>
+        <ambient>0 0 0.8 1</ambient>
+        <diffuse>0 0 0.8 1</diffuse>
+        <specular>0 0 0.8 1</specular>
+      </material>
+    </visual>
+  </gazebo>
+
+</robot>

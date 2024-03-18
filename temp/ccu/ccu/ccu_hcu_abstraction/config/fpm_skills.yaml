@@ -1,0 +1,65 @@
+dashboard_bt:
+    xml: "dashboard_bt.xml"
+    inputs: []
+    description: "Check what is this for?"
+    released: false
+demo_cluster:
+    xml: "demo_cluster.xml"
+    inputs: []
+    description: "Check what is this for?"
+    released: false
+test_program:
+    xml: "execute_test_program.xml"
+    inputs: []
+    description: "Check what is this for?"
+    released: false
+execute_urp_program:
+    xml: "execute_urp_program.xml"
+    inputs: []
+    description: "Check what is this for?"
+    released: false
+init:
+    xml: "init.xml"
+    inputs: []
+    description: "Check what is this for?"
+    released: false
+moveit_program_control:
+    xml: "moveit_program_control.xml"
+    inputs: null
+    description: "Check what is this for?"
+    released: false
+moveit_tree:
+    xml: "MoveitTree.xml"
+    inputs: []
+    description: "Check what is this for?"
+    released: false
+points_cluster:
+    xml: "points_cluster.xml"
+    inputs: []
+    description: "Check what is this for?"
+    released: false
+ros_control:
+    xml: "ros2_control.xml"
+    inputs: []
+    description: "Check what is this for?"
+    released: false
+script_switching:
+    xml: "script_switching.xml"
+    inputs: []
+    description: "Check what is this for?"
+    released: false
+start_drill_program:
+    xml: "start_drill_program.xml"
+    inputs: []
+    description: "Check what is this for?"
+    released: false
+transport_in:
+    xml: "transport_in.xml"
+    inputs: []
+    description: "Move robot into the transport sleeve/holder."
+    released: true
+transport_out:
+    xml: "transport_out.xml"
+    inputs: []
+    description: "Move robot out of the transport sleeve/holder."
+    released: true

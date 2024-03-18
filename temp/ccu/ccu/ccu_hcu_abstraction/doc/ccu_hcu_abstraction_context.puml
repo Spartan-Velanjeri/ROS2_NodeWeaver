@@ -1,0 +1,60 @@
+@startuml "grpc_serve"
+'skinparam minClassWidth 100
+
+skinparam note {
+    BackgroundColor WhiteSmoke
+}
+
+skinparam DefaultTextAlignment left
+
+component HCU {
+    card hcu_gui as "CLIENT" <<GRPC>>  {
+    }
+}
+component CCU {
+    folder ccu_hcu_abstraction #BUSINESS {
+        rectangle "main" as exe_1 <<executable>> #Yellow {
+            node halc as "NODE" <<ROS>> #APPLICATION
+            node grpc as "SERVER" <<GRPC>> #IMPLEMENTATION
+'hcu_gui -[bold]- grpc #RED : " **IPC** - //protocol://\n //googleRPC -> HTML2   //  "
+            grpc <-[bold]right-> halc : //callbacks//
+            interface " ""//socket//"" " as gp #IMPLEMENTATION
+            hcu_gui -[bold]-- gp #RED
+            note right of link 
+                ""ILocalRemote""
+
+                   //IPC <FONT COLOR="RED">gRPC</FONT> auf HTML2//
+            end note
+            interface " ""SOCKET"" " as rp #APPLICATION
+            halc - rp
+        }
+    }
+    folder ccu_data_services {
+        node ds as "NODE" <<ROS>>
+    }
+    folder ccu_behaviour_tree {
+        node me as "NODE" <<ROS>>
+    }
+
+}
+component "FPM / RPM"  as FPM {
+    node fpm as "NODE" <<ROS>>
+}
+
+
+gp - grpc
+
+rp -[bold]- ds #Blue
+rp -[bold]- me #Blue
+
+rp -[bold]down-- fpm #Blue : "\n\n//Developer//\n//Functions//"
+note top of link 
+    //IPC// 
+    //<FONT COLOR=BLUE>ROS</FONT>-Middleware//
+    //auf CycloneDDS//
+end note
+
+
+
+
+@enduml

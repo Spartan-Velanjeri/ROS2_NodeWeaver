@@ -1,0 +1,65 @@
+@startuml CCU Context C1
+
+
+skinparam DefaultTextAlignment left
+component HCU {
+    frame hcu_gui {
+    }
+}
+
+component CCU {
+    frame ccu as "CCU core-business logic" #BUSINESS {
+        folder ccu_data_services {
+            node ds #APPLICATION
+        }
+        folder ccu_task_execution  {
+            node bt #APPLICATION
+        }
+        folder ccu_hcu_abstraction #BUSINESS {
+            node halc #APPLICATION
+            node grpc #IMPLEMENTATION
+            hcu_gui -- grpc #RED
+            note right of link
+                ""ILocalRemote""
+
+                //<FONT COLOR="RED">IPC</FONT>  gRPC  auf  HTML2//
+            end note
+            grpc -[bold]right- halc
+        }
+    }
+    frame ros_basics  {
+        node r as "robot\nstate"
+        node lu
+
+    }
+    frame os_basics  {
+        rectangle chrony
+    }
+    ros_basics -[hidden]- os_basics
+}
+
+component FPM_CU {
+    folder fpm_task_execution {
+        node bt_fpm
+    }
+}
+component RPM_CU {
+    folder rpm_task_execution {
+        node bt_rpm
+    }
+}
+halc -- bt #BLUE
+bt - ds #BLUE
+halc - ds #BLUE
+ccu_task_execution --- bt_fpm #BLUE
+ccu_task_execution --- bt_rpm #BLUE
+note right of link
+    ""Interface_<FONT COLOR="RED">**?**</FONT>""
+
+    //<FONT COLOR="BLUE">IPC</FONT>  ROS-Middleware  auf  CycloneDDS//
+end note
+
+
+
+
+@enduml

@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<robot name="rpm_sensor_macro" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <xacro:macro name="rpm_sensor" params="parent:=base_link load_imu:=true load_inclino:=false load_lidar:=true load_realsense:=false is_sim:=false">
+    
+
+    <xacro:include filename="$(find ouster_description)/urdf/ouster.xacro"/>
+    <xacro:include filename="$(find realsense2_description)/urdf/_d435.urdf.xacro" />
+    <xacro:include filename="$(find imu_description)/urdf/imu_macro.urdf.xacro"/>
+
+    <!--
+    <link name="rpm_imu" />
+    <link name="rpm_lidar_front_left_base_link" />
+    <link name="rpm_lidar_rear_right_base_link" />
+    <link name="rpm_inclinometer" />
+    -->
+
+
+    <!-- ============  Inertial sensors =============================================================== -->
+        <xacro:if value="${load_inclino}"> <!-- INCLINOMETER -->
+            <xacro:include filename="$(find inclinometer_description)/urdf/inclinometer.urdf.xacro"/>
+            <xacro:spawn_calibrated_joint name="${parent}_2rpm_inclinometer" parent="${parent}" child="rpm_inclinometer" dict_key="rpm_inc"/>  
+        </xacro:if>
+    
+        <xacro:if value="${load_imu}"> <!-- INERITAL SENSOR -->
+            <xacro:imu_sensor link_name="rpm_imu" topic="rpm/sensors/front/imu/imu/data" />
+            <xacro:spawn_calibrated_joint name="${parent}2rpm_imu" parent="${parent}" child="rpm_imu" dict_key="rpm_imu"/>  
+        </xacro:if>
+
+    <!-- ============  LIDARS ============================================ -->
+        <xacro:if value="${load_lidar}">
+            <!-- LOCALIZATION LIDAR FRONT-->
+            <xacro:if value="${is_sim}">
+                <!-- Add ouster plugin for simulation-->
+                <xacro:ouster_os0 name="rpm_lidar_front" topic="rpm/sensors/front/lidar3d" hz="10" samples="440" load_lidar_plugin="true" />                
+            </xacro:if>
+            <xacro:unless value="${is_sim}">
+                <link name="rpm_lidar_front" />
+            </xacro:unless>
+            <xacro:spawn_calibrated_joint name="${parent}_2rpm_lidar_front" parent="${parent}" child="rpm_lidar_front" dict_key="rpm_lidar_fl"/>  
+
+
+            <!-- LOCALIZATION LIDAR REAR-->
+            <xacro:if value="${is_sim}">
+                <!-- Add ouster plugin for simulation-->
+                <!-- Lidar PlugIn load only 1 time-->                
+                <xacro:ouster_os0 name="rpm_lidar_rear" topic="rpm/sensors/rear/lidar3d" hz="10" samples="440" load_lidar_plugin="false" />                
+            </xacro:if>
+            <xacro:unless value="${is_sim}">
+                <link name="rpm_lidar_rear" />
+            </xacro:unless>
+            <xacro:spawn_calibrated_joint name="${parent}_2rpm_lidar_rear" parent="${parent}" child="rpm_lidar_rear" dict_key="rpm_lidar_rr"/>  
+            
+           
+            <!-- SAFETY LIDAR -->
+            <link name="rpm_safety_lidar_front" /> 
+            <link name="rpm_safety_lidar_rear" />                        
+            <xacro:spawn_calibrated_joint name="${parent}_2rpm_safety_lidar_rear" parent="${parent}" child="rpm_safety_lidar_rear" dict_key="rpm_safety_lidar_rr"/>  
+            <xacro:spawn_calibrated_joint name="${parent}_2rpm_safety_lidar_front" parent="${parent}" child="rpm_safety_lidar_front" dict_key="rpm_safety_lidar_fl"/>  
+        </xacro:if>
+
+    <!-- ============  Real sense =============================================================== -->
+        <xacro:if value="${load_realsense}">    
+            <link name="rpm_real_sense_1" />
+            <xacro:spawn_calibrated_joint name="${parent}_2rpm_rs1" parent="${parent}" child="rpm_real_sense_1" dict_key="rpm_rs_1"/>  
+            <xacro:sensor_d435 name="camera" parent="${parent}">
+                <origin xyz="-2 0 2" rpy="0 0 1.5707"/>
+            </xacro:sensor_d435>    
+        </xacro:if>
+
+    </xacro:macro>
+
+</robot>

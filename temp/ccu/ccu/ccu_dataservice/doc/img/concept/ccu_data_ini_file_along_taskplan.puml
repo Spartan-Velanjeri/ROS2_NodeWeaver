@@ -1,0 +1,11 @@
+@startuml Overview
+folder data #BUSINESS{
+   folder taskplans #Beige{
+      folder "1" as tp1 {
+         file fin as "metadata.ini" #LightCoral
+         file ftp as "TaskPlan1.XML"
+      }
+   }
+}
+fin -up[dashed]-> ftp #LightCoral
+@enduml

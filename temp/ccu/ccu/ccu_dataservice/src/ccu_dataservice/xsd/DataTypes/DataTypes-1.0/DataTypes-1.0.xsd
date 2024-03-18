@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0">
+
+    <xs:complexType name="Vector">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Data Type for a vector. Right-Hand-Rule</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="x" type="xs:double" form="unqualified">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Value of the x-component of the vector.</xs:documentation>
+                    <xs:documentation xml:lang="de-DE">x-Komponente des Vektors.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="y" type="xs:double">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Value of the y-component of the vector.</xs:documentation>
+                    <xs:documentation xml:lang="de-DE">y-Komponente des Vektors</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="z" type="xs:double">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Value of the z-component of the vector.</xs:documentation>
+                    <xs:documentation xml:lang="de-DE">z-Komponente des Vektors</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Matrix">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Data Type for a matrix.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="v0" type="Vector">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Offset-Vector (translation part of the matrix).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="v1" type="Vector">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Normalized x-axis of the rotation part.</xs:documentation>
+                    <xs:documentation xml:lang="de-DE">x-Achse</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="v2" type="Vector">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Normalized y-axis of the rotation part.</xs:documentation>
+                    <xs:documentation xml:lang="de-DE">y-Achse</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="v3" type="Vector">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Normalized z-axis of the rotation part.</xs:documentation>
+                    <xs:documentation xml:lang="de-DE">z-Achse</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="guidType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Data Type for an guid used for an uniquie identification of a specific element (e.g. hanger).</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(.{22})"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="codeType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Data Type for reflex markers. Used for core-markers and on-site-markers as well. Only defined types (facets) of markers will be accepted.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="GZM29"/>
+            <xs:pattern value="GZM30"/>
+            <xs:pattern value="GZM31"/>
+            <xs:pattern value="GRZ122"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

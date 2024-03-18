@@ -1,0 +1,814 @@
+Panels:
+  - Class: rviz_common/Displays
+    Help Height: 78
+    Name: Displays
+    Property Tree Widget:
+      Expanded:
+        - /Global Options1
+        - /Status1
+        - /RobotModel1/Description Topic1
+        - /ouster_rear_points1
+      Splitter Ratio: 0.6235294342041016
+    Tree Height: 973
+  - Class: rviz_common/Selection
+    Name: Selection
+  - Class: rviz_common/Tool Properties
+    Expanded:
+      - /2D Goal Pose1
+      - /Publish Point1
+    Name: Tool Properties
+    Splitter Ratio: 0.5886790156364441
+  - Class: rviz_common/Views
+    Expanded:
+      - /Current View1
+    Name: Views
+    Splitter Ratio: 0.5
+  - Class: rviz_common/Time
+    Experimental: false
+    Name: Time
+    SyncMode: 0
+    SyncSource: ouster_front_points
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Alpha: 0.5
+      Cell Size: 1
+      Class: rviz_default_plugins/Grid
+      Color: 160; 160; 164
+      Enabled: false
+      Line Style:
+        Line Width: 0.029999999329447746
+        Value: Lines
+      Name: Grid
+      Normal Cell Count: 0
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Plane: XY
+      Plane Cell Count: 10
+      Reference Frame: <Fixed Frame>
+      Value: false
+    - Alpha: 1
+      Class: rviz_default_plugins/RobotModel
+      Collision Enabled: false
+      Description File: ""
+      Description Source: Topic
+      Description Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: robot_description
+      Enabled: true
+      Links:
+        All Links Enabled: true
+        Expand Joint Details: false
+        Expand Link Details: false
+        Expand Tree: false
+        Link Tree Style: Links in Alphabetic Order
+        assembly_top_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        assembly_top_mount:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        base_footprint:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        fpm_assembly_calibration_reference:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        fpm_imu:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        fpm_inclinometer:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        fpm_ptu_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        fpm_ptu_bit_tcp:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        fpm_ptu_chuck:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        fpm_totalstation:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        fpm_usb_hub:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        fpm_vaccum_cleaner:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        handling_unit_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        handling_unit_mount:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        hu_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        hu_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        hu_base_link_inertia:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hu_flange:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        hu_forearm_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hu_ft_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        hu_shoulder_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hu_tool0:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        hu_upper_arm_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hu_wrist_1_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hu_wrist_2_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hu_wrist_3_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_front_roller:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_rear_roller:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_track:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lift_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lift_base_mount:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lift_segment1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lift_segment2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lift_segment3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lift_segment4:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_front_roller:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_rear_roller:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_track:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        rpm_imu:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        rpm_lidar_front:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        rpm_lidar_front_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        rpm_lidar_front_lidar:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        rpm_lidar_rear:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        rpm_lidar_rear_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        rpm_lidar_rear_lidar:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        rpm_lift_calibrate_reference:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        rpm_safety_lidar_front:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        rpm_safety_lidar_rear:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        rpm_sensorrack_mount:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        rpm_validation_point_01:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        rpm_validation_point_02:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        rpm_validation_point_03:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        rpm_validation_point_04:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        rpm_validation_point_05:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        rpm_validation_point_06:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        rpm_validation_point_07:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        rpm_validation_point_08:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        rpm_validation_point_09:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        rpm_validation_point_10:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        rpm_validation_point_11:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        rpm_validation_point_12:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        upper_cover:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        workspace_center_point:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+      Name: RobotModel
+      TF Prefix: ""
+      Update Interval: 0
+      Value: true
+      Visual Enabled: true
+    - Class: rviz_default_plugins/TF
+      Enabled: true
+      Frame Timeout: 15
+      Frames:
+        All Enabled: true
+        assembly_top_base:
+          Value: true
+        assembly_top_mount:
+          Value: true
+        base_footprint:
+          Value: true
+        base_link:
+          Value: true
+        bautiro/base_link/imu_sensor:
+          Value: true
+        bautiro/base_link/rpm_lidar_front_lidar:
+          Value: true
+        bautiro/base_link/rpm_lidar_rear_lidar:
+          Value: true
+        fpm_assembly_calibration_reference:
+          Value: true
+        fpm_imu:
+          Value: true
+        fpm_inclinometer:
+          Value: true
+        fpm_ptu_base:
+          Value: true
+        fpm_ptu_bit_tcp:
+          Value: true
+        fpm_ptu_chuck:
+          Value: true
+        fpm_totalstation:
+          Value: true
+        fpm_usb_hub:
+          Value: true
+        fpm_vaccum_cleaner:
+          Value: true
+        handling_unit_base:
+          Value: true
+        handling_unit_mount:
+          Value: true
+        hu_base:
+          Value: true
+        hu_base_link:
+          Value: true
+        hu_base_link_inertia:
+          Value: true
+        hu_flange:
+          Value: true
+        hu_forearm_link:
+          Value: true
+        hu_ft_frame:
+          Value: true
+        hu_shoulder_link:
+          Value: true
+        hu_tool0:
+          Value: true
+        hu_upper_arm_link:
+          Value: true
+        hu_wrist_1_link:
+          Value: true
+        hu_wrist_2_link:
+          Value: true
+        hu_wrist_3_link:
+          Value: true
+        left_base:
+          Value: true
+        left_front_roller:
+          Value: true
+        left_rear_roller:
+          Value: true
+        left_track:
+          Value: true
+        left_wheel:
+          Value: true
+        lift_base:
+          Value: true
+        lift_base_mount:
+          Value: true
+        lift_segment1:
+          Value: true
+        lift_segment2:
+          Value: true
+        lift_segment3:
+          Value: true
+        lift_segment4:
+          Value: true
+        map:
+          Value: true
+        odom:
+          Value: true
+        right_base:
+          Value: true
+        right_front_roller:
+          Value: true
+        right_rear_roller:
+          Value: true
+        right_track:
+          Value: true
+        right_wheel:
+          Value: true
+        rpm_imu:
+          Value: true
+        rpm_lidar_front:
+          Value: true
+        rpm_lidar_front_base:
+          Value: true
+        rpm_lidar_front_lidar:
+          Value: true
+        rpm_lidar_rear:
+          Value: true
+        rpm_lidar_rear_base:
+          Value: true
+        rpm_lidar_rear_lidar:
+          Value: true
+        rpm_lift_calibrate_reference:
+          Value: true
+        rpm_safety_lidar_front:
+          Value: true
+        rpm_safety_lidar_rear:
+          Value: true
+        rpm_sensorrack_mount:
+          Value: true
+        rpm_validation_point_01:
+          Value: true
+        rpm_validation_point_02:
+          Value: true
+        rpm_validation_point_03:
+          Value: true
+        rpm_validation_point_04:
+          Value: true
+        rpm_validation_point_05:
+          Value: true
+        rpm_validation_point_06:
+          Value: true
+        rpm_validation_point_07:
+          Value: true
+        rpm_validation_point_08:
+          Value: true
+        rpm_validation_point_09:
+          Value: true
+        rpm_validation_point_10:
+          Value: true
+        rpm_validation_point_11:
+          Value: true
+        rpm_validation_point_12:
+          Value: true
+        upper_cover:
+          Value: true
+        ur_base_new:
+          Value: true
+        workspace_center_point:
+          Value: true
+      Marker Scale: 1
+      Name: TF
+      Show Arrows: true
+      Show Axes: true
+      Show Names: false
+      Tree:
+        base_link:
+          base_footprint:
+            {}
+          left_track:
+            left_base:
+              left_front_roller:
+                {}
+              left_rear_roller:
+                {}
+              left_wheel:
+                {}
+          right_track:
+            right_base:
+              right_front_roller:
+                {}
+              right_rear_roller:
+                {}
+              right_wheel:
+                {}
+          rpm_imu:
+            bautiro/base_link/imu_sensor:
+              {}
+          rpm_lidar_front:
+            bautiro/base_link/rpm_lidar_front_lidar:
+              {}
+            rpm_lidar_front_base:
+              {}
+            rpm_lidar_front_lidar:
+              {}
+          rpm_lidar_rear:
+            bautiro/base_link/rpm_lidar_rear_lidar:
+              {}
+            rpm_lidar_rear_base:
+              {}
+            rpm_lidar_rear_lidar:
+              {}
+          rpm_lift_calibrate_reference:
+            lift_base_mount:
+              lift_base:
+                lift_segment1:
+                  lift_segment2:
+                    lift_segment3:
+                      lift_segment4:
+                        assembly_top_mount:
+                          assembly_top_base:
+                            fpm_assembly_calibration_reference:
+                              fpm_imu:
+                                {}
+                              fpm_inclinometer:
+                                {}
+                              fpm_totalstation:
+                                {}
+                              fpm_usb_hub:
+                                {}
+                              fpm_vaccum_cleaner:
+                                {}
+                              handling_unit_mount:
+                                handling_unit_base:
+                                  hu_base_link:
+                                    hu_base:
+                                      {}
+                                    hu_base_link_inertia:
+                                      hu_shoulder_link:
+                                        hu_upper_arm_link:
+                                          hu_forearm_link:
+                                            hu_wrist_1_link:
+                                              hu_wrist_2_link:
+                                                hu_wrist_3_link:
+                                                  hu_flange:
+                                                    fpm_ptu_base:
+                                                      fpm_ptu_chuck:
+                                                        fpm_ptu_bit_tcp:
+                                                          {}
+                                                    hu_tool0:
+                                                      {}
+                                                  hu_ft_frame:
+                                                    {}
+          rpm_safety_lidar_front:
+            {}
+          rpm_safety_lidar_rear:
+            {}
+          rpm_sensorrack_mount:
+            {}
+          rpm_validation_point_01:
+            {}
+          rpm_validation_point_02:
+            {}
+          rpm_validation_point_03:
+            {}
+          rpm_validation_point_04:
+            {}
+          rpm_validation_point_05:
+            {}
+          rpm_validation_point_06:
+            {}
+          rpm_validation_point_07:
+            {}
+          rpm_validation_point_08:
+            {}
+          rpm_validation_point_09:
+            {}
+          rpm_validation_point_10:
+            {}
+          rpm_validation_point_11:
+            {}
+          rpm_validation_point_12:
+            {}
+          upper_cover:
+            {}
+          ur_base_new:
+            {}
+          workspace_center_point:
+            {}
+        map:
+          {}
+        odom:
+          {}
+      Update Interval: 0
+      Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz_default_plugins/PointCloud2
+      Color: 255; 255; 255
+      Color Transformer: Intensity
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 0
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: ouster_front_points
+      Position Transformer: XYZ
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.009999999776482582
+      Style: Flat Squares
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /rpm/sensors/front/lidar3d/points
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz_default_plugins/PointCloud2
+      Color: 255; 255; 255
+      Color Transformer: FlatColor
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 0
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: ouster_rear_points
+      Position Transformer: XYZ
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.009999999776482582
+      Style: Flat Squares
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /rpm/sensors/rear/lidar3d/points
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+  Enabled: true
+  Global Options:
+    Background Color: 48; 48; 48
+    Fixed Frame: base_link
+    Frame Rate: 30
+  Name: root
+  Tools:
+    - Class: rviz_default_plugins/Interact
+      Hide Inactive Objects: true
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+    - Class: rviz_default_plugins/FocusCamera
+    - Class: rviz_default_plugins/Measure
+      Line color: 128; 128; 0
+    - Class: rviz_default_plugins/SetInitialPose
+      Covariance x: 0.25
+      Covariance y: 0.25
+      Covariance yaw: 0.06853891909122467
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /initialpose
+    - Class: rviz_default_plugins/SetGoal
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /goal_pose
+    - Class: rviz_default_plugins/PublishPoint
+      Single click: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /clicked_point
+  Transformation:
+    Current:
+      Class: rviz_default_plugins/TF
+  Value: true
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Distance: 13.218561172485352
+      Enable Stereo Rendering:
+        Stereo Eye Separation: 0.05999999865889549
+        Stereo Focal Distance: 1
+        Swap Stereo Eyes: false
+        Value: false
+      Focal Point:
+        X: 0
+        Y: 0
+        Z: 0
+      Focal Shape Fixed Size: true
+      Focal Shape Size: 0.05000000074505806
+      Invert Z Axis: false
+      Name: Current View
+      Near Clip Distance: 0.009999999776482582
+      Pitch: 0.17979739606380463
+      Target Frame: <Fixed Frame>
+      Value: Orbit (rviz)
+      Yaw: 2.8754098415374756
+    Saved: ~
+Window Geometry:
+  Displays:
+    collapsed: false
+  Height: 1163
+  Hide Left Dock: false
+  Hide Right Dock: true
+  QMainWindow State: 000000ff00000000fd00000004000000000000015600000458fc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000005fb000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000001600000458000000c900fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f000003e0fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a005600690065007700730000000016000003e0000000a400fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000003c00000003efc0100000002fb0000000800540069006d00650000000000000003c0000002eb00fffffffb0000000800540069006d00650100000000000004500000000000000000000004e40000045800000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730000000000ffffffff0000000000000000
+  Selection:
+    collapsed: false
+  Time:
+    collapsed: false
+  Tool Properties:
+    collapsed: false
+  Views:
+    collapsed: true
+  Width: 1600
+  X: 1920
+  Y: 0

@@ -1,0 +1,4 @@
+string NAME = "get_drill_holes_cluster"
+---
+DrillMask[] drill_masks
+

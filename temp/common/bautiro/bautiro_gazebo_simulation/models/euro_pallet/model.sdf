@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name="euro_pallet">      
+    <pose>0 0 0.2 0 0 0</pose>
+      <static>true</static>
+      <link name="euro_pallet">
+        <inertial>
+          <mass>20.0</mass>
+          <inertia>
+            <ixx>2.43</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1.10</iyy>
+            <iyz>0</iyz>
+            <izz>3.47</izz>
+          </inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>meshes/pallet.dae</uri>
+              <scale>0.15 0.15 0.15</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>meshes/pallet.dae</uri>
+              <scale>0.15 0.15 0.15</scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+</sdf>
